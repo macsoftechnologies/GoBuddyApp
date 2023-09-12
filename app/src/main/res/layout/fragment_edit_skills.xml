@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.providersettingsflowfragment.EditSkillsFragment">
+
+    <TextView
+        android:id="@+id/addText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/selectSkills"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_13ssp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/edit_SkillsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/edit_SkillsBtn"
+        android:layout_below="@id/addText" />
+
+    <TextView
+        android:id="@+id/edit_SkillsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/updateSkills"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="@dimen/_17ssp" />
+
+</RelativeLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".view.fragments.customerflowfragments.ScheduleServiceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+            android:text="@string/job_completed"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold" />
+
+     <!--   <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="@string/lorem_ipsum_small_text"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="@dimen/_14ssp" />-->
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/schedule_nowBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:background="@drawable/theme_rectangle_box"
+        android:drawableStart="@drawable/calendar"
+        android:drawablePadding="@dimen/_15sdp"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Now"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_25ssp" />
+
+  <!--  <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/schedule_nowBtn"
+        android:layout_alignEnd="@+id/schedule_nowBtn"
+        android:layout_alignBottom="@+id/schedule_nowBtn"
+        android:layout_marginStart="198dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="9dp"
+        android:text="Within An Hour" />-->
+
+</RelativeLayout>
+
+        <TextView
+            android:id="@+id/schedule_timeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:background="@drawable/theme_rectangle_box"
+            android:drawableStart="@drawable/calendar"
+            android:drawablePadding="@dimen/_15sdp"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Future"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_25ssp" />
+
+        <TextView
+            android:id="@+id/schedule_recurringBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:background="@drawable/theme_rectangle_box"
+            android:drawableStart="@drawable/calendar"
+            android:drawablePadding="@dimen/_15sdp"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/recurring"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_25ssp" />
+
+        <!--  <TextView
+              android:id="@+id/scheduleNextBtn"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginTop="@dimen/_30sdp"
+              android:layout_marginBottom="@dimen/_45sdp"
+              android:background="@color/colorPrimary"
+              android:paddingLeft="@dimen/_70sdp"
+              android:paddingTop="@dimen/_5sdp"
+              android:paddingRight="@dimen/_70sdp"
+              android:paddingBottom="@dimen/_5sdp"
+              android:text="@string/next"
+              android:textColor="#fff"
+              android:textSize="22sp" />-->
+
+    </LinearLayout>
+
+
+</ScrollView>

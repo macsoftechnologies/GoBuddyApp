@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
+    tools:context=".view.activities.AppUpdateActivity">
+
+    <ImageView
+        android:id="@+id/logo_image_view"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_above="@id/app_update_text_view"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/gobuddy_logo" />
+
+    <TextView
+        android:id="@+id/app_update_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="true"
+        android:text="Latest Version available"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/update_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_update_text_view"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:text="@string/app_update"
+        android:textAlignment="center"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/app_update_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="UPDATE APP"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+</RelativeLayout>

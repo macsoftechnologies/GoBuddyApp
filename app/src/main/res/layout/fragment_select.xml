@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".view.fragments.customerflowfragments.SelectProviderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:elevation="@dimen/_5sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:drawableStart="@drawable/theme_round_tick"
+                    android:drawablePadding="@dimen/_15sdp"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:text="@string/order_confirmed"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_22ssp"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/orderIdView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_65sdp"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Order ID #12345" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_65sdp"
+                    android:text="@string/thank_you_"
+                    android:textColor="@color/quantum_googred700"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/displayTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="@color/quantum_googgreen"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="We found you three providers for your service" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:text="@string/notify_my_jobs"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/providersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

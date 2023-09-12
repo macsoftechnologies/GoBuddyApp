@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "594263295899",
+    "firebase_url": "https://gobuddy-225cc.firebaseio.com",
+    "project_id": "gobuddy-225cc",
+    "storage_bucket": "gobuddy-225cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594263295899:android:3107abe4e64d0023",
+        "android_client_info": {
+          "package_name": "com.colourmoon.gobuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594263295899-g7ioohsb845o1qdbbpg3vs2m7kbgi97t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.colourmoon.gobuddy",
+            "certificate_hash": "6b04c417212f5f24a0ecd8c4ba9ed7ab84c7c791"
+          }
+        },
+        {
+          "client_id": "594263295899-8m30c99op0eaemjimstvc2vivodstm04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.colourmoon.gobuddy",
+            "certificate_hash": "e73ccf9ff7ca8c05d24d2debdccbd401cbc1dda4"
+          }
+        },
+        {
+          "client_id": "594263295899-ajmm6tioena0o678lla0rptvicjlh5ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQp7LSNsbVVUVpXHc8KiTKw3KqQdtyYpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594263295899-ajmm6tioena0o678lla0rptvicjlh5ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

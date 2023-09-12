@@ -1,0 +1,205 @@
+<resources>
+    <string name="app_name">GOBUDDY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem_ipsum_text">Start Earning Money \nLorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard</string>
+    <string name="login_email_phone">Email/Phone</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phoneNum">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="dateOfBirth">Date of Birth(YYYY/MM/DD)</string>
+    <string name="address">Address</string>
+    <string name="accept_terms_and_conditions"> <u>Terms and Conditions</u></string>
+    <string name="accept">Accept</string>
+    <string name="lorem_ipsum_large_text">Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+        Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+        Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+        Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+        Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    </string>
+    <string name="verification">Verification</string>
+    <string name="done">Done</string>
+    <string name="thank_you">THANK YOU</string>
+    <string name="for_registering_as_a_provider">For registering as a PROVIDER</string>
+    <string name="click_here_to_upload_skills_e_kyc">Click here to upload skills / e-Kyc</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="lorem_ipsum_medium_text">Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+        Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    </string>
+    <string name="gobuddy">GOBUDDY</string>
+    <string name="get_started">Get Started</string>
+    <string name="upload">Upload</string>
+    <string name="address_proof">Address Proof</string>
+    <string name="id_proof">ID Proof</string>
+    <string name="selectSkills">Please select skills you are comfortable with to provide service on</string>
+    <string name="login">Login</string>
+    <string name="favourite">Favourite</string>
+    <string name="myJobs">My Jobs</string>
+    <string name="home">Home</string>
+    <string name="help">Help</string>
+    <string name="settings">Settings</string>
+    <string name="our_services">Our Services</string>
+    <string name="SearchForServices">Search your service here</string>
+    <string name="enterPhNo">Forgotten Password \n Don\'t Worry!! \nEnter Your Registered Phone Number</string>
+    <string name="request_otp">Request OTP</string>
+    <string name="otpNumber">Enter OTP Here</string>
+    <string name="newpassword">New Password </string>
+    <string name="confirmPass">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="pick_any_one">Pick Any One</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="pick_from_gallery">Pick From Gallery</string>
+    <string name="go_to_dashboard">Go TO DashBoard</string>
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="payas_service">If you haven\'t assigned enough jobs to meet the selected model, our system would adjust you to the right model so you are charged fairly.</string>
+    <string name="indian_rupee">\u20B9 </string>
+    <string name="indian_rupee_">Rs. </string>
+    <string name="provider_responsibility">Provider Responsibility</string>
+    <string name="customer_responsibility">Customer Responsibility</string>
+    <string name="note">Note</string>
+    <string name="profile">Profile</string>
+    <string name="promoCode">Promo Code</string>
+    <string name="savedAddress">Saved Addresses</string>
+    <string name="suggestAjob">Suggest a Job</string>
+    <string name="logout">Log Out</string>
+    <string name="about_us">About Us</string>
+    <string name="faq">FAQ</string>
+    <string name="job_completed">When do you need your Job to be completed ?</string>
+    <string name="lorem_ipsum_small_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</string>
+    <string name="now">Now</string>
+    <string name="recurring">Recurring</string>
+    <string name="schedule">Schedule</string>
+    <string name="specific">Specific</string>
+    <string name="flexible">Flexible</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="select_recurring_frequency">Select Recurring Frequency</string>
+    <string name="job_location">Job Location</string>
+    <string name="change">Change</string>
+    <string name="dateAndTime"><![CDATA[Date & Time : ]]></string>
+    <string name="orderDetails">Order Details</string>
+    <string name="estimated_price">Above price is estimated price only, actual cost may vary after service completion</string>
+    <string name="selectpayment">Select Payment Method</string>
+    <string name="pay_through_app">Pay Through App(Online Payment)</string>
+    <string name="upon_completion_of_services">Upon completion of services</string>
+    <string name="cash_payment">Pay to the Provider(Cash Payment)</string>
+    <string name="placeOrder">Place Order</string>
+    <string name="apply">Apply</string>
+    <string name="enter_your_coupon_here">Enter Your Coupon Here</string>
+    <string name="coupon_applied">Coupon Applied</string>
+    <string name="discounted_price">Discounted Price</string>
+    <string name="remove_coupon">Remove Coupon</string>
+    <string name="coupon_price">Coupon Price (-)</string>
+    <string name="order_confirmed">Order Confirmed</string>
+    <string name="thank_you_">Thank you for your order</string>
+    <string name="notify_my_jobs">we will notify once we assign one of the available provider or you can check your my jobs screen to view the status</string>
+    <string name="email_optional">Email(Optional)</string>
+    <string name="mr">Mr.</string>
+    <string name="miss">Miss.</string>
+    <string name="houseAndStreet"><![CDATA[House & Street]]></string>
+    <string name="locality">Locality</string>
+    <string name="nickname_for_address">NICKNAME FOR ADDRESS</string>
+    <string name="office">OFFICE</string>
+    <string name="other">OTHER</string>
+    <string name="home_">HOME</string>
+    <string name="save_address">SAVE ADDRESS</string>
+    <string name="addaddress">AddAddress</string>
+    <string name="login_caps">LOGIN</string>
+    <string name="haven_t_received_otp">Haven\'t Received OTP?</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="colon">:</string>
+    <string name="job_name">Job Name</string>
+    <string name="date_time"><![CDATA[Date & Time]]></string>
+    <string name="status">Status</string>
+    <string name="view_project">View Project</string>
+    <string name="ongoing">OnGoing</string>
+    <string name="paymentsummary">Payment Summary</string>
+    <string name="your_rating">Your Rating</string>
+    <string name="booking_amount">Booking Amount</string>
+    <string name="extra_charges">Extra Charges</string>
+    <string name="invoice_amount">Invoice Amount</string>
+    <string name="amount_paid">Amount Paid</string>
+    <string name="amount_tobe_paid">Amount To Be Paid</string>
+    <string name="view_job">View Job</string>
+    <string name="ok">OK</string>
+    <string name="pending_jobs">Pending Jobs</string>
+    <string name="completedJobs">Completed Jobs</string>
+    <string name="payouts">Payouts</string>
+    <string name="tutorial">Tutorials</string>
+    <string name="job_id">Job ID</string>
+    <string name="cancel">CANCEL</string>
+    <string name="accept_job">ACCEPT JOB</string>
+    <string name="contact_customer">Contact Customer</string>
+    <string name="amount">Amount</string>
+    <string name="status_completed">Status : Completed</string>
+    <string name="ekyc">e-Kyc</string>
+    <string name="subscription">Subscription</string>
+    <string name="myskills">My Skills</string>
+    <string name="vacationMode">Vacation Mode</string>
+    <string name="support">Support</string>
+    <string name="viewAsCustomer">View As Customer</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="update">Update</string>
+    <string name="earningAmount">Earning Amount</string>
+    <string name="status_onSetteled">Status : NOT Settled</string>
+    <string name="status_Settled">Status : Settled</string>
+    <string name="vacation_mode_text">Activating Vacation Mode Makes sure your services won\'t appear in search results. Other members will not be able to start a conversation with you until return</string>
+    <string name="select_duration">Select Duration</string>
+    <string name="vacation_mode">Vacation Mode</string>
+    <string name="save">Save</string>
+    <string name="select_or_enter_date">Select or Enter Date</string>
+    <string name="viewAsProvider">View As Provider</string>
+    <string name="successful">Successful</string>
+    <string name="pending">Pending</string>
+    <string name="completed">Completed</string>
+    <string name="complete">Complete</string>
+    <string name="edit">EDIT</string>
+
+    <string name="area_of_expertish">Area Of Expertish</string>
+    <string name="updateEkyc">Update e-KYC</string>
+    <!--<string name="api_key">AIzaSyCPmNpjlSzFVMkWAAQ7OzkCk_NOKshf-Yo</string>-->
+    <string name="need_help">Need Help ?</string>
+    <string name="updateSkills">Update Skills</string>
+    <string name="click_here_if_the_job_was_done"><u>Click Here If the Job Was Done</u></string>
+    <string name="jobDone">Job Completion</string>
+    <string name="thank_you_for_provider">Thank you for providing them a great service. Now, complete this order by entering any extra amount below or else leave it and click on complete job button</string>
+    <string name="enterAmount">Enter Amount</string>
+    <string name="completeJob">Complete Job</string>
+    <string name="contact_provider">Contact Provider</string>
+    <string name="proceed_to_payment">Proceed To Payment</string>
+    <string name="under_maintanence">Inconvenience Regretted \n  Under Maintanence</string>
+    <string name="type_something">Type Something</string>
+    <string name="admin">Admin</string>
+    <string name="onboard_text">Improve your living by registering as customer and you can also start earning money by registering as provider</string>
+    <string name="review">Review</string>
+    <string name="avg">Avg</string>
+    <string name="job">Job</string>
+    <string name="register_as_a_provider_and_start_earning_money_on_your_availability">Register as a Provider and Start Earning Money on your Availability</string>
+    <string name="app_update">To keep using GoBuddy, please update to the latest version. click on update app button below to update the app now</string>
+    <string name="total">Total</string>
+    <string name="please_enter_your_comments">Please enter your comments</string>
+    <string-array name="address_proof_array">
+        <item>Aadhar</item>
+        <item>VoterID</item>
+        <item>PanCard</item>
+        <item>CurrentBill</item>
+    </string-array>
+    <string-array name="id_proof_array">
+        <item>PanCard</item>
+        <item>Aadhar</item>
+        <item>VoterID</item>
+        <item>CurrentBill</item>
+    </string-array>
+</resources>

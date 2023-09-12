@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/provider_navigation_graph"
+    app:startDestination="@id/provider_pending_jobs">
+
+    <fragment
+        android:id="@+id/provider_pending_jobs"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerfragments.ProviderPendingJobsFragment"
+        android:label="Available Jobs"
+        tools:layout="@layout/fragment_provider_pending_jobs"/>
+    <fragment
+        android:id="@+id/provider_completed_jobs"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerfragments.ProviderCompletedJobsFragment"
+        android:label="Completed Jobs"
+        tools:layout="@layout/fragment_provider_completed_jobs" />
+    <fragment
+        android:id="@+id/provider_payout"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerfragments.ProviderPayoutsFragment"
+        android:label="Payouts"
+        tools:layout="@layout/fragment_provider_payouts" />
+    <fragment
+        android:id="@+id/provider_tutorial"
+        android:name="com.colourmoon.gobuddy.view.fragments.ProvPostRegFragments.TutorialsFragment"
+        android:label="Online Tutorials"
+        tools:layout="@layout/fragment_tutorials" />
+    <fragment
+        android:id="@+id/provider_settings"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerfragments.ProviderSettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_provider_settings" />
+    <fragment
+        android:id="@+id/acceptedJobDetailsFragment"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerflowfragments.AcceptedJobDetailsFragment"
+        android:label="fragment_accepted_job_details"
+        tools:layout="@layout/fragment_accepted_job_details" />
+    <fragment
+        android:id="@+id/availableJobDetailsFragment"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerflowfragments.AvailableJobDetailsFragment"
+        android:label="fragment_available_job_details"
+        tools:layout="@layout/fragment_available_job_details" />
+    <fragment
+        android:id="@+id/availableJobsFragment"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerflowfragments.AvailableJobsFragment"
+        android:label="fragment_available_jobs"
+        tools:layout="@layout/fragment_available_jobs" >
+        <action
+            android:id="@+id/action_availableJobsFragment_to_availableJobDetailsFragment"
+            app:destination="@id/availableJobDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/acceptedJobsFragment"
+        android:name="com.colourmoon.gobuddy.view.fragments.providerflowfragments.AcceptedJobsFragment"
+        android:label="fragment_accepted_jobs"
+        tools:layout="@layout/fragment_accepted_jobs" >
+        <action
+            android:id="@+id/action_acceptedJobsFragment_to_acceptedJobDetailsFragment"
+            app:destination="@id/acceptedJobDetailsFragment" />
+    </fragment>
+</navigation>

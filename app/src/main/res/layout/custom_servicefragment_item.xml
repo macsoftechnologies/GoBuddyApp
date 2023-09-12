@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_8sdp"
+    android:layout_marginRight="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="@dimen/_5sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/serviceCountText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="@dimen/_15ssp"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/serviceTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.35"
+            android:textColor="#000"
+            android:textSize="@dimen/_13ssp"
+            tools:text="Bedroom Room Clean" />
+
+        <TextView
+            android:id="@+id/servicePriceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            tools:text="\u20B9 500" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp">
+
+    <CheckedTextView
+        android:id="@+id/addSkill_childTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        android:checkMark="?android:attr/textCheckMark"
+        android:drawableStart="@drawable/ic_forward_arrow"
+        android:drawablePadding="@dimen/_10sdp"
+        android:ellipsize="end"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="#000"
+        android:textSize="@dimen/_14ssp"
+        tools:text="Laundry" />
+
+</androidx.cardview.widget.CardView>
