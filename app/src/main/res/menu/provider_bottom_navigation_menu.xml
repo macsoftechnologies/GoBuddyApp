@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/provider_pending_jobs"
+        android:icon="@drawable/ic_pending_jobs"
+        android:title="@string/pending" />
+    <item
+        android:id="@+id/provider_completed_jobs"
+        android:icon="@drawable/ic_complete_jobs"
+        android:title="@string/complete" />
+    <item
+        android:id="@+id/provider_payout"
+        android:icon="@drawable/ic_payouts"
+        android:title="@string/payouts" />
+    <item
+        android:id="@+id/provider_tutorial"
+        android:icon="@drawable/ic_tutorial"
+        android:title="@string/tutorial" />
+    <item
+        android:id="@+id/provider_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
+</menu>

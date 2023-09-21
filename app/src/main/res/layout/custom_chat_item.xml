@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <LinearLayout
+        android:id="@+id/rightChatItemLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/chat_right_item"
+        android:elevation="@dimen/_3sdp"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/rightChatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="@dimen/_13ssp"
+            tools:text="Hello Mr.Naveen" />
+
+        <TextView
+            android:id="@+id/rightChatTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="@dimen/_8ssp"
+            tools:text="Feb 2019 04:55 PM" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/leftChatItemLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/chat_left_item_bg"
+        android:elevation="@dimen/_3sdp"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/leftChatUserType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/admin"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/_10ssp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/leftChatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_13ssp"
+            tools:text="Hello Mr.Raja" />
+
+        <TextView
+            android:id="@+id/leftChatTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_8ssp"
+            tools:text="Feb 2019 04:55 PM" />
+    </LinearLayout>
+
+</LinearLayout>

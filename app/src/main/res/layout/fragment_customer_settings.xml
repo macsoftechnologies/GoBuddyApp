@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".view.fragments.customerFragments.CustomerSettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/providerSettings_viewAsProviderBtn"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_15sdp">
+
+            <TextView
+                android:id="@+id/settings_profileText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:text="@string/profile"
+                android:textColor="#000"
+                android:textSize="@dimen/_18ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/settings_promocodeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:text="@string/promoCode"
+                android:textColor="#000"
+                android:textSize="@dimen/_18ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/settings_savedAddressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:text="@string/savedAddress"
+                android:textColor="#000"
+                android:textSize="@dimen/_18ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/settings_suggestAjobText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:text="@string/suggestAjob"
+                android:textColor="#000"
+                android:textSize="@dimen/_18ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/settings_logoutText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:text="@string/logout"
+                android:textColor="#000"
+                android:textSize="@dimen/_18ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/providerSettings_viewAsProviderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#E6E6FA"
+        android:drawableStart="@drawable/ic_refresh"
+        android:drawablePadding="@dimen/_15sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp"
+        android:text="@string/viewAsProvider"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

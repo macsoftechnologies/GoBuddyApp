@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".view.activities.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/login_img" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_email_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@drawable/card_shape_input"
+            android:hint="@string/login_email_phone"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:padding="12dp"
+            android:background="@drawable/card_shape_input"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/login_loginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:background="@drawable/rounded_corner_white"
+        android:fontFamily="@font/poppins"
+        android:paddingLeft="75dp"
+        android:paddingTop="12dp"
+        android:paddingRight="75dp"
+        android:paddingBottom="12dp"
+        android:text="Login"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/login_forgot_passBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/forgot_password"
+        android:layout_gravity="end"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="---------OR---------"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:padding="0dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/quantum_lightgreen"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:src="@drawable/face1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login with"
+               android:textColor="@color/white"
+                android:textSize="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="100dp"
+                android:layout_gravity="bottom"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="Face ID"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="90dp"
+                android:textColor="@color/quantum_yellow"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="or Login with 4 digit Pin"
+            android:fontFamily="@font/poppins"
+
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center" />
+   <com.poovam.pinedittextfield.SquarePinField
+       android:layout_width="wrap_content"
+       android:layout_marginTop="20dp"
+       android:layout_height="wrap_content"
+       android:inputType="number"
+       android:textSize="16sp"
+       android:id="@+id/square_field_pin"
+       android:layout_gravity="center"
+       app:cornerRadius="5dp"
+       app:fieldBgColor="#fff"
+       app:highlightColor="@color/colorPrimary"
+       app:noOfFields="4"/>
+
+    <TextView
+        android:id="@+id/login_toRegisterBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Don't have account ? Sign up"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</LinearLayout>
+    </ScrollView>
+
+

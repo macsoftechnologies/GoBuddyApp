@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:background="?android:attr/selectableItemBackground">
+
+
+
+
+    <TextView
+        android:id="@+id/subcategoryTextview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:drawableEnd="@drawable/ic_forward_arrow"
+        android:ellipsize="end"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:padding="@dimen/_6sdp"
+        android:textColor="#000"
+        android:textSize="@dimen/_14ssp"
+        tools:text=" &#8226;  Cleaning and Washing" />
+</androidx.cardview.widget.CardView>

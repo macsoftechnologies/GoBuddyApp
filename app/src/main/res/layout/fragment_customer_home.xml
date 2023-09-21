@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.fragments.customerFragments.CustomerHomeFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customerMainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:id="@+id/toolBarQuestionBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="end"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:src="@drawable/ic_baseline_help_24" />
+
+        <ImageView
+            android:id="@+id/toolBarIcon"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="center"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:src="@drawable/app_icon" />
+
+        <TextView
+            android:id="@+id/toolBarLoginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:drawableLeft="@drawable/ic_baseline_person_pin_24"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="@string/login"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_10ssp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/adds_imageSlider"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content" />
+
+
+            <com.glide.slider.library.SliderLayout
+                android:id="@+id/homePageImageSlider"
+                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:layout_marginRight="@dimen/_13sdp"
+                app:indicator_visibility="invisible" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_13sdp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp">
+
+                <EditText
+                    android:id="@+id/cust_home_searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:drawableStart="@drawable/ic_search_black_24dp"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/SearchForServices"
+                    android:imeOptions="actionSearch"
+                    android:inputType="none"
+
+                    android:maxLines="1"
+                    android:textSize="@dimen/_12ssp"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_6sdp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cust_home_services_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/custom_service_item" />
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

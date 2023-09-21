@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/containerType"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/app_icon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+       android:layout_below="@id/imgLogo"
+        android:layout_marginTop="0dp"
+       android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:text="Like to Register as"
+        android:textSize="20dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/txtCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/curved_white_bg"
+        android:backgroundTint="@color/quantum_orange"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:padding="9dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:text="Customer"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtVendor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/txtCustomer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/curved_white_bg"
+        android:padding="9dp"
+        android:fontFamily="@font/poppins"
+        android:backgroundTint="@color/quantum_lightgreen"
+        android:gravity="center"
+        android:text="Provider"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

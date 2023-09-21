@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.providerflowfragments.AvailableJobsFragment">
+
+    <include
+        android:id="@+id/available_no_jobs_view"
+        layout="@layout/custom_no_jobs_item"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/providerAvailableJobsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        tools:listitem="@layout/custom_provider_available_jobs_item" />
+
+</FrameLayout>

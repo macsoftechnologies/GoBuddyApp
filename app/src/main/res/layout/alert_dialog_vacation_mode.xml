@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="@string/vacation_mode"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/vacation_mode_text"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="@dimen/_11ssp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:text="@string/select_duration"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/vacation_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:drawableEnd="@drawable/ic_date_range"
+        android:hint="@string/select_or_enter_date"
+        android:inputType="date"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/vacationModeSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="@dimen/_40sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingRight="@dimen/_40sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:text="@string/save"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold" />
+</LinearLayout>

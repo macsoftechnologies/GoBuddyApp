@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.colourmoon.gobuddy.helper.MovableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
+    tools:context=".view.activities.ChatActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/chatEditTextLayout"
+        app:reverseLayout="true"
+        app:stackFromEnd="true"
+        tools:listitem="@layout/custom_chat_item" />
+
+    <LinearLayout
+        android:id="@+id/chatEditTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_weight="1.7"
+            android:background="@drawable/theme_curved_border"
+            android:fontFamily="@font/poppins"
+            android:gravity="center_vertical"
+            android:hint="@string/type_something"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_8sdp" />
+
+
+        <ImageView
+            android:id="@+id/sendMessageBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="0.3"
+            android:src="@drawable/ic_send_black_24dp" />
+    </LinearLayout>
+</com.colourmoon.gobuddy.helper.MovableRelativeLayout>

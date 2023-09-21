@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_menu_loginBtn"
+        android:title="@string/login_caps"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_menu_addressBtn"
+        android:icon="@drawable/ic_add_circle"
+        android:title="@string/addaddress"
+        android:visible="false"
+        app:showAsAction="always" />
+</menu>

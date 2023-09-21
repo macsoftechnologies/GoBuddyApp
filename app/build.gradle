@@ -1,0 +1,113 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 31
+    defaultConfig {
+        applicationId "com.colourmoon.gobuddy"
+        minSdkVersion 22
+        targetSdkVersion 31
+        versionCode 21
+        versionName "2.3"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // dependency for networking
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+
+
+    // dependency for getting locations
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    //dependency for sms auto verify
+    implementation 'com.google.android.gms:play-services-base:17.5.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.0'
+
+    // dependency for loading images from server
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    // Shimmer
+    //  implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    // dependency for maintaining views and text sizes same across various screen sizes and dimensions
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    // dependency for expandable recyclerview
+    implementation 'com.thoughtbot:expandablecheckrecyclerview:1.4'
+
+    // image compressor
+    implementation 'id.zelory:compressor:2.1.0'
+
+    // for range seek bar
+    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
+
+    // for circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //new material design
+    implementation 'com.google.android.material:material:1.3.0'
+
+    // for rating bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.4.3'
+
+    // image slider library
+    implementation "com.github.firdausmaulan:GlideSlider:1.4.1"
+
+    //navigation architexture components
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+    // butter knife dependenecy
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    // Maps and Places integration
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.1'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.poovamraj:PinEditTextField:1.2.6'
+
+    /* implementation('com.paytm:pgplussdk:1.3.3') {
+         transitive = true;
+     }
+ */
+    // new paytm sdk dependency
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.5.3'
+
+    // for autoupdate manage
+    implementation 'com.google.android.play:core:1.9.0'
+
+    implementation 'androidx.exifinterface:exifinterface:1.3.2'
+
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'
+}
