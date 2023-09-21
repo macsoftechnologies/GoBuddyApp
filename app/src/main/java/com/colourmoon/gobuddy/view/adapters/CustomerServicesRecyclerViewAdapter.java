@@ -69,7 +69,7 @@ public class CustomerServicesRecyclerViewAdapter extends RecyclerView.Adapter<Cu
             customerServiceImageView = itemView.findViewById(R.id.customer_service_image);
             customerServiceNameView = itemView.findViewById(R.id.customer_service_name);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            customerServiceImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();

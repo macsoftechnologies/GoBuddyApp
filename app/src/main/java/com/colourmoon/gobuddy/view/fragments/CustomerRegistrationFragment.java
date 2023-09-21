@@ -185,7 +185,24 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
     private void registerCustomer() {
         Map<String, String> customerRegistrationMap = new HashMap<>();
-        customerRegistrationMap.put("name", reg_cus_name_data);
+
+        if (main_latitude != null && main_longitude != null && main_address != null && placeId != null) {
+            customerRegistrationMap.put("latitude", main_latitude);
+            customerRegistrationMap.put("longitude", main_longitude);
+            customerRegistrationMap.put("landmark", main_address);
+            customerRegistrationMap.put("place_id", placeId);
+        }
+
+        if (reg_cus_name_data != null && reg_cus_email_data != null && reg_cus_phone_data != null && reg_cus_pass_data != null) {
+            customerRegistrationMap.put("name", reg_cus_name_data);
+            customerRegistrationMap.put("email", reg_cus_email_data);
+            customerRegistrationMap.put("phone_number", reg_cus_phone_data);
+            customerRegistrationMap.put("password", reg_cus_pass_data);
+            customerRegistrationMap.put("terms_and_conditions", "1");
+            customerRegistrationMap.put("token", FcmTokenPreference.getInstance(getActivity()).getFcmToken());
+           }
+
+        /*customerRegistrationMap.put("name", reg_cus_name_data);
         customerRegistrationMap.put("email", reg_cus_email_data);
         customerRegistrationMap.put("phone_number", reg_cus_phone_data);
         customerRegistrationMap.put("password", reg_cus_pass_data);
@@ -194,7 +211,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         customerRegistrationMap.put("longitude", main_longitude);
         customerRegistrationMap.put("place_id", placeId);
         customerRegistrationMap.put("landmark", main_address);
-        customerRegistrationMap.put("token", FcmTokenPreference.getInstance(getActivity()).getFcmToken());
+        customerRegistrationMap.put("token", FcmTokenPreference.getInstance(getActivity()).getFcmToken());*/
         RegistrationController.getInstance().callCustomerRegistrationApi(customerRegistrationMap);
     }
 

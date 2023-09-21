@@ -190,6 +190,7 @@
     <string name="app_update">To keep using GoBuddy, please update to the latest version. click on update app button below to update the app now</string>
     <string name="total">Total</string>
     <string name="please_enter_your_comments">Please enter your comments</string>
+    <string name="at_work">At Work</string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>
