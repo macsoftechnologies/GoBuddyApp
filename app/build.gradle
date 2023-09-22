@@ -4,16 +4,28 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 31
+
+    signingConfigs {
+        config {
+            keyAlias 'gobuddyKey'
+            keyPassword 'gobuddy@123'
+            storeFile file('config/gobuddy.jks')
+            storePassword 'gobuddy@123'
+        }
+    }
+
     defaultConfig {
         applicationId "com.colourmoon.gobuddy"
         minSdkVersion 22
         targetSdkVersion 31
-        versionCode 21
-        versionName "2.4"
+        versionCode 22
+        versionName "2.4.1"
+        archivesBaseName = "GoBuddy-V$versionCode($versionName)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
