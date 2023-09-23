@@ -3,7 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     signingConfigs {
         config {
@@ -17,9 +17,9 @@ android {
     defaultConfig {
         applicationId "com.colourmoon.gobuddy"
         minSdkVersion 22
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 22
-        versionName "2.4.1"
+        versionName "2.4.2"
         archivesBaseName = "GoBuddy-V$versionCode($versionName)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
