@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 //import com.colourmoon.gobuddy.Face_id_otp_Fragment;
 //import com.colourmoon.gobuddy.Faceidotp;
-import com.colourmoon.gobuddy.FaceIdOtpActivity;
+//import com.colourmoon.gobuddy.FaceIdOtpActivity;
 import com.colourmoon.gobuddy.helper.LocationDetailsHelper;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
@@ -160,7 +160,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             @Override
             public void onClick(View view) {
 
-                openCustomDialog();
+              //  openCustomDialog();
 
             }
 
@@ -266,8 +266,8 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_pass_editText = view.findViewById(R.id.reg_pass_edittext);
         reg_cus_backToLoginBtn = view.findViewById(R.id.reg_toLoginBtn);
         reg_cus_registerBtn = view.findViewById(R.id.reg_registerBtn);
-        custom_layout=view.findViewById(R.id.customLayout);
-        click=view.findViewById(R.id.click);
+      //  custom_layout=view.findViewById(R.id.customLayout);
+       click=view.findViewById(R.id.click);
 
     }
 
@@ -485,43 +485,6 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-  private void openCustomDialog() {
-
-
-       // Faceidotp dialogFragment = new Faceidotp();
-        //dialogFragment.show(getChildFragmentManager(), "CustomDialogFragment");
-
-        // Create a PopupWindow with the inflated layout
-
-        // Customize the PopupWindow as needed
-        // For example, set background, animation, focusability, etc.
-
-      Dialog dialog = new Dialog(requireContext());
-
-      // Set the dialog's content view to your custom layout
-      dialog.setContentView(R.layout.activity_face_idotp_layout);
-
-      Window window = dialog.getWindow();
-      if (window != null) {
-          WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-          layoutParams.copyFrom(window.getAttributes());
-
-          // Set the width and height to MATCH_PARENT
-          layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-          layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-          window.setAttributes(layoutParams);
-      }
-      // Optionally, customize the dialog appearance and behavior
-      //  dialog.setTitle("Custom Dialog Title");
-      // dialog.setCancelable(true); // Set whether the dialog can be canceled by tapping outside
-
-      // Show the dialog
-      dialog.show();
-
-  }
-
 
 
 

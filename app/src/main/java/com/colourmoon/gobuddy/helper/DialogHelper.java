@@ -23,7 +23,7 @@ public class DialogHelper {
                 .setIcon(R.drawable.ic_logout_icon)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("ok", (dialogInterface, i) -> dialogInterface.cancel());
+                .setPositiveButton("Ok", (dialogInterface, i) -> dialogInterface.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
      //   TextView textView = alertDialog.findViewById(android.R.id.message);
      //   textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "poppins.ttf"));

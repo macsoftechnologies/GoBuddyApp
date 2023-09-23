@@ -12,13 +12,6 @@
         android:layout_marginTop="@dimen/_10sdp"
         tools:listitem="@layout/custom_servicefragment_item" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="oiii"
-        android:layout_marginTop="320dp"
-        android:textSize="30dp"/>
+
 
 </FrameLayout>

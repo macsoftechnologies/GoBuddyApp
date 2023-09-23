@@ -195,6 +195,7 @@
     <string name="_8226_note">• Note</string>
     <string name="_8226_customer_responsibility">• Customer Responsibility</string>
     <string name="_8226_provider_responsibility">• Provider Responsibility</string>
+    <string name="don_t_have_account_sign_up"> <b><u>Sign up</u></b></string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

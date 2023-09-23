@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     private TextView loginBtn, moveToRegisterBtn, forgotPassBtn;
     private TextInputLayout login_email_editText, login_pass_editText;
     private String log_emailData, log_passData;
-    private PinField squarePinField;
+   // private PinField squarePinField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
         });
 
-        squarePinField.setOnTextCompleteListener(new PinField.OnTextCompleteListener() {
-            @Override
-            public boolean onTextComplete( String str) {
 
-                checkPin(str);
-
-                return  true;
-            }
-        });
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         loginBtn = findViewById(R.id.login_loginBtn);
         moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
         forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
-        squarePinField = findViewById(R.id.square_field_pin);
+       // squarePinField = findViewById(R.id.square_field_pin);
     }
 
     private void GetTextFromFields() {
@@ -205,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         Toast.makeText(this, "Intenet Not Available", Toast.LENGTH_SHORT).show();
     }
 
-    private void checkPin(String enterPin){
+   /* private void checkPin(String enterPin){
 
         SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
         String savedPIN = sharedPreferences.getString("value", "");
@@ -221,9 +213,9 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             // Invalid PIN, show an error message and clear the PIN input field
             Toast.makeText(this, "Invalid PIN", Toast.LENGTH_SHORT).show();
             //squarePinField.setText(""); // Clear the entered PIN
-        }
+        }*/
 
-    }
+
 
 
 }

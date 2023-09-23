@@ -7,19 +7,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+//import com.colourmoon.gobuddy.GridAdapter;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.ServiceCategoryModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
+//import com.colourmoon.gobuddy.view.adapters.GridAdapter;
 import com.colourmoon.gobuddy.view.adapters.SubCategoriesAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SERVICES_FRAGMENT_TAG;
@@ -44,7 +48,7 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
     private ServiceCategoryModel serviceCategoryModel;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView subCategoriesRecyclerView;
+    private RecyclerView subCategoriesRecyclerView,gridRecyclerView;
 
     public SubCategoriesFragment() {
         // Required empty public constructor
@@ -99,6 +103,9 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
     private void castingViews(View view) {
         subCategoriesRecyclerView = view.findViewById(R.id.subCategoriesRecyclerView);
+       // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
+
+       
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,6 +144,16 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         subCategoriesRecyclerView.setAdapter(subCategoriesAdapter);
         subCategoriesAdapter.setSubCategoriesItemclickListener(this);
         ProgressBarHelper.dismiss(getActivity());
+
+
+        //GridLayoutManager gridLayoutManager= new GridLayoutManager(requireContext(),2);
+      //  gridRecyclerView.setLayoutManager(gridLayoutManager);
+
+        //List<String> data = new ArrayList<>();
+// Populate the 'data' list with your data
+
+       // GridAdapter adapter = new GridAdapter(data, requireContext());
+        //gridRecyclerView.setAdapter(adapter);
     }
 
     @Override

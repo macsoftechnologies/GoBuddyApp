@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:background="@drawable/card_shape_input"
+
             android:hint="@string/login_email_phone"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:padding="12dp"
-            android:background="@drawable/card_shape_input"
+
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,11 +97,11 @@
         android:textStyle="bold" />
 
 
-        <TextView
+     <!--   <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="---------OR---------"
+
             android:layout_marginTop="10dp"
             android:textSize="25dp"/>
 
@@ -159,20 +159,36 @@
        app:cornerRadius="5dp"
        app:fieldBgColor="#fff"
        app:highlightColor="@color/colorPrimary"
-       app:noOfFields="4"/>
+       app:noOfFields="4"/>-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <TextView
 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Don,t have an account ?"
+
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/login_toRegisterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Don't have account ? Sign up"
+        android:text="@string/don_t_have_account_sign_up"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:textColor="#000"
+        android:textColor="@color/quantum_orange"
         android:textSize="15sp"
         android:textStyle="bold" />
+</LinearLayout>
 </LinearLayout>
     </ScrollView>
 

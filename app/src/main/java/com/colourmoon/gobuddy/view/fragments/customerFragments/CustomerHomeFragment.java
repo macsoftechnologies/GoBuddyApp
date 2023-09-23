@@ -71,9 +71,9 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     private SliderLayout homesliderLayout;
     private ViewPager viewPager;
    // private ImageSliderAdapter imageSliderAdapter;
-    private Handler sliderHandler = new Handler(Looper.myLooper());
-    private int currentPage = 0;
-    private static final long DELAY_MS = 3000; // C
+   // private Handler sliderHandler = new Handler(Looper.myLooper());
+    //private int currentPage = 0;
+    //private static final long DELAY_MS = 3000; // C
 
     public CustomerHomeFragment() {
         // Required empty public constructor
@@ -204,7 +204,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homeLoginBtn = view.findViewById(R.id.toolBarLoginBtn);
         homeHelpBtn = view.findViewById(R.id.toolBarQuestionBtn);
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
-        viewPager = view.findViewById(R.id.adds_imageSlider);
+      //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
     @Override

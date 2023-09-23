@@ -1,6 +1,6 @@
 package com.colourmoon.gobuddy;
 
-import androidx.appcompat.app.AppCompatActivity;
+/*import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -76,4 +76,4 @@ public class FaceIdOtpActivity extends AppCompatActivity {
     }
 
 
-}
+}*/
