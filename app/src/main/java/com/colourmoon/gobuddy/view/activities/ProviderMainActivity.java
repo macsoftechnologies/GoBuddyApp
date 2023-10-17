@@ -253,6 +253,7 @@ public class ProviderMainActivity extends AppCompatActivity implements Tutorials
     @Override
     public void onFailureCheckDeviceLoginResponse(String failureResponse) {
         //  Utils.getInstance().showSnackBarOnCustomerScreen(failureResponse, this);
+        Utils.getInstance().showSnackBarOnProviderScreen(failureResponse, this);
 
     }
 
@@ -263,7 +264,9 @@ public class ProviderMainActivity extends AppCompatActivity implements Tutorials
 
     @Override
     public void onCheckUserStatusFailureResponse(String failureReason) {
-        new DialogHelper(this).showAlert(failureReason + "\nAnd you will be logged out after few seconds", "Attention");
+        if (!isDestroyed()) {
+            new DialogHelper(this).showAlert(failureReason + "\nAnd you will be logged out after few seconds", "Attention");
+        }
         stopCheckUserStatusTimerTask();
         logoutUser();
     }
@@ -288,6 +291,6 @@ public class ProviderMainActivity extends AppCompatActivity implements Tutorials
 
     @Override
     public void onLogoutFailure(String failureMessage) {
-        Utils.getInstance().showSnackBarOnCustomerScreen(failureMessage, this);
+        Utils.getInstance().showSnackBarOnProviderScreen(failureMessage, this);
     }
 }

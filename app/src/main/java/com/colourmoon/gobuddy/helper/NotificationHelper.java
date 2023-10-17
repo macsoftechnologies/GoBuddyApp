@@ -90,8 +90,12 @@ public class NotificationHelper {
             notifyIntent = new Intent(context, CustomerMainActivity.class);
         }
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent =
+                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S ?
+                        PendingIntent.getActivity(
+                                context, 0, notifyIntent, PendingIntent.FLAG_IMMUTABLE) // Targeting S+ (version 31 and above) requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE
+                        : PendingIntent.getActivity(
+                        context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, FCM_CHANNEL_ID);
         notificationBuilder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
@@ -118,8 +122,12 @@ public class NotificationHelper {
         notifyIntent.putExtra("name", userName);
         notifyIntent.putExtra("from", "notification");
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent =
+                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S ?
+                        PendingIntent.getActivity(
+                                context, 0, notifyIntent, PendingIntent.FLAG_IMMUTABLE) // Targeting S+ (version 31 and above) requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE
+                        : PendingIntent.getActivity(
+                        context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHAT_CHANNEL_ID);
         notificationBuilder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

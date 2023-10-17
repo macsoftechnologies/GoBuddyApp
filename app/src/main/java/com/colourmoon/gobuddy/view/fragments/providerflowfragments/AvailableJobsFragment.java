@@ -117,7 +117,10 @@ public class AvailableJobsFragment extends Fragment implements ProviderAvailable
     public void onProviderAvailableFailureReason(String failureReason) {
         ProgressBarHelper.dismiss(getActivity());
         noJobsView.setVisibility(View.VISIBLE);
-        noJobsImageView.setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_provider_no_available_jobs));
+        if (getActivity() != null) {
+            noJobsImageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_provider_no_available_jobs));
+        }
+
         noJobsTextView.setText(failureReason);
     }
 

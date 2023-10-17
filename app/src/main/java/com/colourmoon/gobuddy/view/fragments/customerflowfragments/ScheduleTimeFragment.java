@@ -210,8 +210,12 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void valueChanged(Number value) {
-        timeSlot1 = timeSlotsMainArray[Integer.valueOf(String.valueOf(value))];
-        specificTimeView.setText(timeSlot1);
+        try {
+            timeSlot1 = timeSlotsMainArray[Integer.parseInt(String.valueOf(value))];
+            specificTimeView.setText(timeSlot1);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

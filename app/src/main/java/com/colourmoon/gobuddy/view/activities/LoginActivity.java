@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     private TextView loginBtn, moveToRegisterBtn, forgotPassBtn;
     private TextInputLayout login_email_editText, login_pass_editText;
     private String log_emailData, log_passData;
-   // private PinField squarePinField;
+    // private PinField squarePinField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
         });
-
-
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         loginBtn = findViewById(R.id.login_loginBtn);
         moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
         forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
-       // squarePinField = findViewById(R.id.square_field_pin);
+        // squarePinField = findViewById(R.id.square_field_pin);
     }
 
     private void GetTextFromFields() {
@@ -194,7 +193,15 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     @Override
     public void onInternetUnavailable() {
-        Toast.makeText(this, "Intenet Not Available", Toast.LENGTH_SHORT).show();
+        if (login_email_editText != null) {
+            login_email_editText.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(login_email_editText.getContext(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 
    /* private void checkPin(String enterPin){
@@ -214,8 +221,6 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             Toast.makeText(this, "Invalid PIN", Toast.LENGTH_SHORT).show();
             //squarePinField.setText(""); // Clear the entered PIN
         }*/
-
-
 
 
 }

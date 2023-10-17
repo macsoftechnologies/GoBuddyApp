@@ -123,9 +123,12 @@ public class AcceptedJobsFragment extends Fragment implements ProviderAcceptedJo
             noJobsView.setVisibility(View.GONE);
             Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
         }*/
-        noJobsView.setVisibility(View.VISIBLE);
-        noJobsImageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_provider_no_accepted_jobs));
-        noJobsTextView.setText(failureReason);
+        if (getActivity() != null) {
+            noJobsView.setVisibility(View.VISIBLE);
+            noJobsImageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_provider_no_accepted_jobs));
+            noJobsTextView.setText(failureReason);
+        }
+
     }
 
     @Override

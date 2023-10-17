@@ -71,7 +71,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
     private String mParam2;
 
     private Spinner addressProofSpinner, idProofSpinner;
-    private ImageView addressProofImageView, idProofImageView,arrow_up,arrow_down,arrow_up1,arrow_down1;
+    private ImageView addressProofImageView, idProofImageView, arrow_up, arrow_down, arrow_up1, arrow_down1;
     private TextView addressProofImageUploadBtn, idProofImageUploadBtn;
     private String mCurrentPhotoPath, fromWhichProof;
     private TextView editEkyc_Btn, addressProofRejectView, idProofRejectView;
@@ -150,9 +150,6 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
         });
 
 
-
-
-
         editEkyc_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,7 +209,6 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
     }
 
 
-
     private boolean validateAddressProofImage() {
         if (addressProofImageString != null && addressProofImageString.isEmpty()) {
             Utils.getInstance().showSnackBarOnProviderScreen("Please Upload AddressProof Image", getActivity());
@@ -232,12 +228,11 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
         editEkyc_Btn = view.findViewById(R.id.editEkycBtn);
         addressProofRejectView = view.findViewById(R.id.addressProofRejectView);
         idProofRejectView = view.findViewById(R.id.idProofRejectView);
-        arrow_down=view.findViewById(R.id.arrow_down);
-        arrow_up=view.findViewById(R.id.arrow_up);
-        arrow_down1=view.findViewById(R.id.arrow_down_1);
-        arrow_up1=view.findViewById(R.id.arrow_up_1);
+        arrow_down = view.findViewById(R.id.arrow_down);
+        arrow_up = view.findViewById(R.id.arrow_up);
+        arrow_down1 = view.findViewById(R.id.arrow_down_1);
+        arrow_up1 = view.findViewById(R.id.arrow_up_1);
     }
-
 
 
     @Override
@@ -402,14 +397,17 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
         options.inJustDecodeBounds = false;
         options.inPurgeable = true;
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
-            Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
-            if (fromWhichProof.equals("IdProof")) {
-                idProofImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
-            } else {
-                addressProofImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
+            if (mCurrentPhotoPath != null) {
+                Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
+                Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
+                if (fromWhichProof.equals("IdProof")) {
+                    idProofImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
+                } else {
+                    addressProofImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
+                }
+                ImageUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), fromWhichProof);
             }
-            ImageUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), fromWhichProof);
+
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_CANCELED) {
             Toast.makeText(getActivity(), "Image Capturing Cancelled", Toast.LENGTH_SHORT).show();
         } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -542,10 +540,9 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
 
     private int getPositionFromAddressProofArray(String documentType) {
 
-       // arrow_up.setVisibility(View.VISIBLE);
+        // arrow_up.setVisibility(View.VISIBLE);
         //arrow_down.setVisibility(View.INVISIBLE);
         switch (documentType) {
-
 
 
             case "Aadhar":
@@ -562,7 +559,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
     }
 
     private int getPositionFromIdProofArray(String documentType) {
-      //  arrow_up1.setVisibility(View.VISIBLE);
+        //  arrow_up1.setVisibility(View.VISIBLE);
         //arrow_down1.setVisibility(View.INVISIBLE);
         switch (documentType) {
             case "PanCard":

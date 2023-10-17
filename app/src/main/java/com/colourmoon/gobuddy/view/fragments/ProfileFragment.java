@@ -658,8 +658,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_UNDEFINED);
+        int orientation = 0;
+        if (ei != null) {
+            orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+        }
 
         Bitmap rotatedBitmap = null;
         switch (orientation) {
