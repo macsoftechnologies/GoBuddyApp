@@ -15,7 +15,10 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.helper.HtmlTagHelper;
@@ -37,6 +40,7 @@ public class ServiceDetailsFragment extends Fragment {
     private ServiceModel serviceModel;
     private String subCategoryId;
     private TextView serviceTitleText, servicePriceText, serviceProviderRespText, serviceCustomerRespText, serviceNoteText, serviceDetailsNextBtn;
+    private CheckBox checkBox;
 
     public ServiceDetailsFragment() {
         // Required empty public constructor
@@ -60,6 +64,7 @@ public class ServiceDetailsFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,17 +82,35 @@ public class ServiceDetailsFragment extends Fragment {
         castingViews(view);
 
         setTextToTextViews();
+       updateNextButtonState();
 
         serviceDetailsNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScheduleServiceFragment scheduleServiceFragment = ScheduleServiceFragment.newInstance(serviceModel.getServiceId(), serviceModel.getSubServiceId(), subCategoryId);
-                addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+
+                if (checkBox.isChecked()) {
+                    ScheduleServiceFragment scheduleServiceFragment = ScheduleServiceFragment.newInstance(serviceModel.getServiceId(), serviceModel.getSubServiceId(), subCategoryId);
+                    addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+
+                } else {
+                    Toast.makeText(getActivity(), "Are you willing to place the order", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
-
+      checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+              updateNextButtonState();
+          }
+      });
         return view;
     }
+
+    private void updateNextButtonState() {
+        serviceDetailsNextBtn.setEnabled(true);
+    }
+
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -135,6 +158,7 @@ public class ServiceDetailsFragment extends Fragment {
         serviceCustomerRespText = view.findViewById(R.id.customerRespText);
         serviceNoteText = view.findViewById(R.id.serviceNoteText);
         serviceDetailsNextBtn = view.findViewById(R.id.serviceDetailsNextBtn);
+        checkBox= view.findViewById(R.id.check_box);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

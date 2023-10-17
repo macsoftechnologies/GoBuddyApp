@@ -38,6 +38,7 @@ import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.EkycModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
+import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.alertdialogs.CameraBottomSheetDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -125,7 +126,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
             @Override
             public void onClick(View view) {
                 if (idProofImageUploadBtn.getText().equals("Approved") | idProofImageUploadBtn.getText().equals("Pending")) {
-                    Utils.getInstance().showSnackBarOnProviderScreen("ID Proof Submitted Already", getActivity());
+                    Utils.getInstance().showSnackBarOnProviderScreen("ID Proof Submitted Already", (ProviderMainActivity) getActivity());
                 } else {
                     bundle.putString("isFrom", "IdProof");
                     fromWhichProof = "IdProof";
@@ -139,7 +140,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
             @Override
             public void onClick(View view) {
                 if (addressProofImageUploadBtn.getText().equals("Approved") | addressProofImageUploadBtn.getText().equals("Pending")) {
-                    Utils.getInstance().showSnackBarOnProviderScreen("Address Proof Submitted Already", getActivity());
+                    Utils.getInstance().showSnackBarOnProviderScreen("Address Proof Submitted Already", (ProviderMainActivity) getActivity());
                 } else {
                     bundle.putString("isFrom", "AddressProof");
                     fromWhichProof = "AddressProof";

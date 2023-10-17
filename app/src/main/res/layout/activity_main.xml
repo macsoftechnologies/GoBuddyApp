@@ -27,6 +27,38 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/customer_bottom_navigation_menu" />
 
+       <!-- <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+            android:id="@+id/customer_bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/customer_bottom_navigation_menu" />-->
+      <!--  <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+            android:id="@+id/customer_bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:mbn_rippleColor="?android:attr/colorPrimaryDark"
+            app:mbn_rippleBehavior="light"
+            app:mbn_backgroundBottomColor="#FFFFFF"
+            app:mbn_circleColor="?attr/colorPrimary"
+            app:mbn_circleRadius="16dp"
+            app:mbn_countTextColor="?android:attr/colorAccent"
+            app:mbn_countTypeface="sans-serif"
+            app:mbn_countPaddingTop="2dp"
+            app:mbn_countPaddingRight="6dp"
+            app:mbn_countTextSize="10sp"
+            app:mbn_countBackgroundColor="#FF0000"
+            app:mbn_id="@+id/bottomNavigationView"
+            app:mbn_selectedColor="?android:attr/colorAccent"
+            app:mbn_unselectedColor="?android:attr/colorPrimary"
+            app:mbn_roundedBackgroundRadius="16dp"
+            app:mbn_showIcons="true"
+            app:mbn_showText="true" />-->
+
+
     </com.colourmoon.gobuddy.helper.MovableRelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

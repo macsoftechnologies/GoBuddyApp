@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 //import com.colourmoon.gobuddy.GridAdapter;
+//import com.colourmoon.gobuddy.ChildAdapter;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
@@ -48,7 +49,8 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
     private ServiceCategoryModel serviceCategoryModel;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView subCategoriesRecyclerView,gridRecyclerView;
+    private RecyclerView subCategoriesRecyclerView;
+  //  private List<String> childItemList = new ArrayList<>(); // In
 
     public SubCategoriesFragment() {
         // Required empty public constructor
@@ -81,6 +83,8 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
@@ -92,17 +96,28 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sub_categories, container, false);
 
+
         castingViews(view);
 
         ProgressBarHelper.show(getActivity(), "Loading SubCategories");
         SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
         SubcategoriesFragmentController.getInstance().setSubCategoriesFragmentControllerListener(this);
+       // addChildItems();
 
         return view;
     }
 
+  /*  private void addChildItems() {
+        childItemList.add("Child Item 1");
+        childItemList.add("Child Item 2");
+        // Add more items as needed
+    }*/
+
     private void castingViews(View view) {
         subCategoriesRecyclerView = view.findViewById(R.id.subCategoriesRecyclerView);
+        //childRecyclerView = view.findViewById(R.id.child_recyclerview);
+        //ChildAdapter childAdapter = new ChildAdapter(requireContext(), childItemList);
+        //childRecyclerView.setAdapter(childAdapter);
        // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
 
        

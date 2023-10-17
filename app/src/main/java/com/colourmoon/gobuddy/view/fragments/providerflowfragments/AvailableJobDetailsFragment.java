@@ -155,14 +155,14 @@ public class AvailableJobDetailsFragment extends Fragment implements ProviderAva
 
     @Override
     public void onProviderAvailableFailureReason(String failureReason) {
-        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
         ProgressBarHelper.dismiss(getActivity());
     }
 
     @Override
     public void onAcceptJobSuccessResponse(String successResponse) {
         ProgressBarHelper.dismiss(getActivity());
-        Utils.getInstance().showSnackBarOnProviderScreen(successResponse, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(successResponse, (ProviderMainActivity) getActivity());
         if (getActivity().getIntent().hasExtra("screen_type")) {
             ((ProviderMainActivity) getActivity()).changeProviderHomeSelection(R.id.provider_pending_jobs);
         } else {
@@ -174,6 +174,6 @@ public class AvailableJobDetailsFragment extends Fragment implements ProviderAva
     @Override
     public void onAcceptJobFailureResponse(String failureReason) {
         ProgressBarHelper.dismiss(getActivity());
-        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
     }
 }

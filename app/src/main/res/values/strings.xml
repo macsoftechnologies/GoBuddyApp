@@ -44,7 +44,7 @@
     <string name="selectSkills">Please select skills you are comfortable with to provide service on</string>
     <string name="login">Login</string>
     <string name="favourite">Favourite</string>
-    <string name="myJobs">My Jobs</string>
+    <string name="myJobs">My Orders</string>
     <string name="home">Home</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
@@ -196,6 +196,8 @@
     <string name="_8226_customer_responsibility">• Customer Responsibility</string>
     <string name="_8226_provider_responsibility">• Provider Responsibility</string>
     <string name="don_t_have_account_sign_up"> <b><u>Sign up</u></b></string>
+    <string name="add_face_id_or_a_4_digit_pin_to_access_n_your_account_easily_click_here">Add Finger print or a 4 digit pin to Access \n your account easily<b><u>Click Here</u></b> </string>
+    <string name="set_your_four_digit_pin"><b><u>Set your four digit pin</u></b></string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

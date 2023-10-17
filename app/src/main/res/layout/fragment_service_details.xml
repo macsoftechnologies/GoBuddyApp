@@ -118,6 +118,24 @@
             android:layout_marginRight="@dimen/_15sdp"
             android:text="@string/lorem_ipsum_medium_text" />
 
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="20dp"
+    android:layout_height="wrap_content">
+        <CheckBox
+           android:id="@+id/check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accept"
+            android:textColor="#000"
+            android:textStyle="bold" />
+</LinearLayout>
+
 
         <TextView
             android:id="@+id/serviceDetailsNextBtn"
@@ -134,6 +152,7 @@
             android:text="@string/next"
             android:textColor="#fff"
             android:textSize="22sp" />
+
 
 
 

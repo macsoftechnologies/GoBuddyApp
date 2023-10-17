@@ -89,9 +89,9 @@ public class NotificationHelper {
         } else {
             notifyIntent = new Intent(context, CustomerMainActivity.class);
         }
-        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                context, 0, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, FCM_CHANNEL_ID);
         notificationBuilder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

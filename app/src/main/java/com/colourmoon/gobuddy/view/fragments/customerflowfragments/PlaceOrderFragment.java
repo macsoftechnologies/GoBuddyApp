@@ -184,6 +184,7 @@ public class PlaceOrderFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.applyCouponBtn:
                 couponText = couponEditText.getEditText().getText().toString();
+
                 if (!validateCoupon()) {
                     return;
                 } else {
@@ -220,12 +221,22 @@ public class PlaceOrderFragment extends Fragment implements View.OnClickListener
     }
 
     private boolean validateCoupon() {
-        if (couponText.isEmpty()) {
+        String totalPriceString = total_price.getText().toString();
+        int totalPrice = Integer.parseInt(totalPriceString.replaceAll("[^0-9]", ""));
+
+
+        if(totalPrice >= 500){
+
+         if (couponText.isEmpty()) {
             couponEditText.setError("Please Enter Your Coupon Code");
             return false;
         } else {
-            couponEditText.setError(null);
-            return true;
+             couponEditText.setError(null);
+             return true;
+         }
+        }else{
+            showSnackBar("Total price must be greater than or equal to 500 to apply the coupon.");
+            return false;
         }
     }
 
@@ -336,7 +347,7 @@ public class PlaceOrderFragment extends Fragment implements View.OnClickListener
             extra_charges_price.setText(getActivity().getResources().getString(R.string.indian_rupee) + orderDetailsModel.getExtra_charges_price());
         }
 
-        if (getActivity() != null) {
+        if (getActivity() != null  ) {
             total_price.setText(getActivity().getResources().getString(R.string.indian_rupee) + orderDetailsModel.getTotal());
         }
         this.orderDetailsModel = orderDetailsModel;

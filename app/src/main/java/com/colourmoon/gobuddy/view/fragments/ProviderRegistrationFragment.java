@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.colourmoon.gobuddy.MyOtpPopUp;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.commoncontrollers.RegistrationController;
 import com.colourmoon.gobuddy.helper.DialogHelper;
@@ -67,6 +68,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
     private String reg_prov_name_data, reg_prov_email_data, reg_prov_phone_data, reg_prov_dateOfBirth_data, reg_prov_address_data, reg_prov_pass_data;
     private TextView reg_prov_registerBtn, reg_prov_toLoginBtn, reg_prov_termsAndConditionsBtn;
     private CheckBox reg_prov_acceptTandCcheckBox;
+    private TextView click_popup1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -118,6 +120,14 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
             public void onClick(View view) {
                 validateAndCallRegister();
             }
+        });
+        click_popup1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCustomDialog();
+
+            }
+
         });
 
         reg_prov_toLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -312,6 +322,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
         reg_prov_toLoginBtn = view.findViewById(R.id.reg_provider_toLoginBtn);
         reg_prov_acceptTandCcheckBox = view.findViewById(R.id.reg_provider_tAndCcheckBox);
         reg_prov_termsAndConditionsBtn = view.findViewById(R.id.termsAndConditionBtn);
+        click_popup1=view.findViewById(R.id.click);
     }
 
     private boolean validateEmailWithRegex(String Email) {
@@ -342,7 +353,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validatePhone() {
         if (reg_prov_phone_data.isEmpty()) {
-            reg_prov_phone_editText.setError("Please Enter Your Phone Number");
+            Toast.makeText(getActivity(), "Please Enter your Phone Number", Toast.LENGTH_SHORT).show();
             return false;
         } else if (reg_prov_phone_data.length() != 10) {
             reg_prov_phone_editText.setError("Please Enter a Valid Mobile Number");
@@ -355,7 +366,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validateName() {
         if (reg_prov_name_data.isEmpty()) {
-            reg_prov_name_editText.setError("Please Enter Your Name");
+            Toast.makeText(getActivity(), "Please Enter your Name", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_prov_name_editText.setError(null);
@@ -365,7 +376,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validatePassword() {
         if (reg_prov_pass_data.isEmpty()) {
-            reg_prov_pass_editText.setError("Please Enter Your Password");
+            Toast.makeText(getActivity(), "Please Enter your Password", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_prov_pass_editText.setError(null);
@@ -375,7 +386,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validateAddress() {
         if (reg_prov_address_data.isEmpty()) {
-            reg_prov_address_editText.setError("Please Enter Your Address");
+            Toast.makeText(getActivity(), "Please Enter your Address", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_prov_address_editText.setError(null);
@@ -385,7 +396,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validateDateOfBirth() {
         if (reg_prov_dateOfBirth_data.isEmpty()) {
-            reg_prov_dateOfBirth_editText.setError("Please Enter Your DateofBirth");
+            Toast.makeText(getActivity(), "Please Enter your Date Of Birth", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_prov_dateOfBirth_editText.setError(null);
@@ -463,5 +474,11 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private  void  openCustomDialog(){
+        MyOtpPopUp dialogFragment = new MyOtpPopUp();
+
+        // Show the dialog fragment using FragmentManager
+        dialogFragment.show(getChildFragmentManager(), "MyOtpPopUp");
     }
 }

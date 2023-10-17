@@ -19,12 +19,20 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:src="@drawable/logo" />
-        <ImageView
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gifImageView"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:src="@drawable/login_img" />
+            android:src="@drawable/gif_login" />
+      <!--  <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/login_img" />-->
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-
+            android:background="@drawable/card_shape_input"
             android:hint="@string/login_email_phone"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +67,7 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:padding="12dp"
-
+            android:background="@drawable/card_shape_input"
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -96,8 +104,45 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-     <!--   <TextView
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/lineleft"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+
+                android:background="#635E5E"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+               android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text=" OR "/>
+            </androidx.cardview.widget.CardView>
+            <View
+
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="1dp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+
+                android:background="#635E5E"/>
+
+
+        </LinearLayout>
+
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -106,18 +151,19 @@
             android:textSize="25dp"/>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
+            android:layout_width="180dp"
             android:layout_gravity="center"
-            android:padding="0dp"
+            android:padding="4dp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/quantum_lightgreen"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/finger_id"
                 android:layout_width="60dp"
                 android:layout_marginTop="0dp"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:src="@drawable/face1"/>
+                android:layout_height="80dp"
+                android:src="@drawable/ic_baseline_fingerprint_24"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="Face ID"
+                android:text="Finger Print"
                 android:layout_marginTop="100dp"
                 android:layout_marginLeft="90dp"
                 android:textColor="@color/quantum_yellow"/>
@@ -148,18 +194,40 @@
             android:textSize="15dp"
             android:layout_marginTop="15dp"
             android:gravity="center" />
-   <com.poovam.pinedittextfield.SquarePinField
+ <!--  <com.poovam.pinedittextfield.SquarePinField
+
        android:layout_width="wrap_content"
        android:layout_marginTop="20dp"
        android:layout_height="wrap_content"
        android:inputType="number"
        android:textSize="16sp"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:clickable="true"
+
        android:id="@+id/square_field_pin"
        android:layout_gravity="center"
        app:cornerRadius="5dp"
        app:fieldBgColor="#fff"
        app:highlightColor="@color/colorPrimary"
        app:noOfFields="4"/>-->
+        <EditText
+            android:id="@+id/edit_pin"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="pin"
+            android:visibility="gone"
+            android:textColorHint="@color/quantum_orange"
+            android:textSize="10dp"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:id="@+id/nxt_save"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="nxt"/>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -186,7 +254,7 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:textColor="@color/quantum_orange"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 </LinearLayout>
 </LinearLayout>

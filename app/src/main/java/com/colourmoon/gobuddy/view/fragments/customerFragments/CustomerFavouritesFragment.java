@@ -152,7 +152,7 @@ public class CustomerFavouritesFragment extends Fragment implements FavouritesCo
     @Override
     public void onFavouritesFailureResponse(String failureResponse) {
         ProgressBarHelper.dismiss(getActivity());
-        // Utils.getInstance().showSnackBarOnCustomerScreen(failureResponse, getActivity());
+         Utils.getInstance().showSnackBarOnCustomerScreen(failureResponse, getActivity());
         no_favorites_view.setVisibility(View.VISIBLE);
         noJobsImageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_provider_no_available_jobs));
         noJobsTextView.setText(failureResponse);

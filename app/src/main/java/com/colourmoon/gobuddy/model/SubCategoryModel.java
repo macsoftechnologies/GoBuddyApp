@@ -5,8 +5,11 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class SubCategoryModel implements Parcelable {
 
+  // private List<ChildItem> ChildItemList;
     @SerializedName("sid")
     private String subCategoryId;
 
@@ -62,7 +65,12 @@ public class SubCategoryModel implements Parcelable {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.isCategoryChecked = isCategoryChecked;
+    //   List<ChildItem> childItemList;
+
     }
+
+
+
 
     @Override
     public int describeContents() {
