@@ -25,6 +25,7 @@ public class LoginResponseModel {
     @SerializedName("phone_number")
     private String phoneNumber;
 
+
     @SerializedName("view_as")
     private String presentUserType;
 
@@ -91,4 +92,6 @@ public class LoginResponseModel {
     public void setPresentUserType(String presentUserType) {
         this.presentUserType = presentUserType;
     }
+
+
 }

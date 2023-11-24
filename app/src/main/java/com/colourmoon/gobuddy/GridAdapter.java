@@ -1,6 +1,6 @@
 package com.colourmoon.gobuddy;
 
-/*import android.content.Context;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,43 +11,45 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ViewHolder> {
-    private Context context;
-    private List<String> childItemList;
+public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder> {
 
-    public ChildAdapter(Context context, List<String> childItemList) {
+    private Context context;
+    private List<String> itemList;
+
+    public GridAdapter(Context context, List<String> itemList) {
         this.context = context;
-        this.childItemList = childItemList;
+        this.itemList = itemList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.child_subcategorys_items, parent, false);
-        return new ViewHolder(view);
+    public GridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
+        return new GridViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String childItem = childItemList.get(position);
-        holder.bind(childItem);
+    public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
+        String item = itemList.get(position);
+        holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return childItemList.size();
+        return itemList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView childItemTextView;
+    public static class GridViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull View itemView) {
+        private TextView itemName;
+
+        public GridViewHolder(@NonNull View itemView) {
             super(itemView);
-            childItemTextView = itemView.findViewById(R.id.child_item_title);
+            itemName = itemView.findViewById(R.id.itemNameTextView);
         }
 
-        public void bind(String childItem) {
-            childItemTextView.setText(childItem);
+        public void bind(String item) {
+            itemName.setText(item);
         }
     }
-}*/
+}

@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.colourmoon.gobuddy.view.activities.CustomerMainActivity;
 import com.colourmoon.gobuddy.view.activities.LoginActivity;
+import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHomeFragment;
 import com.poovam.pinedittextfield.PinField;
 
 /**
@@ -115,7 +117,7 @@ public class MyOtpPopUp extends DialogFragment {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("value",pin);
             editor.apply();
-            Intent intent = new Intent(getActivity(), FingerPrintActivity.class);
+            Intent intent = new Intent(getActivity(), CustomerMainActivity.class);
             startActivity(intent);
 
         } else {

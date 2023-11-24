@@ -16,6 +16,8 @@ import com.colourmoon.gobuddy.MyOtpPopUp;
 import com.colourmoon.gobuddy.utilities.Constants;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -94,10 +96,11 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
     private String mParam2;
     private Button save_pin;
     private RelativeLayout custom_layout;
-    private TextInputLayout reg_cus_name_editText, reg_cus_email_editText, reg_cus_phone_editText, reg_cus_pass_editText;
-    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data, reg_cus_pass_data;
+    private TextInputLayout reg_cus_name_editText, reg_cus_email_editText, reg_cus_phone_editText;
+    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data,reg_cus_pass_data;
     private TextView reg_cus_registerBtn, reg_cus_backToLoginBtn, click_popup;
     private OnFragmentInteractionListener mListener;
+    private SquarePinField reg_cus_pass_editText;
   //  private EditText pin_setup;
     //private PinField squarePinField_setup;
     private static final String PREFS_NAME = "MyPrefsFile";
@@ -224,7 +227,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
          checkIsCustomerRegistered();
 
         // for calling the registration api immediately after entering password
-        reg_cus_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+       /* reg_cus_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -233,7 +236,28 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
                 }
                 return false;
             }
+        });*/
+        reg_cus_pass_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String pin = editable.toString();
+                if(pin.length() == 4){
+                    validateAndCallRegister();
+                }
+
+            }
         });
+
 
         return view;
     }
@@ -301,7 +325,8 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_name_data = reg_cus_name_editText.getEditText().getText().toString();
         reg_cus_email_data = reg_cus_email_editText.getEditText().getText().toString();
         reg_cus_phone_data = reg_cus_phone_editText.getEditText().getText().toString();
-        reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
+      //  reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
+        reg_cus_pass_data= reg_cus_pass_editText.getText().toString();
     }
 
     private void castingViews(View view) {
@@ -335,7 +360,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             return true;
         } else {
             if (!validateEmailWithRegex(reg_cus_email_data)) {
-                reg_cus_email_editText.setError("Please Enter Valid Email");
+                Toast.makeText(getActivity(), "Please Enter a valid Email", Toast.LENGTH_SHORT).show();
                 return false;
             } else {
                 reg_cus_email_editText.setError(null);
@@ -349,7 +374,8 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             Toast.makeText(getActivity(), "Please Enter your Phone Number", Toast.LENGTH_SHORT).show();
             return false;
         } else if (reg_cus_phone_data.length() != 10) {
-            reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
+            Toast.makeText(getActivity(), "Please Enter a valid Mobile Number", Toast.LENGTH_SHORT).show();
+           // reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
             return false;
         } else {
             reg_cus_phone_editText.setError(null);
@@ -430,7 +456,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             reg_cus_phone_editText.setError("This Number was Already Registered");
         } else {
             reg_cus_phone_editText.setError(null);
-            reg_cus_pass_editText.getEditText().requestFocus();
+          //  reg_cus_pass_editText.getEditText().requestFocus();
         }
     }
 

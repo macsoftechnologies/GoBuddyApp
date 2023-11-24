@@ -3,7 +3,7 @@ package com.colourmoon.gobuddy.controllers.customercontrollers;
 
 //package com.colourmoon.gobuddy.controllers.customercontrollers;
 
-import androidx.annotation.NonNull;
+/*import androidx.annotation.NonNull;
 
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
@@ -155,10 +155,10 @@ public class CombinedFragmentController {
             }
         });
     }
-}
+}*/
 
 
-/*import androidx.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
@@ -256,4 +256,4 @@ public class SubcategoriesFragmentController {
         });
     }
 
-}*/
+}

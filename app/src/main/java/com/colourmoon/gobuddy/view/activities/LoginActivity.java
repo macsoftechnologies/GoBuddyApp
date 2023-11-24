@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -33,15 +34,17 @@ import com.colourmoon.gobuddy.model.LoginResponseModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.poovam.pinedittextfield.PinField;
+import com.poovam.pinedittextfield.SquarePinField;
 //import android.biometric.BiometricPrompt;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity implements LoginController.LoginControllerResponseListener, InternetConnectionListener {
+public class LoginActivity extends AppCompatActivity implements LoginController.LoginControllerResponseListener, InternetConnectionListener, PinField.OnTextCompleteListener {
 
     private TextView loginBtn, moveToRegisterBtn, forgotPassBtn;
-    private TextInputLayout login_email_editText, login_pass_editText;
+    private TextInputLayout login_email_editText;
+    private SquarePinField  login_pass_editText;
     private String log_emailData, log_passData;
     // private PinField squarePinField;
     private static final int REQUEST_PERMISSIONS = 100;
@@ -66,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
         // this method is responsible for casting views in xml to java file
         castingViews();
-
 
 
 
@@ -147,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
         });
 
-        login_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+       /* login_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -155,10 +157,40 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 }
                 return false;
             }
-        });
+        });*/
+      login_pass_editText.addTextChangedListener(new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          }
+
+          @Override
+          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          }
+
+          @Override
+          public void afterTextChanged(Editable editable) {
+              String pin = editable.toString();
+              if (pin.length() == 4) {
+                  Toast.makeText(LoginActivity.this, "PIN is correct", Toast.LENGTH_SHORT).show();
+                  checkAndCallLogin();
+                  // Proceed with the login process or other actions
+              } else {
+                  // PIN is incorrect, show an error message
+                  Toast.makeText(LoginActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                  // Handle incorrect PIN scenario (e.g., show error message to the user)
+              }
+
+          }
+      });
+
+
+
 
         new GoBuddyApiClient().setInternetConnectionListener(this);
     }
+
 
     private void checkAndCallLogin() {
         // for getting the input from user
@@ -188,8 +220,10 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         loginBtn = findViewById(R.id.login_loginBtn);
         moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
         forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
+        login_pass_editText.setOnTextCompleteListener(this);
 
-       //pin_edit= findViewById(R.id.edit_pin);
+
+        //pin_edit= findViewById(R.id.edit_pin);
        //nxt_save=findViewById(R.id.nxt_save);
       // squarePinField1= findViewById(R.id.square_field_pin);
       // fingerPrint=findViewById(R.id.finger_id);
@@ -198,14 +232,20 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     private void GetTextFromFields() {
         log_emailData = login_email_editText.getEditText().getText().toString();
-        log_passData = login_pass_editText.getEditText().getText().toString();
+        log_passData = login_pass_editText.getText().toString();
+       // log_passData = login_pass_editText.getEditText().getText().toString();
     }
 
     private boolean validateEmail() {
         if (log_emailData.isEmpty()) {
           Toast.makeText(this,"Please enter your email",Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        }
+        else if (log_emailData.length() != 10) {
+            Toast.makeText(LoginActivity.this, "Please Enter a Valid Mobile Number", Toast.LENGTH_SHORT).show();
+            // reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
+            return false;
+        }else {
             login_email_editText.setError(null);
             return true;
         }
@@ -267,6 +307,11 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     @Override
     public void onInternetUnavailable() {
         Toast.makeText(this, "Intenet Not Available", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onTextComplete(@NonNull String s) {
+        return false;
     }
 
 

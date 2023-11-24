@@ -12,10 +12,10 @@
        android:layout_height="wrap_content"
        android:orientation="vertical">
 
-       <TextView
+      <TextView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="Add face ID digit pin to Access\n your account easily"
+           android:text="Add finger Print ID digit pin to Access\n your account easily"
            android:gravity="center"
            android:textSize="18dp"
            android:textColor="@color/black"
@@ -29,7 +29,7 @@
        <TextView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="Add Face ID"
+           android:text="Add Finger Print ID"
            android:gravity="center"
            android:layout_marginTop="20dp"
            android:textSize="20dp"

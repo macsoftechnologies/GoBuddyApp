@@ -6,38 +6,55 @@
     android:id="@+id/containerType"
     android:background="@color/white">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:id="@+id/linear1"
+   android:layout_marginTop="140dp"
+    android:layout_centerHorizontal="true"
+   android:gravity="center"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/app_icon" />
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_120sdp"
 
+        android:src="@drawable/app_icon" />
+</LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-       android:layout_below="@id/imgLogo"
-        android:layout_marginTop="0dp"
+       android:layout_below="@id/linear1"
+        android:layout_marginTop="15dp"
        android:textStyle="bold"
+        android:id="@+id/like_to_register"
         android:layout_marginBottom="20dp"
         android:text="Like to Register as"
         android:textSize="20dp"
         android:gravity="center"/>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:layout_below="@id/like_to_register"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:id="@+id/customtxt"
+        android:layout_marginBottom="5dp"
+        android:text="@string/register_as_customer_to_enjoy_the_services"
+        android:textSize="12dp"
+        android:gravity="center"/>
+
+    <TextView
         android:id="@+id/txtCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgLogo"
+       android:layout_below="@id/customtxt"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/curved_white_bg"
         android:backgroundTint="@color/quantum_orange"
@@ -51,14 +68,27 @@
         android:textStyle="bold" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:layout_below="@id/txtCustomer"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
+        android:id="@+id/providertxt"
+        android:layout_marginBottom="5dp"
+        android:text="@string/register_as_provider_to_provide_services"
+        android:textSize="12dp"
+        android:gravity="center"/>
+
+    <TextView
         android:id="@+id/txtVendor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/txtCustomer"
+        android:layout_below="@id/providertxt"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/curved_white_bg"
         android:padding="9dp"
         android:fontFamily="@font/poppins"

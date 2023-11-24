@@ -54,7 +54,17 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pin_code"
+            android:gravity="start"
+            android:layout_marginLeft="30dp"
+            android:textSize="18dp"/>
+
+
+
+   <!-- <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_password_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,7 +80,23 @@
             android:background="@drawable/card_shape_input"
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>-->
+        <com.poovam.pinedittextfield.SquarePinField
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_password_edittext"
+            android:layout_gravity="center"
+
+            android:layout_marginTop="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:cornerRadius="5dp"
+            app:fieldBgColor="#fff"
+            app:highlightColor="@color/colorPrimary"
+            app:noOfFields="4" />
 
     <TextView
         android:id="@+id/login_loginBtn"
@@ -194,7 +220,7 @@
             android:textSize="15dp"
             android:layout_marginTop="15dp"
             android:gravity="center" />
- <!--  <com.poovam.pinedittextfield.SquarePinField
+ <!--<com.poovam.pinedittextfield.SquarePinField
 
        android:layout_width="wrap_content"
        android:layout_marginTop="20dp"

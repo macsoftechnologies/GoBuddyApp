@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class FingerPrintActivity extends AppCompatActivity {
     BiometricPrompt.PromptInfo promptInfo;
      PinField squarePinField1;
      TextView popup;
+     RelativeLayout fingerprintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,12 @@ public class FingerPrintActivity extends AppCompatActivity {
         fingerprint = findViewById(R.id.finger_print);
         squarePinField1= findViewById(R.id.square_field_pin);
         popup=findViewById(R.id.popup);
+        fingerprintLayout= findViewById(R.id.finger_otp_layout);
 
 
 
-        fingerprint.animate().alpha(0.0f).setDuration(3000).withEndAction(runnable).start();
+        fingerprint.animate().alpha(0.0f).setDuration(2000).withEndAction(runnable).start();
+        fingerprint.setVisibility(View.INVISIBLE);
 
 
 
@@ -54,6 +59,15 @@ public class FingerPrintActivity extends AppCompatActivity {
                 openCustomDialog();
             }
         });*/
+        popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCustomDialog();
+
+            }
+
+        });
+
         BiometricManager biometricManager = BiometricManager.from(this);
 
         fingerprint.setOnClickListener(new View.OnClickListener() {
@@ -191,8 +205,16 @@ public class FingerPrintActivity extends AppCompatActivity {
    private final Runnable runnable = new Runnable() {
        @Override
        public void run() {
-           fingerprint.animate().alpha(1.0f).setDuration(3000).withEndAction(runnable).start();
+           fingerprint.animate().alpha(1.0f).setDuration(1000).withEndAction(runnable).start();
+           fingerprintLayout.setBackgroundColor(Color.parseColor("#bcf542"));
+           fingerprint.setVisibility(View.VISIBLE);
        }
    } ;
+private void  openCustomDialog(){
+    MyOtpPopUp dialogFragment = new MyOtpPopUp();
 
+    // Show the dialog fragment using FragmentManager
+    dialogFragment.show(getSupportFragmentManager(), "MyOtpPopUp");
+
+}
 }

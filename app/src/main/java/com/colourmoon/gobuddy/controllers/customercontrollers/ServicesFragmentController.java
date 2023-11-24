@@ -46,7 +46,7 @@ public class ServicesFragmentController {
         this.servicesFragmentControllerListener = servicesFragmentControllerListener;
     }
 
-    public void getCategoriesApiCall(String subCategoryId) {
+    public void getServicesCategoriesApiCall(String subCategoryId) {
         GoBuddyApiInterface goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
         Call<ResponseBody> getCategoriesCall = goBuddyApiInterface.getServices(subCategoryId);
         getCategoriesCall.enqueue(new Callback<ResponseBody>() {

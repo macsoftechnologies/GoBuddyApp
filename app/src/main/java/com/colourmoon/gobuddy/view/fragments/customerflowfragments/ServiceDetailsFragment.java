@@ -11,12 +11,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ import com.colourmoon.gobuddy.helper.HtmlTagHelper;
 import com.colourmoon.gobuddy.model.ServiceModel;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SCHEDULE_FRAGMENT_TAG;
+
+import java.util.Locale;
 
 public class ServiceDetailsFragment extends Fragment {
 
@@ -38,9 +42,11 @@ public class ServiceDetailsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private ServiceModel serviceModel;
+    private TextToSpeech tts,tts1,tts2,tts3;
     private String subCategoryId;
     private TextView serviceTitleText, servicePriceText, serviceProviderRespText, serviceCustomerRespText, serviceNoteText, serviceDetailsNextBtn;
     private CheckBox checkBox;
+    private ImageView Mike1,Mike2,Mike3;
 
     public ServiceDetailsFragment() {
         // Required empty public constructor
@@ -83,6 +89,24 @@ public class ServiceDetailsFragment extends Fragment {
 
         setTextToTextViews();
        updateNextButtonState();
+       Mike1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               providerTextToSpeech();
+           }
+       });
+       Mike2.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               customerTextToSpeech();
+           }
+       });
+       Mike3.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               noteTextToSpeech();
+           }
+       });
 
         serviceDetailsNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +117,8 @@ public class ServiceDetailsFragment extends Fragment {
                     addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
 
                 } else {
-                    Toast.makeText(getActivity(), "Are you willing to place the order", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Click the checkbox to conform  the order", Toast.LENGTH_SHORT).show();
+                    initializeTextToSpeech();
 
                 }
             }
@@ -102,9 +127,76 @@ public class ServiceDetailsFragment extends Fragment {
           @Override
           public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
               updateNextButtonState();
+              if (!isChecked && tts != null) {
+                  tts.stop();
+                  tts.shutdown();
+              }
           }
       });
         return view;
+    }
+
+    private void initializeTextToSpeech() {
+        tts = new TextToSpeech(requireContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.US);
+                   // String note = serviceModel.getServiceNote();
+                    String textToSpeak = "Click the checkbox to conform the order";
+                    tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+            }
+        });
+
+    }
+    private void providerTextToSpeech(){
+        tts1 = new TextToSpeech(requireContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int provider) {
+                if (provider != TextToSpeech.ERROR) {
+                    tts1.setLanguage(Locale.US);
+                     String providerSpeech = serviceModel.getServiceProviderResponsibility();
+                    String providerSpeechtext= providerSpeech.replaceAll("<br></br>","");
+                   // String textToSpeak = "Are you willing to place the order";
+                    tts1.speak(providerSpeechtext, TextToSpeech.QUEUE_FLUSH, null, null);
+
+                }
+            }
+        });
+
+    }
+    private void customerTextToSpeech(){
+        tts2 = new TextToSpeech(requireContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int customer) {
+                if (customer != TextToSpeech.ERROR) {
+                    tts2.setLanguage(Locale.US);
+                    // String note = serviceModel.getServiceNote();
+                    String customertextSpeech = serviceModel.getServiceCustomerResponsibility();
+                    String customerSpeech= customertextSpeech.replaceAll("<br></br>.","");
+                    tts2.speak(customerSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+
+                }
+            }
+        });
+
+    }
+    private void noteTextToSpeech(){
+        tts3 = new TextToSpeech(requireContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int note) {
+                if (note != TextToSpeech.ERROR) {
+                    tts3.setLanguage(Locale.US);
+                    String noteSpeech = serviceModel.getServiceNote();
+                    //String textToSpeak = "Are you willing to place the order";
+                    String noteText= noteSpeech.replaceAll("<br></br>","");
+                    tts3.speak(noteText, TextToSpeech.QUEUE_FLUSH, null, null);
+
+                }
+            }
+        });
+
     }
 
     private void updateNextButtonState() {
@@ -145,6 +237,7 @@ public class ServiceDetailsFragment extends Fragment {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), Html.FROM_HTML_MODE_COMPACT));
+
         } else {
             serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), null,
                     new HtmlTagHelper()));
@@ -159,6 +252,10 @@ public class ServiceDetailsFragment extends Fragment {
         serviceNoteText = view.findViewById(R.id.serviceNoteText);
         serviceDetailsNextBtn = view.findViewById(R.id.serviceDetailsNextBtn);
         checkBox= view.findViewById(R.id.check_box);
+        Mike1= view.findViewById(R.id.mike1);
+        Mike2= view.findViewById(R.id.mike2);
+        Mike3= view.findViewById(R.id.mike3);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

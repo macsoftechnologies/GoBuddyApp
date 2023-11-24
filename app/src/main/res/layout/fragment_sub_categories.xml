@@ -1,8 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+        <!--<androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subCategoriesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.271" />-->
+
+
+        <!-- <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/grid_recyclerView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:clipToPadding="false"
+             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+             app:spanCount="2" />-->
+        <!-- <FrameLayout
+             android:layout_width="match_parent"
+             android:background="@color/blue_00ade6"
+             android:layout_marginTop="600dp"
+             android:layout_height="wrap_content">-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".view.fragments.customerflowfragments.SubCategoriesFragment"
+    android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/subCategoriesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+     <!--   <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/servicesRecyclerView"
+            android:layout_width="match_parent"
+            app:spanCount="2"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false">
+
+
+        </androidx.recyclerview.widget.RecyclerView>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gridRecyclerView"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+       app:spanCount="2"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+        <!-- </FrameLayout>-->
+
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".view.fragments.customerflowfragments.SubCategoriesFragment">
@@ -25,15 +115,16 @@
 
 
 
-   <!-- <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/grid_recyclerView"
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/servicesRecyclerView"
         android:layout_width="match_parent"
+       android:visibility="visible"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2" />-->
+        app:spanCount="2" />
 
 
 
-</FrameLayout>
+</LinearLayout>-->
