@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,7 +39,7 @@ public class Utils {
     }
 
     public void hideSoftKeyboard(Activity activity) {
-        if (activity.getCurrentFocus() == null) {
+        if (activity == null || activity.getCurrentFocus() == null) {
             return;
         }
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -48,33 +49,15 @@ public class Utils {
     }
 
     public void hideSoftKeyboardForFragments(Activity activity) {
-        activity.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-    }
-
-    public void showSnackBarOnCustomerScreen(String message, Activity activity) {
         if (activity != null) {
-            CoordinatorLayout coordinatorLayout = activity.findViewById(R.id.customerFragments_coordinator_layout);
-            final Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
-            snackbar.setAction("Ok", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    snackbar.dismiss();
-                }
-            });
-            snackbar.show();
-            snackbar.setActionTextColor(Color.WHITE);
-            View sbView = snackbar.getView();
-            sbView.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
-            TextView textView = sbView.findViewById(R.id.snackbar_text);
-            textView.setTextColor(Color.WHITE);
+            activity.getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         }
     }
 
-    public void showSnackBarOnProviderScreen(String message, Activity activity) {
+    public void showSnackBarOnCustomerScreen(String message, FragmentActivity activity, int coordinatorLayoutId) {
         if (activity != null) {
-            CoordinatorLayout coordinatorLayout = activity.findViewById(R.id.providerCoordinatorLayout);
+            CoordinatorLayout coordinatorLayout = activity.findViewById(coordinatorLayoutId);
             final Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
             snackbar.setAction("Ok", new View.OnClickListener() {
                 @Override
@@ -86,7 +69,7 @@ public class Utils {
             snackbar.setActionTextColor(Color.WHITE);
             View sbView = snackbar.getView();
             sbView.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
-            TextView textView = sbView.findViewById(R.id.snackbar_text);
+            TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
             textView.setTextColor(Color.WHITE);
         }
     }
@@ -95,19 +78,19 @@ public class Utils {
         return new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
                 boolean keepOriginal = true;
                 StringBuilder sb = new StringBuilder(end - start);
                 for (int i = start; i < end; i++) {
                     char c = source.charAt(i);
-                    if (isCharAllowed(c)) // put your condition here
+                    if (isCharAllowed(c)) {
                         sb.append(c);
-                    else
+                    } else {
                         keepOriginal = false;
+                    }
                 }
-                if (keepOriginal)
+                if (keepOriginal) {
                     return null;
-                else {
+                } else {
                     if (source instanceof Spanned) {
                         SpannableString sp = new SpannableString(sb);
                         TextUtils.copySpansFrom((Spanned) source, start, sb.length(), null, sp, 0);
@@ -126,4 +109,9 @@ public class Utils {
         };
     }
 
+    public void showSnackBarOnProviderScreen(String internet_not_available, FragmentActivity providerMainActivity) {
+    }
+
+    public void showSnackBarOnCustomerScreen(String failureResponse, FragmentActivity activity) {
+    }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".view.fragments.providersettingsflowfragment.EditEkycFragment">
 
@@ -20,14 +21,17 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="25dp"
                 android:src="@drawable/e_kycc" />
+
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+
                 android:text="@string/address_proof"
 
                 android:padding="10dp"
@@ -39,23 +43,33 @@
             </TextView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:backgroundTint="@color/quantum_orange"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/edit_address_proof_spinner"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:outlineAmbientShadowColor="@color/gray_8ba6c1">
+
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:backgroundTint="@color/quantum_orange"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/edit_address_proof_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
 
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
 
-                android:entries="@array/address_proof_array" >
+                    android:entries="@array/address_proof_array" >
 
-            </Spinner>
+                </Spinner>
                 <ImageView
                     android:id="@+id/arrow_up"
                     android:layout_width="wrap_content"
@@ -83,15 +97,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:weightSum="2">
+                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/edit_address_proof_imageView"
                     android:layout_width="wrap_content"
-                    android:layout_height="120dp"
+                    android:layout_height="150dp"
                     android:layout_weight="1.4"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="70dp"
                     android:padding="20dp"
                     android:src="@drawable/image_place_holder" />
 
@@ -102,6 +116,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="0.6"
                     android:background="@drawable/rounded_corner_white"
                     android:paddingTop="10dp"
@@ -109,10 +124,15 @@
                     android:layout_marginTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/upload"
-                   android:gravity="center"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="16sp" />
+
+
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
 
             <TextView
                 android:id="@+id/addressProofRejectView"
@@ -137,26 +157,36 @@
                 android:textStyle="bold" />
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:outlineAmbientShadowColor="@color/gray_8ba6c1">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:backgroundTint="@color/quantum_orange"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="1dp"
                 android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/edit_idproof_spinner"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:entries="@array/id_proof_array" />
+                <Spinner
+                    android:id="@+id/edit_idproof_spinner"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:entries="@array/id_proof_array" />
                 <ImageView
                     android:id="@+id/arrow_up_1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_gravity="end"
                     android:visibility="invisible"
                     android:layout_marginTop="17dp"
@@ -168,8 +198,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:visibility="invisible"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginRight="26dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/ic_arrow_down_24px"/>
 
 
@@ -180,14 +210,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:weightSum="2">
+                android:paddingBottom="0dp"
+                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/edit_idproof_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="125dp"
+                    android:layout_height="150dp"
                     android:layout_weight="1.4"
+
+                    android:layout_marginTop="70dp"
                     android:layout_gravity="center"
                     android:padding="20dp"
                     android:src="@drawable/image_place_holder" />
@@ -204,12 +236,14 @@
                     android:background="@drawable/rounded_corner_white"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/upload"
                     android:backgroundTint="@color/quantum_lightgreen"
                     android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="16sp" />
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/idProofRejectView"

@@ -5,14 +5,23 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.colourmoon.gobuddy.MyOtpPopUp;
+import com.colourmoon.gobuddy.utilities.Constants;
+
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 //import com.colourmoon.gobuddy.Face_id_otp_Fragment;
@@ -21,6 +30,7 @@ import android.widget.PopupWindow;
 import com.colourmoon.gobuddy.helper.LocationDetailsHelper;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
+import com.colourmoon.gobuddy.utilities.Constants;
 import com.colourmoon.gobuddy.view.activities.RegistrationActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -53,6 +63,8 @@ import com.colourmoon.gobuddy.model.RegistrationResponseModel;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.activities.LoginActivity;
 import com.colourmoon.gobuddy.view.activities.OtpVerificationActivity;
+import com.poovam.pinedittextfield.PinField;
+import com.poovam.pinedittextfield.SquarePinField;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,13 +94,20 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button save_pin;
     private RelativeLayout custom_layout;
-    private TextInputLayout reg_cus_name_editText, reg_cus_email_editText, reg_cus_phone_editText, reg_cus_pass_editText;
-    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data, reg_cus_pass_data;
-    private TextView reg_cus_registerBtn, reg_cus_backToLoginBtn, click;
+    private TextInputLayout reg_cus_name_editText, reg_cus_email_editText, reg_cus_phone_editText;
+    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data,reg_cus_pass_data;
+    private TextView reg_cus_registerBtn, reg_cus_backToLoginBtn, click_popup;
     private OnFragmentInteractionListener mListener;
-
+    private SquarePinField reg_cus_pass_editText;
+  //  private EditText pin_setup;
+    //private PinField squarePinField_setup;
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String KEY_NAME = "userName";
     String main_latitude, main_longitude, main_address, placeId;
+
+
 
     public CustomerRegistrationFragment() {
         // Required empty public constructor
@@ -147,6 +166,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             @Override
             public void onClick(View view) {
                 validateAndCallRegister();
+
             }
         });
 
@@ -156,15 +176,43 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
                 backToLogin();
             }
         });
-        click.setOnClickListener(new View.OnClickListener() {
+        click_popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-              //  openCustomDialog();
+                openCustomDialog();
 
             }
 
         });
+     /*   save_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPinSetup();
+
+            }
+            private void  setPinSetup(){
+             //   String pin = pin_setup.getText().toString();
+                String pin= squarePinField_setup.getText().toString();
+
+              //  if (pin.length() == 4) {
+                    if(pin.length()==4){
+                    // Save the PIN securely in SharedPreferences
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences("myKey", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("value",pin);
+                    editor.apply();
+
+
+                    // Navigate to the verification activity
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    // Show an error message - PIN must be 4 digits
+                    Toast.makeText(getActivity(), "PIN must be 4 digits", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
 
 
 
@@ -176,10 +224,10 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
 
 
-         //checkIsCustomerRegistered();
+         checkIsCustomerRegistered();
 
         // for calling the registration api immediately after entering password
-        reg_cus_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+       /* reg_cus_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -188,7 +236,28 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
                 }
                 return false;
             }
+        });*/
+        reg_cus_pass_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String pin = editable.toString();
+                if(pin.length() == 4){
+                    validateAndCallRegister();
+                }
+
+            }
         });
+
 
         return view;
     }
@@ -256,7 +325,8 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_name_data = reg_cus_name_editText.getEditText().getText().toString();
         reg_cus_email_data = reg_cus_email_editText.getEditText().getText().toString();
         reg_cus_phone_data = reg_cus_phone_editText.getEditText().getText().toString();
-        reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
+      //  reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
+        reg_cus_pass_data= reg_cus_pass_editText.getText().toString();
     }
 
     private void castingViews(View view) {
@@ -266,8 +336,11 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_pass_editText = view.findViewById(R.id.reg_pass_edittext);
         reg_cus_backToLoginBtn = view.findViewById(R.id.reg_toLoginBtn);
         reg_cus_registerBtn = view.findViewById(R.id.reg_registerBtn);
+     //   pin_setup=view.findViewById(R.id.pin_setup);
       //  custom_layout=view.findViewById(R.id.customLayout);
-       click=view.findViewById(R.id.click);
+       click_popup=view.findViewById(R.id.click);
+       //save_pin=view.findViewById(R.id.btnsave_pin);
+       //squarePinField_setup=view.findViewById(R.id.square_field_pin_setup);
 
     }
 
@@ -287,7 +360,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             return true;
         } else {
             if (!validateEmailWithRegex(reg_cus_email_data)) {
-                reg_cus_email_editText.setError("Please Enter Valid Email");
+                Toast.makeText(getActivity(), "Please Enter a valid Email", Toast.LENGTH_SHORT).show();
                 return false;
             } else {
                 reg_cus_email_editText.setError(null);
@@ -298,10 +371,11 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
     private boolean validatePhone() {
         if (reg_cus_phone_data.isEmpty()) {
-            reg_cus_phone_editText.setError("Please Enter Your Phone Number");
+            Toast.makeText(getActivity(), "Please Enter your Phone Number", Toast.LENGTH_SHORT).show();
             return false;
         } else if (reg_cus_phone_data.length() != 10) {
-            reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
+            Toast.makeText(getActivity(), "Please Enter a valid Mobile Number", Toast.LENGTH_SHORT).show();
+           // reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
             return false;
         } else {
             reg_cus_phone_editText.setError(null);
@@ -311,7 +385,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
     private boolean validateName() {
         if (reg_cus_name_data.isEmpty()) {
-            reg_cus_name_editText.setError("Please Enter Your Name");
+            Toast.makeText(getActivity(), "Please Enter your Name", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_cus_name_editText.setError(null);
@@ -321,7 +395,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
     private boolean validatePassword() {
         if (reg_cus_pass_data.isEmpty()) {
-            reg_cus_pass_editText.setError("Please Enter Your Password");
+            Toast.makeText(getActivity(), "Please Enter your Password", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_cus_pass_editText.setError(null);
@@ -382,7 +456,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             reg_cus_phone_editText.setError("This Number was Already Registered");
         } else {
             reg_cus_phone_editText.setError(null);
-            reg_cus_pass_editText.getEditText().requestFocus();
+          //  reg_cus_pass_editText.getEditText().requestFocus();
         }
     }
 
@@ -486,6 +560,43 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         void onFragmentInteraction(Uri uri);
     }
 
+    private void openCustomDialog() {
 
 
+        // Faceidotp dialogFragment = new Faceidotp();
+        //dialogFragment.show(getChildFragmentManager(), "CustomDialogFragment");
+
+        // Create a PopupWindow with the inflated layout
+
+        // Customize the PopupWindow as needed
+        // For example, set background, animation, focusability, etc.
+
+      /*  Dialog dialog = new Dialog(requireContext());
+
+        // Set the dialog's content view to your custom layout
+        dialog.setContentView(R.layout.activity_face_id_otp);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(window.getAttributes());
+
+            // Set the width and height to MATCH_PARENT
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+            window.setAttributes(layoutParams);
+        }
+        // Optionally, customize the dialog appearance and behavior
+        //  dialog.setTitle("Custom Dialog Title");
+        // dialog.setCancelable(true); // Set whether the dialog can be canceled by tapping outside
+
+        // Show the dialog
+        dialog.show();*/
+        MyOtpPopUp dialogFragment = new MyOtpPopUp();
+
+        // Show the dialog fragment using FragmentManager
+        dialogFragment.show(getChildFragmentManager(), "MyOtpPopUp");
+
+}
 }

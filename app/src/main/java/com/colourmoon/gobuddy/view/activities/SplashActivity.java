@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.colourmoon.gobuddy.BuildConfig;
+import com.colourmoon.gobuddy.FingerPrintActivity;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.commoncontrollers.AppUpdateController;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
@@ -31,11 +34,14 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
     private static final int UPDATE_REQUEST_CODE = 5001;
     private ImageView splashImageView;
     private AppUpdateManager appUpdateManager;
+   // private RelativeLayout fingerprintlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+     //   fingerprintlayout= findViewById(R.id.finger_otp_layout);
 
         AppUpdateController.getInstance().setAppUpdateControllerListener(this);
 
@@ -140,7 +146,8 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
         /* Create an Intent that will start the home screen */
         Intent boardingIntent = new Intent(SplashActivity.this, OnBoardingActivity.class);
-        Intent customerIntent = new Intent(SplashActivity.this, CustomerMainActivity.class);
+        Intent fingerIntent = new Intent(SplashActivity.this, FingerPrintActivity.class);
+     //   Intent customerIntent= new Intent(SplashActivity.this,CustomerMainActivity.class);
         Intent providerIntent = new Intent(SplashActivity.this, ProviderMainActivity.class);
         if (firstStart) {
             startActivity(boardingIntent);
@@ -149,8 +156,11 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
             editor.apply();
         } else if (UserSessionManagement.getInstance(SplashActivity.this).isProvider()) {
             startActivity(providerIntent);
-        } else {
-            startActivity(customerIntent);
+        }
+
+       else {
+           // startActivity(customerIntent);
+          startActivity(fingerIntent);
         }
         finish();
     }

@@ -5,13 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.customerflowfragments.ServicesFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/servicesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_10sdp"
         tools:listitem="@layout/custom_servicefragment_item" />
 
-
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kloa"
+         android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textSize="34dp"/>-->
 
 </FrameLayout>

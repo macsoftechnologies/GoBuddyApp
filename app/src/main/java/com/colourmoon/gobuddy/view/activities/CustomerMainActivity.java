@@ -16,6 +16,7 @@ import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.fragments.customermyjobsfragments.CustomerOnGoingJobsDetailsFragment;
+//import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -49,6 +50,7 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
 
     public static String main_latitude, main_longitude, main_address, placeId;
     private BottomNavigationView bottomNavigationView;
+    //private MeowBottomNavigation bottomNavigationView;
 
     private boolean isFirstTime;
     private Timer timer;
@@ -60,13 +62,17 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
+      bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
+        //bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
+       bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
         bottomNavigationView.setItemIconTintList(null);
 
         if (savedInstanceState == null) {
-            bottomNavigationView.setSelectedItemId(R.id.cust_home);
+          bottomNavigationView.setSelectedItemId(R.id.cust_home);
         }
+
+
+
 
         if (getIntent() != null && getIntent().hasExtra("screen_type")) {
             String orderId = getIntent().getStringExtra("order_id");
@@ -149,7 +155,8 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
         return super.onOptionsItemSelected(item);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+      private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()) {

@@ -16,12 +16,14 @@ android {
 
     defaultConfig {
         applicationId "com.colourmoon.gobuddy"
-        minSdkVersion 22
+
+        minSdkVersion 23
         targetSdkVersion 33
 
         versionCode 24
         versionName "2.7.2"
         archivesBaseName = "GoBuddy-V$versionCode($versionName)"
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -124,4 +126,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'
+   // implementation "androidx.biometric:biometric:1.2.0"
+   // implementation 'androidx.biometric:biometric:1.2.0'
+    implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
+
+
+
+
 }

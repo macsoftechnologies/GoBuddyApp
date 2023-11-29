@@ -1,8 +1,11 @@
 package com.colourmoon.gobuddy.view.fragments.customerflowfragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,23 +13,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.colourmoon.gobuddy.GridAdapter;
+//import com.colourmoon.gobuddy.ChildAdapter;
+import com.colourmoon.gobuddy.GridAdapter;
 import com.colourmoon.gobuddy.R;
+//import com.colourmoon.gobuddy.controllers.customercontrollers.CombinedFragmentController;
+import com.colourmoon.gobuddy.controllers.customercontrollers.ServicesFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.ServiceCategoryModel;
+import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 //import com.colourmoon.gobuddy.view.adapters.GridAdapter;
+import com.colourmoon.gobuddy.view.adapters.ServicesRecyclerViewAdapter;
 import com.colourmoon.gobuddy.view.adapters.SubCategoriesAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SERVICES_FRAGMENT_TAG;
+import static com.colourmoon.gobuddy.utilities.Constants.SERVICE_DETAIL_FRAGMENT_TAG;
+import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAGMENT_TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +52,10 @@ import static com.colourmoon.gobuddy.utilities.Constants.SERVICES_FRAGMENT_TAG;
  * Use the {@link SubCategoriesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener {
+/*public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener, ServicesFragmentController.ServicesFragmentControllerListener ,ServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener {*/
     // TODO: Rename parameter arguments, choose names that match
+    public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener{
+        // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -45,10 +63,15 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SubCategoryModel subCategoryModel;
 
     private ServiceCategoryModel serviceCategoryModel;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView subCategoriesRecyclerView,gridRecyclerView;
+    private RecyclerView subCategoriesRecyclerView,servicesRecyclerView,gridRecylerView;
+    private GridAdapter gridAdapter;
+    private List<String> gridItemList = new ArrayList<>();
+
+  //  private List<String> childItemList = new ArrayList<>(); // In
 
     public SubCategoriesFragment() {
         // Required empty public constructor
@@ -81,10 +104,13 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
             serviceCategoryModel = (ServiceCategoryModel) getArguments().getSerializable("categoryModel");
+          //  subCategoryModel = (SubCategoryModel) getArguments().getParcelable("subCategoryModel");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceCategoryModel.getServiceName());
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -92,18 +118,50 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sub_categories, container, false);
 
-        castingViews(view);
 
+        castingViews(view);
+      //  boolean isSubcategories;
+
+      /*  if (subCategoryModel!= null) {
+          //  isSubcategories = true;
+            ProgressBarHelper.show(getActivity(), "Loading SubCategories");
+          //  CombinedFragmentController.getInstance().setCombinedFragmentControllerListener(this);
+
+            SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
+            SubcategoriesFragmentController.getInstance().setSubCategoriesFragmentControllerListener(this);
+        } else if( serviceCategoryModel!= null) {
+            //isSubcategories = false;
+           ProgressBarHelper.show(getActivity(), "Loading Services");
+          //  CombinedFragmentController.getInstance().setCombinedFragmentControllerListener(this);
+
+            ServicesFragmentController.getInstance().getServicesCategoriesApiCall( subCategoryModel.getSubCategoryId());
+            ServicesFragmentController.getInstance().setServicesFragmentControllerListener(this);
+        }
+        else{
+            Toast.makeText(getActivity(),"failure jii response",Toast.LENGTH_SHORT).show();
+            //Toast.makeText()
+        }*/
         ProgressBarHelper.show(getActivity(), "Loading SubCategories");
         SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
         SubcategoriesFragmentController.getInstance().setSubCategoriesFragmentControllerListener(this);
+       // addChildItems();
+        //SubcategoriesFragmentController
 
         return view;
     }
 
+  /*  private void addChildItems() {
+        childItemList.add("Child Item 1");
+        childItemList.add("Child Item 2");
+        // Add more items as needed
+    }*/
+
     private void castingViews(View view) {
         subCategoriesRecyclerView = view.findViewById(R.id.subCategoriesRecyclerView);
+
        // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
+      //  gridRecylerView =view.findViewById(R.id.gridRecyclerView);
+     //   servicesRecyclerView= view.findViewById(R.id.servicesRecyclerView);
 
        
     }
@@ -126,15 +184,38 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         }*/
     }
 
-    @Override
+   @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    //@Override
+    //public void onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
+      //  createRecyclerView(subCategoryModelList);
+    //}
     @Override
-    public void onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
+    public void  onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
         createRecyclerView(subCategoryModelList);
+    }
+
+   /* @Override
+    public void onServiceSuccessResponse(List<ServiceModel> serviceModelList) {
+        createServiceRecyclerView(serviceModelList);
+    }
+
+    @Override
+    public void onServiceFailureResponse(String failureReason) {
+        Toast.makeText(getActivity(),"failure service response",Toast.LENGTH_SHORT).show();
+        ProgressBarHelper.dismiss(getActivity());
+       // showSnackBar(failureReason);
+    }*/
+
+    @Override
+    public void onFailureResponse(String failureReason) {
+        //Toast.makeText(getActivity(),"failure response",Toast.LENGTH_SHORT).show();
+        ProgressBarHelper.dismiss(getActivity());
+
     }
 
     private void createRecyclerView(List<SubCategoryModel> subCategoryModelList) {
@@ -144,6 +225,19 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         subCategoriesRecyclerView.setAdapter(subCategoriesAdapter);
         subCategoriesAdapter.setSubCategoriesItemclickListener(this);
         ProgressBarHelper.dismiss(getActivity());
+
+     /*   gridAdapter = new GridAdapter(requireContext(), gridItemList);
+        gridRecylerView.setAdapter(gridAdapter);
+        gridRecylerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+
+        // Add data to the gridItemList
+        gridItemList.add("Item 1");
+        gridItemList.add("Item 2");
+        gridItemList.add("Item 3");
+        gridItemList.add("Item 4");*/
+        // Add more items as needed
+
+      //  gridAdapter.notifyDataSetChanged();
 
 
         //GridLayoutManager gridLayoutManager= new GridLayoutManager(requireContext(),2);
@@ -155,20 +249,56 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
        // GridAdapter adapter = new GridAdapter(data, requireContext());
         //gridRecyclerView.setAdapter(adapter);
     }
+  /*  private void createServiceRecyclerView(List<ServiceModel> serviceModelList) {
+        servicesRecyclerView.setHasFixedSize(true);
+        servicesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ServicesRecyclerViewAdapter servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(getActivity(), serviceModelList);
+        servicesRecyclerView.setAdapter(servicesRecyclerViewAdapter);
+        servicesRecyclerViewAdapter.setServicesRecyclerViewItemClickListener(this);
+       // ProgressBarHelper.dismiss(getActivity());
+       // servicesRecyclerView.setHasFixedSize(true);
+       // int spanCount = 2;
+       /* servicesRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(),2));
+        ServicesRecyclerViewAdapter servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(getActivity(), serviceModelList);
+        servicesRecyclerView.setAdapter(servicesRecyclerViewAdapter);
+        servicesRecyclerViewAdapter.setServicesRecyclerViewItemClickListener(this);
+       // ProgressBarHelper.dismiss(getActivity());
+    }*/
 
-    @Override
-    public void onFailureResponse(String failureReason) {
-        ProgressBarHelper.dismiss(getActivity());
-    }
+
+    //@Override
+    //public void onFailureResponse(String failureReason) {
+     //   ProgressBarHelper.dismiss(getActivity());
+   //}
 
     @Override
     public void onItemClick(SubCategoryModel subCategoryModel) {
         ServicesFragment servicesFragment = new ServicesFragment();
-        Bundle bundle = new Bundle();
+       // servicesRecyclerView.setVisibility(View.VISIBLE);
+         // subCategoriesRecyclerView.setVisibility(View.INVISIBLE);
+    //  Toast.makeText(getActivity(),"item is clicked",Toast.LENGTH_SHORT).show();
+       Bundle bundle = new Bundle();
         bundle.putParcelable("subCategoryModel", subCategoryModel);
-        servicesFragment.setArguments(bundle);
+      //  Fragment SubServicesFragment;
+
+       servicesFragment.setArguments(bundle);
         addToFragmentContainer(servicesFragment, true, SERVICES_FRAGMENT_TAG);
     }
+   /* @Override
+    public void onServiceItemClick(ServiceModel serviceModel) {
+        Log.d("serviceModel", serviceModel.toString());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("serviceModel", serviceModel);
+        bundle.putString("subCategoryId", subCategoryModel.getSubCategoryId());
+        if (serviceModel.getSubServiceId().equals("0")) {
+            ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
+            serviceDetailsFragment.setArguments(bundle);
+            addToFragmentContainer(serviceDetailsFragment, true, SERVICE_DETAIL_FRAGMENT_TAG);
+        } else {
+            addToFragmentContainer(SubServicesFragment.newInstance(serviceModel, subCategoryModel.getSubCategoryId()), true,
+                    SUB_SERVICE_DETAIL_FRAGMENT_TAG);
+        }
+    }*/
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -180,6 +310,9 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         fragmentTransaction.replace(R.id.customer_fragments_container, fragment, tag);
         fragmentTransaction.commitAllowingStateLoss();
     }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

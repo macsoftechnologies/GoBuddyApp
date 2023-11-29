@@ -34,6 +34,7 @@ import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiInterface;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.activities.CustomerMainActivity;
+import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.fragments.ProfileFragment;
 import com.colourmoon.gobuddy.view.fragments.SupportFragment;
 import com.colourmoon.gobuddy.view.fragments.providersettingsflowfragment.EditEkycFragment;
@@ -228,22 +229,22 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                         String responseString = new String(response.body().bytes());
                         JSONObject jsonObject = new JSONObject(responseString);
                         if (jsonObject.getString("status").equals("valid")) {
-                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), getActivity());
+                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), (ProviderMainActivity) getActivity());
                         } else {
-                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), getActivity());
+                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), (ProviderMainActivity) getActivity());
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    Utils.getInstance().showSnackBarOnProviderScreen("No Response From Server", getActivity());
+                    Utils.getInstance().showSnackBarOnProviderScreen("No Response From Server", (ProviderMainActivity) getActivity());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), getActivity());
+                Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), (ProviderMainActivity) getActivity());
                 vacationSwitch.setChecked(false);
             }
         });
@@ -273,7 +274,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                             }
                         } else {
                             ProgressBarHelper.dismiss(getActivity());
-                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), getActivity());
+                            Utils.getInstance().showSnackBarOnProviderScreen(jsonObject.getString("message"), (ProviderMainActivity) getActivity());
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -282,7 +283,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                     }
                 } else {
                     ProgressBarHelper.dismiss(getActivity());
-                    Utils.getInstance().showSnackBarOnProviderScreen("No Response From Server", getActivity());
+                    Utils.getInstance().showSnackBarOnProviderScreen("No Response From Server", (ProviderMainActivity) getActivity());
                 }
             }
 
@@ -290,7 +291,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 ProgressBarHelper.dismiss(getActivity());
                 t.printStackTrace();
-                Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), getActivity());
+                Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), (ProviderMainActivity) getActivity());
                 vacationSwitch.setChecked(false);
             }
         });
@@ -306,7 +307,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
         if (!isEkycDone) {
             addToFragmentContainer(EditEkycFragment.newInstance("", ""), true, "editEkycFragmentTag");
         } else {
-            Utils.getInstance().showSnackBarOnProviderScreen("E-kyc has been already done", getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen("E-kyc has been already done", (ProviderMainActivity) getActivity());
         }
     }
 
@@ -350,7 +351,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
     @Override
     public void onLogoutFailure(String failureMessage) {
         if (getActivity() != null) {
-            Utils.getInstance().showSnackBarOnProviderScreen(failureMessage, getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(failureMessage, (ProviderMainActivity) getActivity());
         }
     }
 
@@ -367,7 +368,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
     @Override
     public void onViewAsFailureResponse(String failureReason) {
         if (getActivity() != null) {
-            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
         }
     }
 }

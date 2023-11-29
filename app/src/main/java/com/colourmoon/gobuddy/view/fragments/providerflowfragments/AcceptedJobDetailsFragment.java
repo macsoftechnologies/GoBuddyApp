@@ -138,7 +138,7 @@ public class AcceptedJobDetailsFragment extends Fragment implements ProviderAcce
 
     @Override
     public void onProviderAcceptedFailureReason(String failureReason) {
-        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
         ProgressBarHelper.dismiss(getActivity());
     }
 
@@ -252,14 +252,14 @@ public class AcceptedJobDetailsFragment extends Fragment implements ProviderAcce
 
     private void onFailureResponse(String message, AlertDialog alertDialog) {
         ProgressBarHelper.dismiss(getActivity());
-        Utils.getInstance().showSnackBarOnProviderScreen(message, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(message, (ProviderMainActivity) getActivity());
     }
 
     private void onSuccessResponse(String message, AlertDialog alertDialog) {
         alertDialog.dismiss();
         ProgressBarHelper.dismiss(getActivity());
         ((ProviderMainActivity) getActivity()).changeProviderHomeSelection(R.id.provider_completed_jobs);
-        Utils.getInstance().showSnackBarOnProviderScreen(message, getActivity());
+        Utils.getInstance().showSnackBarOnProviderScreen(message, (ProviderMainActivity) getActivity());
     }
 
     private Map<String, String> createproviderJobCompleteMap() {

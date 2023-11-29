@@ -15,7 +15,7 @@
     <string name="address">Address</string>
     <string name="accept_terms_and_conditions"> <u>Terms and Conditions</u></string>
     <string name="accept">Accept</string>
-    <string name="lorem_ipsum_large_text">Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    <string name="lorem_ipsum_large_text">&#8226;Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
         Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
     Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
     Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
@@ -33,7 +33,7 @@
     <string name="click_here_to_upload_skills_e_kyc">Click here to upload skills / e-Kyc</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
-    <string name="lorem_ipsum_medium_text">Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
+    <string name="lorem_ipsum_medium_text"> &#8226; Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
         Lorem Ipsum is simply a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard.
     </string>
     <string name="gobuddy">GOBUDDY</string>
@@ -44,7 +44,7 @@
     <string name="selectSkills">Please select skills you are comfortable with to provide service on</string>
     <string name="login">Login</string>
     <string name="favourite">Favourite</string>
-    <string name="myJobs">My Jobs</string>
+    <string name="myJobs">My Orders</string>
     <string name="home">Home</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
@@ -75,7 +75,7 @@
     <string name="about_us">About Us</string>
     <string name="faq">FAQ</string>
     <string name="job_completed">When do you need your Job to be completed ?</string>
-    <string name="lorem_ipsum_small_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</string>
+    <string name="lorem_ipsum_small_text">&#8226;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</string>
     <string name="now">Now</string>
     <string name="recurring">Recurring</string>
     <string name="schedule">Schedule</string>
@@ -192,10 +192,19 @@
     <string name="please_enter_your_comments">Please enter your comments</string>
     <string name="forgot_password"><b><u>Forgot password?</u></b></string>
     <string name="click_here"><b><u>Click here</u></b></string>
-    <string name="_8226_note">• Note</string>
-    <string name="_8226_customer_responsibility">• Customer Responsibility</string>
-    <string name="_8226_provider_responsibility">• Provider Responsibility</string>
+
     <string name="don_t_have_account_sign_up"> <b><u>Sign up</u></b></string>
+    <string name="add_face_id_or_a_4_digit_pin_to_access_n_your_account_easily_click_here">Add Finger print or a 4 digit pin to Access \n your account easily<b><u>Click Here</u></b> </string>
+    <string name="set_your_four_digit_pin"><b><u>Set your four digit pin</u></b></string>
+    <string name="customer_responseibility">Customer Responsibility</string>
+    <string name="provider_responsibility1">Provider Responsibility</string>
+    <string name="note1">Note</string>
+    <string name="register_as_customer_to_enjoy_the_services">Register as \"Customer\" to enjoy the services</string>
+    <string name="register_as_provider_to_provide_services">Register as \"Provider\" to provide services</string>
+    <string name="forgotpin"><b><u>ForgotPin</u></b></string>
+    <string name="pin_code"><b><u>Pin code</u></b></string>
+    <string name="pin_code1"><b><u>Pin code</u></b></string>
+    <string name="pin_code2"><b><u>Pin code</u></b></string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

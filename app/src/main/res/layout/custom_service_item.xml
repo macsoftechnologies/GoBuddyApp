@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_110sdp"
+    android:layout_marginStart="6dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    app:cardCornerRadius="12.5dp"
+    app:cardElevation="4dp">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/customer_service_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.60"
+            android:paddingTop="@dimen/_7sdp"
+            android:src="@drawable/ic_settings" />
+
+        <TextView
+            android:id="@+id/customer_service_name"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="0.40"
+            android:ellipsize="end"
+            android:gravity="center"
+
+            android:layout_marginTop="0dp"
+            android:lineSpacingExtra="-7dp"
+            android:maxLines="3"
+            android:textColor="#000"
+            android:textSize="11dp"
+            android:text="Beauty and Spa kkjjkkjjlja"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
+            android:text=" 128"
+
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="5dp"
+
+            android:textSize="12.5sp"
+            android:textColor="@color/quantum_orange"/>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -49,7 +113,7 @@
         android:textSize="11dp"
         android:text="Beauty and Spa " />
 
-  <!--  <TextView
+   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
@@ -59,6 +123,6 @@
 
         android:layout_marginTop="3dp"
         android:textSize="8dp"
-        android:textColor="@color/quantum_orange"/>-->
+        android:textColor="@color/quantum_orange"/>
 
-</LinearLayout>
+</LinearLayout>-->

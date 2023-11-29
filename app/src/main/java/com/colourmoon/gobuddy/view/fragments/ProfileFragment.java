@@ -44,6 +44,7 @@ import com.colourmoon.gobuddy.model.ProfileModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.activities.MapsActivity;
+import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.alertdialogs.CameraBottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -364,7 +365,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     private boolean validateProfileImage() {
         if (profileImage.isEmpty()) {
             if (from.equalsIgnoreCase("provider")) {
-                Utils.getInstance().showSnackBarOnProviderScreen("Please Upload Image", getActivity());
+                Utils.getInstance().showSnackBarOnProviderScreen("Please Upload Image", (ProviderMainActivity) getActivity());
             } else {
                 Utils.getInstance().showSnackBarOnCustomerScreen("Please Upload Image", getActivity());
             }
@@ -382,7 +383,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     @Override
     public void onProfileUpdateSuccessResponse(String successResponse) {
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen(successResponse, getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(successResponse, (ProviderMainActivity) getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen(successResponse, getActivity());
         }
@@ -391,7 +392,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     @Override
     public void onFailureReason(String failureReason) {
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen(failureReason, getActivity());
         }
@@ -572,7 +573,12 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         options.inPurgeable = true;
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
-            Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
+            Bitmap rotatedBitmap = null;
+            try {
+                rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             profileImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
             //profileImage = mCurrentPhotoPath;
             AnyFileUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), "");
@@ -598,7 +604,12 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
                 //  profileImage = mCurrentPhotoPath;
                 bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
             }
-            Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
+            Bitmap rotatedBitmap = null;
+            try {
+                rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             profileImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
             AnyFileUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), "");
         } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_CANCELED) {
@@ -640,7 +651,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     public void onImageUploadSuccessResponse(String imageUrl, String fromWhichProof) {
         profileImage = imageUrl;
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen("Success", getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen("Success", (ProviderMainActivity) getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen("Success", getActivity());
         }
@@ -651,40 +662,45 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         Toast.makeText(getActivity(), failureReason, Toast.LENGTH_SHORT).show();
     }
 
-    private Bitmap rotatedImageBitmap(String photoPath, Bitmap bitmap) {
+    private Bitmap rotatedImageBitmap(String photoPath, Bitmap bitmap) throws IOException {
+        //  ExifInterface ei = new ExifInterface(photoPath);
         ExifInterface ei = null;
         try {
             ei = new ExifInterface(photoPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int orientation = 0;
         if (ei != null) {
-            orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                     ExifInterface.ORIENTATION_UNDEFINED);
+
+            Bitmap rotatedBitmap = null;
+            switch (orientation) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(bitmap, 180);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(bitmap, 270);
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    rotatedBitmap = bitmap;
+            }
+            return rotatedBitmap;
+        } else {
+            return bitmap;
         }
 
-        Bitmap rotatedBitmap = null;
-        switch (orientation) {
 
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                rotatedBitmap = rotateImage(bitmap, 90);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                rotatedBitmap = rotateImage(bitmap, 180);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                rotatedBitmap = rotateImage(bitmap, 270);
-                break;
-
-            case ExifInterface.ORIENTATION_NORMAL:
-            default:
-                rotatedBitmap = bitmap;
-        }
-        return rotatedBitmap;
     }
+
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();

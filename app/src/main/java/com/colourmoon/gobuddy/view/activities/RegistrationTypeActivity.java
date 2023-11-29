@@ -21,11 +21,17 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.colourmoon.gobuddy.BuildConfig;
 import com.colourmoon.gobuddy.R;
+import com.colourmoon.gobuddy.controllers.commoncontrollers.AppUpdateController;
 import com.colourmoon.gobuddy.helper.LocationDetailsHelper;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
@@ -35,6 +41,9 @@ import com.colourmoon.gobuddy.view.fragments.ProviderRegistrationFragment;
 public class RegistrationTypeActivity extends AppCompatActivity implements CustomerRegistrationFragment.OnFragmentInteractionListener, ProviderRegistrationFragment.OnFragmentInteractionListener, LocationDetailsHelper.LocationDetailsResponseListener, InternetConnectionListener {
 
     TextView txtCustomer,txtVendor;
+    ImageView logo;
+    private static final int SPLASH_DISPLAY_LENGTH = 1000;
+    private static final int UPDATE_REQUEST_CODE = 5001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +52,7 @@ public class RegistrationTypeActivity extends AppCompatActivity implements Custo
 
         txtCustomer =findViewById(R.id.txtCustomer);
         txtVendor =findViewById(R.id.txtVendor);
+        logo=findViewById(R.id.imgLogo);
 
         // for getting location details
         getLocationDetails();
@@ -58,8 +68,29 @@ public class RegistrationTypeActivity extends AppCompatActivity implements Custo
         LocationDetailsHelper.getInstance(this).setLocationDetailsResponseListener(this);
 
         new GoBuddyApiClient().setInternetConnectionListener(this);
+     //   new Handler(Looper.getMainLooper()).postDelayed(() -> AppUpdateController.getInstance().appUpdateApiCall(String.valueOf(BuildConfig.VERSION_CODE)), SPLASH_DISPLAY_LENGTH);
+
+
+        logo.animate().scaleX(2.0f).scaleY(2.0f).setDuration(2000).withEndAction(runnable).start();
+      // logo.animate().alpha(1.0f).setDuration(2000).withEndAction(runnable).start();
+       // logo.animate().scaleX(1.5f).scaleY(1.5f).setDuration(2000).withEndAction(runnable).start();
+
+
+        //}).start();
 
     }
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+            logo.animate().scaleX(1.0f).scaleY(1.0f).setDuration(4000).withEndAction(runnable).start();
+          //  logo.animate().alpha(0.0f).setDuration(2000).withEndAction(runnable).start();
+
+
+            //  logo.animate().translationXBy(200).translationYBy(200).setDuration(2000).withEndAction(runnable).start();
+
+        }
+    };
 
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {

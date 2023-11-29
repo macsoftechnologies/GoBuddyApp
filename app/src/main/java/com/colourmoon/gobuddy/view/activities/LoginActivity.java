@@ -2,26 +2,33 @@ package com.colourmoon.gobuddy.view.activities;
 
 import android.content.Intent;
 
+import com.colourmoon.gobuddy.FingerPrintActivity;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
-import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHomeFragment;
 import com.google.android.material.textfield.TextInputLayout;
+
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.commoncontrollers.LoginController;
@@ -32,16 +39,23 @@ import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.poovam.pinedittextfield.PinField;
 import com.poovam.pinedittextfield.SquarePinField;
+//import android.biometric.BiometricPrompt;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity implements LoginController.LoginControllerResponseListener, InternetConnectionListener {
+public class LoginActivity extends AppCompatActivity implements LoginController.LoginControllerResponseListener, InternetConnectionListener, PinField.OnTextCompleteListener {
 
     private TextView loginBtn, moveToRegisterBtn, forgotPassBtn;
-    private TextInputLayout login_email_editText, login_pass_editText;
+    private TextInputLayout login_email_editText;
+    private SquarePinField  login_pass_editText;
     private String log_emailData, log_passData;
     // private PinField squarePinField;
+    private static final int REQUEST_PERMISSIONS = 100;
+    //private PinField squarePinField1;
+   // private ImageView fingerPrint;
+   // private RelativeLayout fingerPrintLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +65,66 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         getSupportActionBar().setTitle(getResources().getString(R.string.login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+
+
+        //  Executor executor = ContextCompat.getMainExecutor(this);
+
         // this method is responsible for casting views in xml to java file
         castingViews();
 
+
+
+      /*  squarePinField1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // Do something before the text changes (if needed)
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Do something while the text is changing (if needed)
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method is called when text changes are complete
+                String pin = editable.toString();
+                if (pin.length() == 4) {
+                    // The user has entered a 4-digit code, perform your actions here
+                    // For example, validate the PIN, store it in SharedPreferences, and navigate to the next screen
+                    SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
+                    String storedPin = sharedPreferences.getString("value", "");
+
+                    if (pin.equals(storedPin)) {
+                        // PIN is correct, store it in SharedPreferences and navigate to the next activity
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("enteredPin", pin);
+                        editor.apply();
+
+                        Intent intent = new Intent(LoginActivity.this, FingerPrintActivity.class);
+                        startActivity(intent);
+
+                        Toast.makeText(LoginActivity.this, "PIN is correct", Toast.LENGTH_SHORT).show();
+                        // Proceed with the login process or other actions
+                    } else {
+                        // PIN is incorrect, show an error message
+                        Toast.makeText(LoginActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                        // Handle incorrect PIN scenario (e.g., show error message to the user)
+                    }
+                }
+            }
+        });*/
+
         // for restricting the user entering the emoji's
+      /*  fingerPrint .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fingerPrintLayout.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Finger Print Athunecation is now avaliable", Toast.LENGTH_SHORT).show();
+            }
+        });*/
         login_email_editText.getEditText().setFilters(new InputFilter[]{Utils.getInstance().getEditTextFilter()});
 
         moveToRegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +142,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         });
 
 
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
         });
 
-        login_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+       /* login_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -87,10 +158,40 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 }
                 return false;
             }
-        });
+        });*/
+      login_pass_editText.addTextChangedListener(new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          }
+
+          @Override
+          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+          }
+
+          @Override
+          public void afterTextChanged(Editable editable) {
+              String pin = editable.toString();
+              if (pin.length() == 4) {
+                  Toast.makeText(LoginActivity.this, "PIN is correct", Toast.LENGTH_SHORT).show();
+                  checkAndCallLogin();
+                  // Proceed with the login process or other actions
+              } else {
+                  // PIN is incorrect, show an error message
+                  Toast.makeText(LoginActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                  // Handle incorrect PIN scenario (e.g., show error message to the user)
+              }
+
+          }
+      });
+
+
+
 
         new GoBuddyApiClient().setInternetConnectionListener(this);
     }
+
 
     private void checkAndCallLogin() {
         // for getting the input from user
@@ -120,19 +221,34 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         loginBtn = findViewById(R.id.login_loginBtn);
         moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
         forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
-        // squarePinField = findViewById(R.id.square_field_pin);
+
+        login_pass_editText.setOnTextCompleteListener(this);
+
+
+        //pin_edit= findViewById(R.id.edit_pin);
+       //nxt_save=findViewById(R.id.nxt_save);
+      // squarePinField1= findViewById(R.id.square_field_pin);
+      // fingerPrint=findViewById(R.id.finger_id);
+       //fingerPrintLayout=findViewById(R.id.finger_otp_layout);
+
     }
 
     private void GetTextFromFields() {
         log_emailData = login_email_editText.getEditText().getText().toString();
-        log_passData = login_pass_editText.getEditText().getText().toString();
+        log_passData = login_pass_editText.getText().toString();
+       // log_passData = login_pass_editText.getEditText().getText().toString();
     }
 
     private boolean validateEmail() {
         if (log_emailData.isEmpty()) {
-            login_email_editText.setError("Please Enter Your Email or Password");
+          Toast.makeText(this,"Please enter your email",Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        }
+        else if (log_emailData.length() != 10) {
+            Toast.makeText(LoginActivity.this, "Please Enter a Valid Mobile Number", Toast.LENGTH_SHORT).show();
+            // reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
+            return false;
+        }else {
             login_email_editText.setError(null);
             return true;
         }
@@ -140,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     private boolean validatePassword() {
         if (log_passData.isEmpty()) {
-            login_pass_editText.setError("Please Enter Your Password");
+            Toast.makeText(this,"Please enter your Password",Toast.LENGTH_SHORT).show();
             return false;
         } else {
             login_pass_editText.setError(null);
@@ -204,23 +320,12 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     }
 
-   /* private void checkPin(String enterPin){
+    @Override
+    public boolean onTextComplete(@NonNull String s) {
+        return false;
+    }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
-        String savedPIN = sharedPreferences.getString("value", "");
-        Log.d("PIN", "Entered PIN: " + enterPin);
-        Log.d("PIN", "Saved PIN: " + savedPIN);
 
-        if (enterPin.equals(savedPIN)) {
-            // PIN matches, navigate to the desired fragment or activity
-            CustomerHomeFragment customerHomeFragment = new CustomerHomeFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container1, customerHomeFragment).commit();
-        } else {
-            // Invalid PIN, show an error message and clear the PIN input field
-            Toast.makeText(this, "Invalid PIN", Toast.LENGTH_SHORT).show();
-            //squarePinField.setText(""); // Clear the entered PIN
-        }*/
 
 
 }

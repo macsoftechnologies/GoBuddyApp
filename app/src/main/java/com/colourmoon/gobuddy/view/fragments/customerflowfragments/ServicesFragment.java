@@ -88,7 +88,7 @@ public class ServicesFragment extends Fragment implements ServicesFragmentContro
 
         servicesRecyclerView = view.findViewById(R.id.servicesRecyclerView);
         ProgressBarHelper.show(getActivity(), "Loading Services");
-        ServicesFragmentController.getInstance().getCategoriesApiCall(subCategoryModel.getSubCategoryId());
+        ServicesFragmentController.getInstance().getServicesCategoriesApiCall(subCategoryModel.getSubCategoryId());
         ServicesFragmentController.getInstance().setServicesFragmentControllerListener(this);
         return view;
     }
@@ -103,12 +103,7 @@ public class ServicesFragment extends Fragment implements ServicesFragmentContro
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
+
     }
 
     @Override

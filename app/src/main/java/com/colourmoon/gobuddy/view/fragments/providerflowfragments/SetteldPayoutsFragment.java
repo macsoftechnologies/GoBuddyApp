@@ -20,6 +20,7 @@ import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.PayoutModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
+import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.adapters.PayoutsRecyclerViewAdapter;
 
 import java.util.List;
@@ -117,7 +118,7 @@ public class SetteldPayoutsFragment extends Fragment implements SettledPayoutsFr
                     SettledPayoutsFragmentController.getInstance().getSettledPayoutsApiCall(UserSessionManagement.getInstance(getActivity())
                             .getUserId());
                 } else {
-                    Utils.getInstance().showSnackBarOnProviderScreen("Please Login To View Your Payouts", getActivity());
+                    Utils.getInstance().showSnackBarOnProviderScreen("Please Login To View Your Payouts", (ProviderMainActivity) getActivity());
                 }
 
             }
