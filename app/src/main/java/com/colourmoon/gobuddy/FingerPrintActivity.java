@@ -48,7 +48,7 @@ public class FingerPrintActivity extends AppCompatActivity {
 
 
 
-        fingerprint.animate().alpha(0.0f).setDuration(2000).withEndAction(runnable).start();
+        fingerprint.animate().alpha(0.0f).setDuration(1000).withEndAction(runnable).start();
         fingerprint.setVisibility(View.INVISIBLE);
 
 

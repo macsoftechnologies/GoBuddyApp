@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,10 @@ public class ServiceDetailsFragment extends Fragment {
     private TextView serviceTitleText, servicePriceText, serviceProviderRespText, serviceCustomerRespText, serviceNoteText, serviceDetailsNextBtn;
     private CheckBox checkBox;
     private ImageView Mike1,Mike2,Mike3;
+    private LinearLayout customerlayout,providerlayout,notelayout;
+    private boolean isProviderTTSPlaying = false;
+    private boolean isCustomerTTSPlaying = false;
+    private boolean isNoteTTSPlaying = false;
 
     public ServiceDetailsFragment() {
         // Required empty public constructor
@@ -89,22 +94,66 @@ public class ServiceDetailsFragment extends Fragment {
 
         setTextToTextViews();
        updateNextButtonState();
+     /*  customerlayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               serviceCustomerRespText.setVisibility(View.VISIBLE);
+               serviceProviderRespText.setVisibility(View.GONE);
+               serviceNoteText.setVisibility(View.GONE);
+           }
+       });
+       providerlayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               serviceCustomerRespText.setVisibility(View.GONE);
+               serviceProviderRespText.setVisibility(View.VISIBLE);
+               serviceNoteText.setVisibility(View.GONE);
+
+           }
+       });
+       notelayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               serviceCustomerRespText.setVisibility(View.GONE);
+               serviceProviderRespText.setVisibility(View.GONE);
+               serviceNoteText.setVisibility(View.VISIBLE);
+
+           }
+       });*/
        Mike1.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               providerTextToSpeech();
+               if (isProviderTTSPlaying) {
+                   stopTextToSpeech(tts1);
+                   isProviderTTSPlaying = false;
+               } else {
+                   providerTextToSpeech();
+                   isProviderTTSPlaying = true;
+               }
            }
        });
        Mike2.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               customerTextToSpeech();
+               if (isCustomerTTSPlaying) {
+                   stopTextToSpeech(tts2);
+                   isCustomerTTSPlaying = false;
+               } else {
+                   customerTextToSpeech();
+                   isCustomerTTSPlaying = true;
+               }
            }
        });
        Mike3.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               noteTextToSpeech();
+               if (isNoteTTSPlaying) {
+                   stopTextToSpeech(tts3);
+                   isNoteTTSPlaying = false;
+               } else {
+                   noteTextToSpeech();
+                   isNoteTTSPlaying = true;
+               }
            }
        });
 
@@ -157,9 +206,10 @@ public class ServiceDetailsFragment extends Fragment {
                 if (provider != TextToSpeech.ERROR) {
                     tts1.setLanguage(Locale.US);
                      String providerSpeech = serviceModel.getServiceProviderResponsibility();
-                    String providerSpeechtext= providerSpeech.replaceAll("<br></br>","");
+                    String providerSpeechtext= providerSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
                    // String textToSpeak = "Are you willing to place the order";
                     tts1.speak(providerSpeechtext, TextToSpeech.QUEUE_FLUSH, null, null);
+                    isProviderTTSPlaying = true;
 
                 }
             }
@@ -174,8 +224,9 @@ public class ServiceDetailsFragment extends Fragment {
                     tts2.setLanguage(Locale.US);
                     // String note = serviceModel.getServiceNote();
                     String customertextSpeech = serviceModel.getServiceCustomerResponsibility();
-                    String customerSpeech= customertextSpeech.replaceAll("<br></br>.","");
+                   String customerSpeech= customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
                     tts2.speak(customerSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+                    isCustomerTTSPlaying = true;
 
                 }
             }
@@ -190,9 +241,9 @@ public class ServiceDetailsFragment extends Fragment {
                     tts3.setLanguage(Locale.US);
                     String noteSpeech = serviceModel.getServiceNote();
                     //String textToSpeak = "Are you willing to place the order";
-                    String noteText= noteSpeech.replaceAll("<br></br>","");
+                    String noteText= noteSpeech.replaceAll("\\<.*?\\>|&nbsp; ","");
                     tts3.speak(noteText, TextToSpeech.QUEUE_FLUSH, null, null);
-
+                    isNoteTTSPlaying = true;
                 }
             }
         });
@@ -255,6 +306,9 @@ public class ServiceDetailsFragment extends Fragment {
         Mike1= view.findViewById(R.id.mike1);
         Mike2= view.findViewById(R.id.mike2);
         Mike3= view.findViewById(R.id.mike3);
+        customerlayout=view.findViewById(R.id.customerLayout);
+        providerlayout=view.findViewById(R.id.providerLayout);
+        notelayout=view.findViewById(R.id.noteLayout);
 
     }
 
@@ -280,6 +334,30 @@ public class ServiceDetailsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Stop any ongoing Text-to-Speech instances when fragment is destroyed
+        stopTextToSpeech(tts);
+        stopTextToSpeech(tts1);
+        stopTextToSpeech(tts2);
+        stopTextToSpeech(tts3);
+    }
+
+    private void stopTextToSpeech(TextToSpeech ttsInstance) {
+        if (ttsInstance != null) {
+            ttsInstance.stop();
+            ttsInstance.shutdown();
+            if (ttsInstance == tts1) {
+                isProviderTTSPlaying = false;
+            } else if (ttsInstance == tts2) {
+                isCustomerTTSPlaying = false;
+            } else if (ttsInstance == tts3) {
+                isNoteTTSPlaying = false;
+            }
+        }
     }
 
     public interface OnFragmentInteractionListener {

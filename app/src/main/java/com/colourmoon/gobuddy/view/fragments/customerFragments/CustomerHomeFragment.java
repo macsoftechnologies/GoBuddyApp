@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,9 +29,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.colourmoon.gobuddy.R;
+import com.colourmoon.gobuddy.controllers.commoncontrollers.ProfileFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.HomeFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.ImageSliderModel;
+import com.colourmoon.gobuddy.model.ProfileModel;
 import com.colourmoon.gobuddy.model.ServiceCategoryModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
@@ -46,6 +51,7 @@ import com.glide.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.concurrent.Executor;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SUBCATEGORIES_FRAGMENT_TAG;
 
@@ -70,8 +76,11 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     private ImageView homeHelpBtn;
     private SliderLayout homesliderLayout;
     private ViewPager viewPager;
-   // private ImageSliderAdapter imageSliderAdapter;
-   // private Handler sliderHandler = new Handler(Looper.myLooper());
+   // private boolean isBiometricAuthenticated = false;
+   // private androidx.biometric.BiometricPrompt biometricPrompt;
+    //private BiometricPrompt.PromptInfo promptInfo;
+    // private ImageSliderAdapter imageSliderAdapter;
+    // private Handler sliderHandler = new Handler(Looper.myLooper());
     //private int currentPage = 0;
     //private static final long DELAY_MS = 3000; // C
 
@@ -94,8 +103,13 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
+
+
+
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -104,17 +118,38 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
         //  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         //  ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
+         
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_home, container, false);
 
-     //   startAutoSlider();
+      /*boolean enableFingerprint = getArguments().getBoolean("enableFingerprint", false);
+
+        if (enableFingerprint) {
+            Executor executor = ContextCompat.getMainExecutor(requireContext());
+            biometricPrompt = new BiometricPrompt(this, executor, authenticationCallback());
+
+            // Create BiometricPrompt.PromptInfo
+            promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Biometric authentication")
+                    .setSubtitle("Authenticate to proceed")
+                    .setDescription("Your app description")
+                    .setNegativeButtonText("Cancel")
+                    .build();
+
+            // Trigger biometric authentication directly
+            biometricPrompt.authenticate(promptInfo);
+       }*/
+
+
+
+
+
+        //   startAutoSlider();
 
         // Initialize and set the imageSliderAdapter for the viewPager
      //   imageSliderAdapter = new ImageSliderAdapter(getActivity());
     //    viewPager.setAdapter(imageSliderAdapter);
-
-
+ 
         
    /*     viewPager = view.findViewById(R.id.imageSlider);
 
@@ -138,6 +173,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         HomeFragmentController.getInstance().callGetCustomerServicesApi();
 
 
+        
 
         homeLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,14 +182,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             }
         });
 
-        if (UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
-            if (homeLoginBtn.getVisibility() == View.VISIBLE) {
-                homeLoginBtn.setVisibility(View.GONE);
-            }
-            if (homeHelpBtn.getVisibility() == View.VISIBLE) {
-                homeHelpBtn.setVisibility(View.GONE);
-            }
-        }
+
 
         homeHelpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,9 +200,37 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             }
         });
+      
+        
 
         return view;
     }
+
+   /* private BiometricPrompt.AuthenticationCallback authenticationCallback() {
+
+        return new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                isBiometricAuthenticated = true;
+                // Biometric authentication succeeded
+                // Implement your logic here upon successful authentication
+            }
+            @Override
+            public  void  onAuthenticationError(int errorCode,@NonNull CharSequence errString){
+                super.onAuthenticationError(errorCode,errString);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                // Handle authentication failure
+            }
+
+            // Override other callback methods as needed
+        };
+    }*/
+
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -207,6 +264,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
       //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -217,8 +276,42 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
                     + " must implement OnFragmentInteractionListener");
         }
     }
-
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
+   //         if (homeLoginBtn.getVisibility() == View.VISIBLE) {
+     //           homeLoginBtn.setVisibility(View.GONE);
+       //     }
+            homeLoginBtn.setText("");
+            if (homeHelpBtn.getVisibility() == View.VISIBLE) {
+                homeHelpBtn.setVisibility(View.GONE);
+            }
+            else {
+                homeLoginBtn.setText(getResources().getString(R.string.login));
+            }
+        }
+        ProfileFragmentController.getInstance().getProfileDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
+        ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
+            @Override
+            public void onProfileDetailsSuccessResponse(ProfileModel profileModel) {
+                homeLoginBtn.setText(profileModel.getName());
+
+            }
+
+            @Override
+            public void onProfileUpdateSuccessResponse(String successResponse) {
+
+            }
+
+            @Override
+            public void onFailureReason(String failureReason) {
+
+            }
+        });
+    }
+
+        @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;

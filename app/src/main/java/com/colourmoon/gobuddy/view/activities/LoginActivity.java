@@ -6,6 +6,7 @@ import com.colourmoon.gobuddy.FingerPrintActivity;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
+import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHomeFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.os.Bundle;
@@ -274,13 +275,15 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 intent.putExtra("user_id", loginResponseModel.getUserId());
                 intent.putExtra("phoneNumber", loginResponseModel.getPhoneNumber());
                 intent.putExtra("callOtp", "CallOtp");
+
                 startActivity(intent);
             } else {
                 if (loginResponseModel.getPresentUserType().equalsIgnoreCase("customer")) {
                     Toast.makeText(this, "LoggedIn as Customer", Toast.LENGTH_SHORT).show();
                     UserSessionManagement.getInstance(this).createLoginSession(loginResponseModel.getUserId(), false);
                     Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("enableFingerprint", true);
+                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "LoggedIn as Provider", Toast.LENGTH_SHORT).show();
@@ -294,6 +297,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             new DialogHelper(this).showAlert(loginResponseModel.getMessage(), "Attention");
         }
     }
+
 
     @Override
     public void onFailureResponse(String failureReason) {

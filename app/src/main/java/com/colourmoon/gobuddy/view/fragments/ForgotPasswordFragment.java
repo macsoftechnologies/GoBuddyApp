@@ -188,7 +188,16 @@ public class ForgotPasswordFragment extends Fragment implements ForgotPasswordCo
         if (forgotPass_newPassData.isEmpty()) {
             forgotPass_newPass_editText.setError("Please Enter Your New Password");
             return false;
-        } else {
+
+        }else if (!isNumeric(forgotPass_newPassData)) {
+            forgotPass_newPass_editText.setError("Password should contain only integers");
+            return false;
+        }
+        else if (forgotPass_newPassData.length() != 4) {
+            forgotPass_newPass_editText.setError("Password should be exactly 4 digits long");
+            return false;
+        }
+        else {
             forgotPass_newPass_editText.setError(null);
             return true;
         }
@@ -198,13 +207,25 @@ public class ForgotPasswordFragment extends Fragment implements ForgotPasswordCo
         if (forgotPass_conPassData.isEmpty()) {
             forgotPass_ConPass_editText.setError("Please Enter Your Confirm Password");
             return false;
-        } else if (!forgotPass_conPassData.equals(forgotPass_newPassData)) {
+        }else if (!isNumeric(forgotPass_conPassData)) {
+            forgotPass_ConPass_editText.setError("Confirm password should contain only integers");
+            return false;
+        }
+        else if (forgotPass_conPassData.length() != 4) {
+            forgotPass_ConPass_editText.setError("Confirm password should be exactly 4 digits long");
+            return false;
+        }
+        else if (!forgotPass_conPassData.equals(forgotPass_newPassData)) {
             forgotPass_ConPass_editText.setError("Passwords Mismatch");
             return false;
         } else {
             forgotPass_ConPass_editText.setError(null);
             return true;
         }
+    }
+    private boolean isNumeric(String str) {
+        // Check if the string contains only numeric characters
+        return str.matches("\\d+");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
