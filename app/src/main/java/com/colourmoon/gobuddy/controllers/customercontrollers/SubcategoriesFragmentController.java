@@ -160,15 +160,19 @@ public class CombinedFragmentController {
 
 import androidx.annotation.NonNull;
 
+import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiInterface;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,11 +224,24 @@ public class SubcategoriesFragmentController {
                             ArrayList<SubCategoryModel> subCategoryModelArrayList = new ArrayList<>();
                             for (int i = 0; i < subCategoryJsonArray.length(); i++) {
                                 JSONObject jsonObject1 = subCategoryJsonArray.getJSONObject(i);
-                                subCategoryModelArrayList.add(new SubCategoryModel(
+                                String servicesString = jsonObject1.getString("services");
+                                //
+                                List<ServiceModel> serviceModelArrayList = new ArrayList<>();
+                                try {
+                                    Gson gson = new Gson();
+                                    Type listType = new TypeToken<List<ServiceModel>>() {
+                                    }.getType();
+                                    serviceModelArrayList = gson.fromJson(servicesString, listType);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                SubCategoryModel categoryModel = new SubCategoryModel(
                                         jsonObject1.getString("id"),
                                         jsonObject1.getString("sub_category"),
                                         false
-                                ));
+                                );
+                                categoryModel.setServices(serviceModelArrayList);
+                                subCategoryModelArrayList.add(categoryModel);
                             }
                             if (subCategoriesFragmentControllerListener != null) {
                                 subCategoriesFragmentControllerListener.onSuccessResponse(subCategoryModelArrayList);
@@ -234,6 +251,7 @@ public class SubcategoriesFragmentController {
                                 subCategoriesFragmentControllerListener.onFailureResponse(jsonObject.getString("message"));
                             }
                         }
+                        //
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {

@@ -1,43 +1,36 @@
 package com.colourmoon.gobuddy.view.fragments.customerflowfragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 //import com.colourmoon.gobuddy.GridAdapter;
 //import com.colourmoon.gobuddy.ChildAdapter;
 import com.colourmoon.gobuddy.GridAdapter;
 import com.colourmoon.gobuddy.R;
 //import com.colourmoon.gobuddy.controllers.customercontrollers.CombinedFragmentController;
-import com.colourmoon.gobuddy.controllers.customercontrollers.ServicesFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.ServiceCategoryModel;
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 //import com.colourmoon.gobuddy.view.adapters.GridAdapter;
-import com.colourmoon.gobuddy.view.adapters.ServicesRecyclerViewAdapter;
 import com.colourmoon.gobuddy.view.adapters.SubCategoriesAdapter;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SERVICES_FRAGMENT_TAG;
@@ -53,9 +46,9 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
  * create an instance of this fragment.
  */
 /*public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener, ServicesFragmentController.ServicesFragmentControllerListener ,ServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener {*/
+// TODO: Rename parameter arguments, choose names that match
+public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener {
     // TODO: Rename parameter arguments, choose names that match
-    public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener{
-        // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -67,11 +60,11 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
 
     private ServiceCategoryModel serviceCategoryModel;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView subCategoriesRecyclerView,servicesRecyclerView,gridRecylerView;
+    private RecyclerView subCategoriesRecyclerView, servicesRecyclerView, gridRecylerView;
     private GridAdapter gridAdapter;
     private List<String> gridItemList = new ArrayList<>();
 
-  //  private List<String> childItemList = new ArrayList<>(); // In
+    //  private List<String> childItemList = new ArrayList<>(); // In
 
     public SubCategoriesFragment() {
         // Required empty public constructor
@@ -105,12 +98,11 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
             serviceCategoryModel = (ServiceCategoryModel) getArguments().getSerializable("categoryModel");
-          //  subCategoryModel = (SubCategoryModel) getArguments().getParcelable("subCategoryModel");
+            //  subCategoryModel = (SubCategoryModel) getArguments().getParcelable("subCategoryModel");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceCategoryModel.getServiceName());
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -120,7 +112,7 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
 
 
         castingViews(view);
-      //  boolean isSubcategories;
+        //  boolean isSubcategories;
 
       /*  if (subCategoryModel!= null) {
           //  isSubcategories = true;
@@ -144,7 +136,7 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
         ProgressBarHelper.show(getActivity(), "Loading SubCategories");
         SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
         SubcategoriesFragmentController.getInstance().setSubCategoriesFragmentControllerListener(this);
-       // addChildItems();
+        // addChildItems();
         //SubcategoriesFragmentController
 
         return view;
@@ -159,11 +151,11 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
     private void castingViews(View view) {
         subCategoriesRecyclerView = view.findViewById(R.id.subCategoriesRecyclerView);
 
-       // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
-      //  gridRecylerView =view.findViewById(R.id.gridRecyclerView);
-     //   servicesRecyclerView= view.findViewById(R.id.servicesRecyclerView);
+        // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
+        //  gridRecylerView =view.findViewById(R.id.gridRecyclerView);
+        //   servicesRecyclerView= view.findViewById(R.id.servicesRecyclerView);
 
-       
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -184,7 +176,7 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
         }*/
     }
 
-   @Override
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -192,10 +184,10 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
 
     //@Override
     //public void onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
-      //  createRecyclerView(subCategoryModelList);
+    //  createRecyclerView(subCategoryModelList);
     //}
     @Override
-    public void  onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
+    public void onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
         createRecyclerView(subCategoryModelList);
     }
 
@@ -219,86 +211,74 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
     }
 
     private void createRecyclerView(List<SubCategoryModel> subCategoryModelList) {
+        List<SubCategoryModel> list = new ArrayList<>();
+        int index = 0;
+        for (SubCategoryModel item : subCategoryModelList) {
+            item.setType(SubCategoriesAdapter.TYPE_HEADER);
+            list.add(item);
+
+            for (ServiceModel services : item.getServices()) {
+                SubCategoryModel model = new SubCategoryModel();
+                model.setType(SubCategoriesAdapter.TYPE_ITEM);
+                model.setServices(Arrays.asList(services));
+                model.setHeaderIndex(index);
+                model.setSubCategoryId(item.getSubCategoryId());
+                list.add(model);
+            }
+            item.setHeaderIndex(index++);
+        }
+        SubCategoriesAdapter subCategoriesAdapter = new SubCategoriesAdapter(getActivity(), list);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
+        subCategoriesRecyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (subCategoriesAdapter.getItemViewType(position)) {
+                    case SubCategoriesAdapter.TYPE_HEADER:
+                        return 2;
+                    case SubCategoriesAdapter.TYPE_ITEM:
+                        return 1;
+                    default:
+                        return -1;
+                }
+            }
+        });
         subCategoriesRecyclerView.setHasFixedSize(true);
-        subCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        SubCategoriesAdapter subCategoriesAdapter = new SubCategoriesAdapter(getActivity(), subCategoryModelList);
+        subCategoriesAdapter.setHasStableIds(false);
         subCategoriesRecyclerView.setAdapter(subCategoriesAdapter);
         subCategoriesAdapter.setSubCategoriesItemclickListener(this);
         ProgressBarHelper.dismiss(getActivity());
 
-     /*   gridAdapter = new GridAdapter(requireContext(), gridItemList);
-        gridRecylerView.setAdapter(gridAdapter);
-        gridRecylerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
-        // Add data to the gridItemList
-        gridItemList.add("Item 1");
-        gridItemList.add("Item 2");
-        gridItemList.add("Item 3");
-        gridItemList.add("Item 4");*/
-        // Add more items as needed
-
-      //  gridAdapter.notifyDataSetChanged();
-
-
-        //GridLayoutManager gridLayoutManager= new GridLayoutManager(requireContext(),2);
-      //  gridRecyclerView.setLayoutManager(gridLayoutManager);
-
-        //List<String> data = new ArrayList<>();
-// Populate the 'data' list with your data
-
-       // GridAdapter adapter = new GridAdapter(data, requireContext());
-        //gridRecyclerView.setAdapter(adapter);
     }
-  /*  private void createServiceRecyclerView(List<ServiceModel> serviceModelList) {
-        servicesRecyclerView.setHasFixedSize(true);
-        servicesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ServicesRecyclerViewAdapter servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(getActivity(), serviceModelList);
-        servicesRecyclerView.setAdapter(servicesRecyclerViewAdapter);
-        servicesRecyclerViewAdapter.setServicesRecyclerViewItemClickListener(this);
-       // ProgressBarHelper.dismiss(getActivity());
-       // servicesRecyclerView.setHasFixedSize(true);
-       // int spanCount = 2;
-       /* servicesRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(),2));
-        ServicesRecyclerViewAdapter servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(getActivity(), serviceModelList);
-        servicesRecyclerView.setAdapter(servicesRecyclerViewAdapter);
-        servicesRecyclerViewAdapter.setServicesRecyclerViewItemClickListener(this);
-       // ProgressBarHelper.dismiss(getActivity());
-    }*/
 
-
-    //@Override
-    //public void onFailureResponse(String failureReason) {
-     //   ProgressBarHelper.dismiss(getActivity());
-   //}
 
     @Override
     public void onItemClick(SubCategoryModel subCategoryModel) {
         ServicesFragment servicesFragment = new ServicesFragment();
-       // servicesRecyclerView.setVisibility(View.VISIBLE);
-         // subCategoriesRecyclerView.setVisibility(View.INVISIBLE);
-    //  Toast.makeText(getActivity(),"item is clicked",Toast.LENGTH_SHORT).show();
-       Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putParcelable("subCategoryModel", subCategoryModel);
-      //  Fragment SubServicesFragment;
+        //  Fragment SubServicesFragment;
 
-       servicesFragment.setArguments(bundle);
+        servicesFragment.setArguments(bundle);
         addToFragmentContainer(servicesFragment, true, SERVICES_FRAGMENT_TAG);
     }
-   /* @Override
-    public void onServiceItemClick(ServiceModel serviceModel) {
+
+    @Override
+    public void onItemClick(ServiceModel serviceModel) {
         Log.d("serviceModel", serviceModel.toString());
         Bundle bundle = new Bundle();
         bundle.putParcelable("serviceModel", serviceModel);
-        bundle.putString("subCategoryId", subCategoryModel.getSubCategoryId());
+        bundle.putString("subCategoryId", serviceModel.getSubCategoryId());
         if (serviceModel.getSubServiceId().equals("0")) {
             ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
             serviceDetailsFragment.setArguments(bundle);
             addToFragmentContainer(serviceDetailsFragment, true, SERVICE_DETAIL_FRAGMENT_TAG);
         } else {
-            addToFragmentContainer(SubServicesFragment.newInstance(serviceModel, subCategoryModel.getSubCategoryId()), true,
+            addToFragmentContainer(SubServicesFragment.newInstance(serviceModel, serviceModel.getSubCategoryId()), true,
                     SUB_SERVICE_DETAIL_FRAGMENT_TAG);
         }
-    }*/
+    }
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -310,8 +290,6 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
         fragmentTransaction.replace(R.id.customer_fragments_container, fragment, tag);
         fragmentTransaction.commitAllowingStateLoss();
     }
-
-
 
 
     /**

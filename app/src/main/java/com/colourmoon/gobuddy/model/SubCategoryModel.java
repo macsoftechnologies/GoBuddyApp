@@ -5,21 +5,45 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class SubCategoryModel implements Parcelable {
 
-    @SerializedName("sid")
+//    @SerializedName("sid")
+    @SerializedName("id")
     private String subCategoryId;
 
     @SerializedName("sub_category")
     private String subCategoryName;
 
+    private List<ServiceModel> services;
+
     @SerializedName("isChecked")
     private boolean isCategoryChecked;
+
+    private int type;
+    private boolean isShow;
+
+    private int headerIndex;
 
     protected SubCategoryModel(Parcel in) {
         subCategoryId = in.readString();
         subCategoryName = in.readString();
+        services = in.createTypedArrayList(ServiceModel.CREATOR);
         isCategoryChecked = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(subCategoryId);
+        dest.writeString(subCategoryName);
+        dest.writeTypedList(services);
+        dest.writeByte((byte) (isCategoryChecked ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<SubCategoryModel> CREATOR = new Creator<SubCategoryModel>() {
@@ -58,21 +82,45 @@ public class SubCategoryModel implements Parcelable {
         this.isCategoryChecked = isCategoryChecked;
     }
 
+    public SubCategoryModel() {
+
+    }
+
     public SubCategoryModel(String subCategoryId, String subCategoryName, boolean isCategoryChecked) {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.isCategoryChecked = isCategoryChecked;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<ServiceModel> getServices() {
+        return services;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(subCategoryId);
-        parcel.writeString(subCategoryName);
-        parcel.writeByte((byte) (isCategoryChecked ? 1 : 0));
+    public void setServices(List<ServiceModel> services) {
+        this.services = services;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void setShow(boolean show) {
+        isShow = show;
+    }
+
+    public int getHeaderIndex() {
+        return headerIndex;
+    }
+
+    public void setHeaderIndex(int headerIndex) {
+        this.headerIndex = headerIndex;
     }
 }

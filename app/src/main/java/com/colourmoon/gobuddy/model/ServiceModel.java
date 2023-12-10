@@ -3,15 +3,31 @@ package com.colourmoon.gobuddy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ServiceModel implements Parcelable {
 
+    @SerializedName("sid")
     private String serviceId;
+    @SerializedName("title")
     private String serviceTitle;
+    @SerializedName("price")
     private String servicePrice;
+    @SerializedName("presponsibility")
     private String serviceProviderResponsibility;
+    @SerializedName("cresponsibility")
     private String serviceCustomerResponsibility;
+    @SerializedName("note")
     private String serviceNote;
+
+    @SerializedName("sub_services")
     private String subServiceId;
+
+    private String subCategoryId;
+
+    public ServiceModel() {
+
+    }
 
     public ServiceModel(String serviceId, String serviceTitle, String servicePrice, String serviceProviderResponsibility, String serviceCustomerResponsibility, String serviceNote, String subServiceId) {
         this.serviceId = serviceId;
@@ -74,6 +90,9 @@ public class ServiceModel implements Parcelable {
     }
 
     public String getSubServiceId() {
+        if (subServiceId == null) {
+            return "0";
+        }
         return subServiceId;
     }
 
@@ -91,5 +110,13 @@ public class ServiceModel implements Parcelable {
         parcel.writeString(serviceCustomerResponsibility);
         parcel.writeString(serviceNote);
         parcel.writeString(subServiceId);
+    }
+
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(String subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 }
