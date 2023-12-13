@@ -220,6 +220,8 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
             for (ServiceModel services : item.getServices()) {
                 SubCategoryModel model = new SubCategoryModel();
                 model.setType(SubCategoriesAdapter.TYPE_ITEM);
+                //Bug Fix: SubCategoryId is missing in payment
+                services.setSubCategoryId(item.getSubCategoryId());
                 model.setServices(Arrays.asList(services));
                 model.setHeaderIndex(index);
                 model.setSubCategoryId(item.getSubCategoryId());
