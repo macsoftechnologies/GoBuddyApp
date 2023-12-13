@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -16,16 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.colourmoon.gobuddy.R;
@@ -76,8 +76,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     private ImageView homeHelpBtn;
     private SliderLayout homesliderLayout;
     private ViewPager viewPager;
-   // private boolean isBiometricAuthenticated = false;
-   // private androidx.biometric.BiometricPrompt biometricPrompt;
+    // private boolean isBiometricAuthenticated = false;
+    // private androidx.biometric.BiometricPrompt biometricPrompt;
     //private BiometricPrompt.PromptInfo promptInfo;
     // private ImageSliderAdapter imageSliderAdapter;
     // private Handler sliderHandler = new Handler(Looper.myLooper());
@@ -105,10 +105,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
+        biometricManager = BiometricManager.from(getActivity());
     }
-
-
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -118,7 +116,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
         //  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         //  ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-         
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_home, container, false);
 
@@ -141,14 +139,11 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
        }*/
 
 
-
-
-
         //   startAutoSlider();
 
         // Initialize and set the imageSliderAdapter for the viewPager
-     //   imageSliderAdapter = new ImageSliderAdapter(getActivity());
-    //    viewPager.setAdapter(imageSliderAdapter);
+        //   imageSliderAdapter = new ImageSliderAdapter(getActivity());
+        //    viewPager.setAdapter(imageSliderAdapter);
  
         
    /*     viewPager = view.findViewById(R.id.imageSlider);
@@ -173,15 +168,12 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         HomeFragmentController.getInstance().callGetCustomerServicesApi();
 
 
-        
-
         homeLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), OnBoardingLoginActivity.class));
             }
         });
-
 
 
         homeHelpBtn.setOnClickListener(new View.OnClickListener() {
@@ -200,8 +192,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             }
         });
-      
-        
+
 
         return view;
     }
@@ -261,9 +252,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homeLoginBtn = view.findViewById(R.id.toolBarLoginBtn);
         homeHelpBtn = view.findViewById(R.id.toolBarQuestionBtn);
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
-      //  viewPager = view.findViewById(R.id.adds_imageSlider);
+        //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
-
 
 
     @Override
@@ -276,20 +266,25 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
-   //         if (homeLoginBtn.getVisibility() == View.VISIBLE) {
-     //           homeLoginBtn.setVisibility(View.GONE);
-       //     }
+            //         if (homeLoginBtn.getVisibility() == View.VISIBLE) {
+            //           homeLoginBtn.setVisibility(View.GONE);
+            //     }
             homeLoginBtn.setText("");
             if (homeHelpBtn.getVisibility() == View.VISIBLE) {
                 homeHelpBtn.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 homeLoginBtn.setText(getResources().getString(R.string.login));
             }
+            if (isFingerPrintAuthorized == false) {
+                bioPrint();
+
+            }
+
         }
         ProfileFragmentController.getInstance().getProfileDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
         ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
@@ -311,7 +306,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         });
     }
 
-        @Override
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -393,6 +388,94 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
     }
 
+    androidx.biometric.BiometricPrompt biometricPrompt;
+    BiometricManager biometricManager;
+
+    BiometricPrompt.PromptInfo promptInfo;
+    private int REQUEST_CODE = 1000;
+    public static boolean isFingerPrintAuthorized = false;
+
+    private void bioPrint() {
+
+        switch (biometricManager.canAuthenticate()) {
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+                Toast.makeText(getActivity(), "device has no finger print option", Toast.LENGTH_SHORT).show();
+                break;
+
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                Toast.makeText(getActivity(), "not working", Toast.LENGTH_SHORT).show();
+                break;
+
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+//                final Intent enrollIntent = new Intent(Settings.ACTION_BIOMETRIC_ENROLL);
+//                enrollIntent.putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+//                        BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+//                startActivityForResult(enrollIntent, REQUEST_CODE);
+                break;
+//                Toast.makeText(getActivity(), "Device has no finger print Assigned", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Use four digit pin code to access", Toast.LENGTH_SHORT).show();
+//                break;
+
+        }
+        Executor executor = ContextCompat.getMainExecutor(getActivity());
+        biometricPrompt = new androidx.biometric.BiometricPrompt(getActivity(), executor, new androidx.biometric.BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                    // Handle negative button action (cancel) if necessary
+                    // For example, show PIN login dialog
+                    biometricPrompt.cancelAuthentication();
+
+                    Toast.makeText(getActivity(), "Authentication canceled by user", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                } else {
+                    // Handle other authentication errors if necessary
+                    handleAuthenticationFailure(errorCode, errString.toString());
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull androidx.biometric.BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                isFingerPrintAuthorized = true;
+//                Toast.makeText(getActivity(), "Login Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                getActivity().finish();
+            }
+
+
+        });
+        promptInfo = new androidx.biometric.BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Gobuddy")
+                .setDescription("Use finger Print to login")
+                .setNegativeButtonText("Cancel")
+                //.setDeviceCredentialAllowed(true)
+
+                .build();
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                biometricPrompt.authenticate(promptInfo);
+            }
+        }, 1000);
+
+    }
+
+    private void handleAuthenticationFailure(int errorCode, String errorMessage) {
+        // Handle authentication failure here
+        // For example, display an error message to the user
+        Toast.makeText(getActivity(), "Authentication failed: " + errorMessage, Toast.LENGTH_SHORT).show();
+        // You can also provide an option for the user to retry authentication
+        // Or switch to an alternative authentication method (e.g., PIN entry)
+    }
 
 
 }

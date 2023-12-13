@@ -23,6 +23,9 @@ public class ServiceModel implements Parcelable {
     @SerializedName("sub_services")
     private String subServiceId;
 
+
+    private String sub_image;
+
     private String subCategoryId;
 
     public ServiceModel() {
@@ -118,5 +121,13 @@ public class ServiceModel implements Parcelable {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
+    }
+
+    public String getSub_image() {
+        return sub_image;
+    }
+
+    public void setSub_image(String sub_image) {
+        this.sub_image = sub_image;
     }
 }

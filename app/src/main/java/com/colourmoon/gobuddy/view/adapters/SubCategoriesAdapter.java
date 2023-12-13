@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.colourmoon.gobuddy.ChildAdapter;
+import com.bumptech.glide.Glide;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
@@ -93,6 +94,11 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             SubCategoryModel subCategoryModel = subCategoryModelList.get(i);
             try {
                 subCategoriesViewHolder.subCategoryTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
+                Glide.with(context)
+                        .load(subCategoryModel.getServices().get(0).getSub_image())
+                        .placeholder(R.drawable.app_icon)
+                        .error(R.drawable.app_icon)
+                        .into(subCategoriesViewHolder.imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }

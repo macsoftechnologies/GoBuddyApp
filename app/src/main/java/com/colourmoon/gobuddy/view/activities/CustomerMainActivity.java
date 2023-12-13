@@ -62,16 +62,14 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
+        bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
         //bottomNavigationView = findViewById(R.id.customer_bottom_navigation_view);
-       bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
         bottomNavigationView.setItemIconTintList(null);
 
         if (savedInstanceState == null) {
-          bottomNavigationView.setSelectedItemId(R.id.cust_home);
+            bottomNavigationView.setSelectedItemId(R.id.cust_home);
         }
-
-
 
 
         if (getIntent() != null && getIntent().hasExtra("screen_type")) {
@@ -156,7 +154,7 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
     }
 
 
-      private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()) {
@@ -306,5 +304,11 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
     @Override
     public void onLogoutFailure(String failureMessage) {
         Utils.getInstance().showSnackBarOnCustomerScreen(failureMessage, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CustomerHomeFragment.isFingerPrintAuthorized = false;
     }
 }
