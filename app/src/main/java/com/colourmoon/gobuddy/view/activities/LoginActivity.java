@@ -3,6 +3,7 @@ package com.colourmoon.gobuddy.view.activities;
 import android.content.Intent;
 
 import com.colourmoon.gobuddy.FingerPrintActivity;
+import com.colourmoon.gobuddy.VerifyOtpActivity;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
@@ -175,12 +176,12 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
           public void afterTextChanged(Editable editable) {
               String pin = editable.toString();
               if (pin.length() == 4) {
-                  Toast.makeText(LoginActivity.this, "PIN is correct", Toast.LENGTH_SHORT).show();
+               //   Toast.makeText(LoginActivity.this, "PIN is correct", Toast.LENGTH_SHORT).show();
                   checkAndCallLogin();
                   // Proceed with the login process or other actions
               } else {
                   // PIN is incorrect, show an error message
-                  Toast.makeText(LoginActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                 // Toast.makeText(LoginActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
                   // Handle incorrect PIN scenario (e.g., show error message to the user)
               }
 
@@ -198,15 +199,16 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         // for getting the input from user
         GetTextFromFields();
         // validates inputs and returns if any failures
-        if (!validateEmail() | !validatePassword()) {
+        //if (!validateEmail() | !validatePassword()) {
+        if(!validateEmail()){
             return;
         } else {
             ProgressBarHelper.show(LoginActivity.this, "Logging In.....\nPlease Wait!!!");
             String fcmToken = FcmTokenPreference.getInstance(getApplicationContext()).getFcmToken();
             Map<String, String> loginMap = new HashMap<>();
             loginMap.put("phone_number", log_emailData);
-            loginMap.put("password", log_passData);
-            loginMap.put("token", fcmToken);
+           // loginMap.put("password", log_passData);
+            //loginMap.put("token", fcmToken);
             LoginController.getInstance().callLoginApi(loginMap);
             LoginController.getInstance().setLoginControllerResponseListener(LoginActivity.this);
         }
@@ -241,11 +243,12 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     }
 
     private boolean validateEmail() {
+        String phoneNumber = log_emailData.trim();
         if (log_emailData.isEmpty()) {
-          Toast.makeText(this,"Please enter your email",Toast.LENGTH_SHORT).show();
+          Toast.makeText(this,"Please enter your  mobile number",Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (log_emailData.length() != 10) {
+        else if (!phoneNumber.matches("\\+?\\d{10}")) {
             Toast.makeText(LoginActivity.this, "Please Enter a Valid Mobile Number", Toast.LENGTH_SHORT).show();
             // reg_cus_phone_editText.setError("Please Enter a Valid Mobile Number");
             return false;
@@ -257,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
     private boolean validatePassword() {
         if (log_passData.isEmpty()) {
-            Toast.makeText(this,"Please enter your Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please enter your pin or update your app",Toast.LENGTH_SHORT).show();
             return false;
         } else {
             login_pass_editText.setError(null);
@@ -268,8 +271,10 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     @Override
     public void onSuccessResponse(LoginResponseModel loginResponseModel) {
         ProgressBarHelper.dismiss(this);
-        Log.d("response", loginResponseModel.getMessage());
-        if (loginResponseModel.getStatus().equals("valid")) {
+        generateOtpAndNavigate(loginResponseModel);
+      //  Log.d("response", loginResponseModel.getMessage());
+
+      /*  if (loginResponseModel.getStatus().equals("valid")) {
             if (loginResponseModel.getIsOtpVerified().equals("0")) {
                 Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
                 intent.putExtra("user_id", loginResponseModel.getUserId());
@@ -282,7 +287,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                     Toast.makeText(this, "LoggedIn as Customer", Toast.LENGTH_SHORT).show();
                     UserSessionManagement.getInstance(this).createLoginSession(loginResponseModel.getUserId(), false);
                     Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-                    intent.putExtra("enableFingerprint", true);
+                   // intent.putExtra("enableFingerprint", true);
                      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
@@ -295,14 +300,30 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             }
         } else {
             new DialogHelper(this).showAlert(loginResponseModel.getMessage(), "Attention");
-        }
+        }*/
     }
+
 
 
     @Override
     public void onFailureResponse(String failureReason) {
         ProgressBarHelper.dismiss(this);
         Toast.makeText(this, failureReason, Toast.LENGTH_SHORT).show();
+    }
+    private void generateOtpAndNavigate(LoginResponseModel loginResponseModel) {
+        if (loginResponseModel.getStatus().equals("valid")) {
+            // Assuming you have a method to generate OTP and pass necessary data
+            String userId = loginResponseModel.getUserId();
+            // Generate OTP logic
+
+            Intent intent = new Intent(LoginActivity.this, VerifyOtpActivity.class);
+            intent.putExtra("user_id", userId);
+            startActivity(intent);
+        } else {
+            // Handle invalid login status (if needed)
+            Toast.makeText(this, loginResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

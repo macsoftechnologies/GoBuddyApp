@@ -15,10 +15,14 @@ public class ServiceCategoryModel implements Serializable {
     @SerializedName("image")
     private String serviceImageUrl;
 
-    public ServiceCategoryModel(String serviceId, String serviceName, String serviceImageUrl) {
+    @SerializedName("count")
+    private String serviceCount;
+
+    public ServiceCategoryModel(String serviceId, String serviceName, String serviceImageUrl,String serviceCount) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.serviceImageUrl = serviceImageUrl;
+        this.serviceCount= serviceCount;
     }
 
     public String getServiceId() {
@@ -31,5 +35,9 @@ public class ServiceCategoryModel implements Serializable {
 
     public String getServiceImageUrl() {
         return serviceImageUrl;
+    }
+
+    public String getServiceCount() {
+        return serviceCount;
     }
 }

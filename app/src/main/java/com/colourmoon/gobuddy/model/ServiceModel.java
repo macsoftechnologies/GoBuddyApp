@@ -23,7 +23,7 @@ public class ServiceModel implements Parcelable {
     @SerializedName("sub_services")
     private String subServiceId;
 
-
+   @SerializedName("service_image")
     private String sub_image;
 
     private String subCategoryId;
@@ -32,7 +32,7 @@ public class ServiceModel implements Parcelable {
 
     }
 
-    public ServiceModel(String serviceId, String serviceTitle, String servicePrice, String serviceProviderResponsibility, String serviceCustomerResponsibility, String serviceNote, String subServiceId) {
+    public ServiceModel(String serviceId, String serviceTitle, String servicePrice, String serviceProviderResponsibility, String serviceCustomerResponsibility, String serviceNote, String subServiceId,String sub_image) {
         this.serviceId = serviceId;
         this.serviceTitle = serviceTitle;
         this.servicePrice = servicePrice;
@@ -40,6 +40,7 @@ public class ServiceModel implements Parcelable {
         this.serviceCustomerResponsibility = serviceCustomerResponsibility;
         this.serviceNote = serviceNote;
         this.subServiceId = subServiceId;
+        this.sub_image = sub_image;
     }
 
     protected ServiceModel(Parcel in) {

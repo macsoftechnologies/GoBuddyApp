@@ -9,6 +9,7 @@ public class SearchModel {
     private String serviceCustomerResponsibility;
     private String serviceProviderResponsibility;
     private String serviceNoteResponsibility;
+    private String sub_image;
 
     public SearchModel(String serviceId, String subServiceId, String serviceTitle, String servicePrice,
                        String serviceSubCategoryId, String serviceCustomerResponsibility, String serviceProviderResponsibility, String serviceNoteResponsibility) {
@@ -20,6 +21,7 @@ public class SearchModel {
         this.serviceCustomerResponsibility = serviceCustomerResponsibility;
         this.serviceProviderResponsibility = serviceProviderResponsibility;
         this.serviceNoteResponsibility = serviceNoteResponsibility;
+        this.sub_image = sub_image;
     }
 
     public String getServiceId() {
@@ -52,5 +54,10 @@ public class SearchModel {
 
     public String getServiceNoteResponsibility() {
         return serviceNoteResponsibility;
+    }
+
+
+    public String getSub_image() {
+        return sub_image;
     }
 }

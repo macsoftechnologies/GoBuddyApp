@@ -174,19 +174,19 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
 
     private void onFlexibleTimeSelected() {
         flexibleTimeBtn.setTextColor(Color.WHITE);
-        flexibleTimeBtn.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
-        specificTimeBtn.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
+        flexibleTimeBtn.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorPrimary));
+        specificTimeBtn.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorPrimary));
         specificTimeBtn.setBackgroundColor(Color.WHITE);
-        specificTimeBtn.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.theme_rectangle_box));
+        specificTimeBtn.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.theme_rectangle_box));
         hideSpecificLayout();
     }
 
     private void onSpecificTimeSelected() {
         specificTimeBtn.setTextColor(Color.WHITE);
-        specificTimeBtn.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
-        flexibleTimeBtn.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
+        specificTimeBtn.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorPrimary));
+        flexibleTimeBtn.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorPrimary));
         flexibleTimeBtn.setBackgroundColor(Color.WHITE);
-        flexibleTimeBtn.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.theme_rectangle_box));
+        flexibleTimeBtn.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.theme_rectangle_box));
         hideFlexibleLayout();
     }
 
@@ -279,8 +279,9 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
         snackbar.show();
         snackbar.setActionTextColor(Color.WHITE);
         View sbView = snackbar.getView();
-        sbView.setBackgroundColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
+        sbView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.colorPrimary));
         TextView textView = sbView.findViewById(R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
     }
 }
+//Objects.requireNonNull(getActivity()),

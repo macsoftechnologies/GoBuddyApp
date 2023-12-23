@@ -1,5 +1,6 @@
 package com.colourmoon.gobuddy.serverinteractions;
 
+import com.colourmoon.gobuddy.VerifyOtpResponseModel;
 import com.colourmoon.gobuddy.model.CheckNumberRegistrationStausModel;
 import com.colourmoon.gobuddy.model.LoginResponseModel;
 import com.colourmoon.gobuddy.model.OtpVerificationResponseModel;
@@ -31,8 +32,13 @@ public interface GoBuddyApiInterface {
     Call<RegistrationResponseModel> providerRegistration(@FieldMap Map<String, String> providerRegistrationMap);
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("newlogin")
     Call<LoginResponseModel> login(@FieldMap Map<String, String> loginMap);
+
+    @FormUrlEncoded
+    @POST("verify_otp")
+    Call<VerifyOtpResponseModel> verifyOtp(@FieldMap Map<String, String> otpMap);
+
 
     @FormUrlEncoded
     @POST("check_user_name")

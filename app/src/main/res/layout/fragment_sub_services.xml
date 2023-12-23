@@ -12,12 +12,12 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_8sdp" />
 
-<TextView
+<!--<TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="olla"
     android:layout_gravity="bottom"
     android:gravity="center"
-    android:textSize="34dp"/>
+    android:textSize="34dp"/>-->
 
 </FrameLayout>

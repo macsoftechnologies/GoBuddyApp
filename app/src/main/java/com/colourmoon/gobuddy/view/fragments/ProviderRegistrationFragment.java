@@ -375,10 +375,11 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
     }
 
     private boolean validatePhone() {
-        if (reg_prov_phone_data.isEmpty()) {
+        String phoneNumber = reg_prov_phone_data.trim();
+        if (phoneNumber.isEmpty()) {
             Toast.makeText(getActivity(), "Please Enter your Phone Number", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (reg_prov_phone_data.length() != 10) {
+        } else if (!phoneNumber.matches("\\+?\\d{10}")) {
             Toast.makeText(getActivity(), "Please Enter a valid Mobile Number", Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -399,7 +400,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private boolean validatePassword() {
         if (reg_prov_pass_data.isEmpty()) {
-            Toast.makeText(getActivity(), "Please Enter your Password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please Enter your four digit Pin", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             reg_prov_pass_editText.setError(null);

@@ -186,15 +186,15 @@ public class ForgotPasswordFragment extends Fragment implements ForgotPasswordCo
 
     private boolean validatePassword() {
         if (forgotPass_newPassData.isEmpty()) {
-            forgotPass_newPass_editText.setError("Please Enter Your New Password");
+            forgotPass_newPass_editText.setError("Please Enter Your New Pin");
             return false;
 
         }else if (!isNumeric(forgotPass_newPassData)) {
-            forgotPass_newPass_editText.setError("Password should contain only integers");
+            forgotPass_newPass_editText.setError("Pin should contain only integers");
             return false;
         }
         else if (forgotPass_newPassData.length() != 4) {
-            forgotPass_newPass_editText.setError("Password should be exactly 4 digits long");
+            forgotPass_newPass_editText.setError("Pin should be exactly 4 digits long");
             return false;
         }
         else {
@@ -205,14 +205,14 @@ public class ForgotPasswordFragment extends Fragment implements ForgotPasswordCo
 
     private boolean validateConfirmPassword() {
         if (forgotPass_conPassData.isEmpty()) {
-            forgotPass_ConPass_editText.setError("Please Enter Your Confirm Password");
+            forgotPass_ConPass_editText.setError("Please Enter Your Confirm Pin");
             return false;
         }else if (!isNumeric(forgotPass_conPassData)) {
-            forgotPass_ConPass_editText.setError("Confirm password should contain only integers");
+            forgotPass_ConPass_editText.setError("Confirm pin should contain only integers");
             return false;
         }
         else if (forgotPass_conPassData.length() != 4) {
-            forgotPass_ConPass_editText.setError("Confirm password should be exactly 4 digits long");
+            forgotPass_ConPass_editText.setError("Confirm pin should be exactly 4 digits long");
             return false;
         }
         else if (!forgotPass_conPassData.equals(forgotPass_newPassData)) {

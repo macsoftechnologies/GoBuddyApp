@@ -32,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +92,10 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     private ImageView profileImageChangeBtn;
     private TextView updateProfileBtn;
     private EditText edtComment;
+
+    private LinearLayout progressBarLayout;
+    private ProgressBar progressBar;
+    private TextView textViewProgress;
 
     // variables
     private String profileName, profileEmail, profilePhoneNum, profileDob, profileAddress, profileImage, mCurrentPhotoPath;
@@ -162,10 +168,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
 
         updateProfileBtn.setOnClickListener(v -> {
             GetInputFromEditText();
-            if (!validateEmail() | !validateName() | !validateAddress() |
+            if (!validateEmail() | !validateName() | !validateAddress() | !validatePhone()|
                     !validateDateOfBirth() | !validateProfileImage()) {
                 return;
             } else {
+                showProgressBar();
                 ProfileFragmentController.getInstance().postProfileDetailsApiCall(createProfileMap());
             }
         });
@@ -200,6 +207,22 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         });
         return view;
     }
+
+    private void showProgressBar() {
+        if (progressBarLayout != null) {
+            progressBarLayout.setVisibility(View.VISIBLE);
+            textViewProgress.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideProgressBar() {
+        if (progressBarLayout != null) {
+            progressBarLayout.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "profile updated succesfully", Toast.LENGTH_SHORT).show();
+            textViewProgress.setVisibility(View.GONE);
+        }
+    }
+
 
     public void requestLocationPermissions() {
 
@@ -285,6 +308,12 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         updateProfileBtn = view.findViewById(R.id.profileUpdateBtn);
         profileImageView = view.findViewById(R.id.profileImageView);
         profileImageChangeBtn = view.findViewById(R.id.profileChangeImageBtn);
+        progressBarLayout = view.findViewById(R.id.progresbarlayout);
+        progressBarLayout.setVisibility(View.GONE); // Hide initially
+
+        progressBar = view.findViewById(R.id.progressBar);
+        textViewProgress = view.findViewById(R.id.textViewProgress);
+
 
     }
 
@@ -382,6 +411,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
 
     @Override
     public void onProfileUpdateSuccessResponse(String successResponse) {
+        hideProgressBar();
         if (from.equalsIgnoreCase("provider")) {
             Utils.getInstance().showSnackBarOnProviderScreen(successResponse, (ProviderMainActivity) getActivity());
         } else {

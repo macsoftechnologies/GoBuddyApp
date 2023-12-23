@@ -47,6 +47,7 @@ public class CustomerServicesRecyclerViewAdapter extends RecyclerView.Adapter<Cu
         Log.d("array", "" + i);
         ServiceCategoryModel serviceCategoryModel = serviceCategoryModelList.get(i);
         customerServicesViewHolder.customerServiceNameView.setText(serviceCategoryModel.getServiceName());
+        customerServicesViewHolder.serviceCountText.setText(" "+serviceCategoryModel.getServiceCount());
         Glide.with(context)
                 .load(serviceCategoryModel.getServiceImageUrl())
                 .centerCrop()
@@ -63,11 +64,13 @@ public class CustomerServicesRecyclerViewAdapter extends RecyclerView.Adapter<Cu
 
         private ImageView customerServiceImageView;
         private TextView customerServiceNameView;
+        private TextView serviceCountText;
 
         public CustomerServicesViewHolder(@NonNull View itemView) {
             super(itemView);
             customerServiceImageView = itemView.findViewById(R.id.customer_service_image);
             customerServiceNameView = itemView.findViewById(R.id.customer_service_name);
+            serviceCountText = itemView.findViewById(R.id.serviceCountText);
 
             customerServiceImageView .setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,6 +81,18 @@ public class CustomerServicesRecyclerViewAdapter extends RecyclerView.Adapter<Cu
                             servicesRecyclerViewItemClickListener.onItemClickListner(serviceCategoryModelList.get(position));
                         }
                     }
+                }
+            });
+            customerServiceNameView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (servicesRecyclerViewItemClickListener != null) {
+                            servicesRecyclerViewItemClickListener.onItemClickListner(serviceCategoryModelList.get(position));
+                        }
+                    }
+
                 }
             });
         }

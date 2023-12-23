@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.colourmoon.gobuddy.controllers.customercontrollers.SelectProviderFrag
 import com.colourmoon.gobuddy.model.ProviderModel;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.adapters.ProviderListRecyclerAdapter;
+import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHomeFragment;
 
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class SelectProviderFragment extends Fragment implements SelectProviderFr
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select Provider");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select, container, false);
+        redirectToHomeAfterDelay();
 
         castingViews(view);
 
@@ -67,6 +71,17 @@ public class SelectProviderFragment extends Fragment implements SelectProviderFr
         SelectProviderFragmentController.getInstance().setSelectFragmentControllerListener(this);
 
         return view;
+    }
+
+    private void redirectToHomeAfterDelay() {
+        final int REDIRECT_DELAY_MILLIS = 4000; // 2 seconds delay
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                redirectToHomeFragment();
+            }
+        }, REDIRECT_DELAY_MILLIS);
     }
 
     private void castingViews(View view) {
@@ -99,6 +114,17 @@ public class SelectProviderFragment extends Fragment implements SelectProviderFr
     @Override
     public void onProviderItemClick(ProviderModel providerModel) {
         addToFragmentContainer(ViewProviderFragment.newInstance(providerModel.getProviderId()), true, "ViewProviderFragmentTag");
+    }
+    private void redirectToHomeFragment() {
+        if (getActivity() != null) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            // Replace the current fragment with your HomeFragment
+            CustomerHomeFragment homeFragment = new CustomerHomeFragment();
+            fragmentTransaction.replace(R.id.customer_fragments_container, homeFragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
     }
 
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {

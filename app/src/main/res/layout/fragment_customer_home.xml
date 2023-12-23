@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_containe_home"
     android:orientation="vertical"
     tools:context=".view.fragments.customerFragments.CustomerHomeFragment">
 
@@ -17,6 +18,7 @@
 
         <ImageView
             android:id="@+id/toolBarQuestionBtn"
+            android:visibility="visible"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_gravity="end"
@@ -32,6 +34,14 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:src="@drawable/app_icon" />
+        <ImageView
+            android:id="@+id/add_location"
+            android:layout_width="@dimen/_40sdp"
+            android:visibility="gone"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_add_location_24"/>
+
 
         <TextView
             android:id="@+id/toolBarLoginBtn"
@@ -41,6 +51,18 @@
             android:drawableLeft="@drawable/ic_baseline_person_pin_24"
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="@string/login"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_11ssp" />
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/ic_baseline_person_pin_24"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="name"
             android:textAllCaps="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_11ssp" />
@@ -75,7 +97,7 @@
                 android:layout_height="@dimen/_180sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                app:indicator_visibility="invisible" />
+                app:indicator_visibility="visible" />
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

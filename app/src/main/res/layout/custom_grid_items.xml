@@ -19,10 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/imageView"
-                android:src="@drawable/app_icon"
+                android:id="@+id/subimageView"
+                android:src="@drawable/mask_group"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+                android:layout_height="100dp"/>
 
             <TextView
                 android:id="@+id/subcategoryTextview"
@@ -31,11 +32,28 @@
                 android:layout_marginTop="10dp"
                 android:background="#fff"
                 android:ellipsize="end"
+
                 android:maxLines="2"
                 android:padding="@dimen/_6sdp"
                 android:textColor="#000"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_10ssp"
                 tools:text=" &#8226;  Cleaning and Washing" />
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="@dimen/_12sdp"
+                android:layout_weight="0.4"
+                android:text="@string/indian_rupee"
+                android:textColor="#55901D"/>
+
+
+
         </LinearLayout>
 
 

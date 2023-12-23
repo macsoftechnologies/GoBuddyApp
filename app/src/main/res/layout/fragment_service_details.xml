@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
 
     android:scrollbars="none"
     tools:context=".view.fragments.customerflowfragments.ServiceDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+
+        android:layout_marginRight="@dimen/_15sdp"
         android:background="#FFFFFF"
         android:elevation="@dimen/_3sdp"
         android:orientation="vertical">
@@ -82,7 +81,7 @@
                 android:layout_width="40dp"
                 android:layout_height="25dp"
                 android:id="@+id/mike1"
-                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/mike"/>
 
@@ -121,7 +120,7 @@
                 android:layout_width="40dp"
                 android:layout_height="25dp"
                 android:id="@+id/mike2"
-                android:layout_marginLeft="@dimen/_42sdp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/mike"/>
         </LinearLayout>
@@ -155,7 +154,7 @@
                 android:layout_width="40dp"
                 android:layout_height="25dp"
                 android:id="@+id/mike3"
-                android:layout_marginLeft="@dimen/_169sdp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="@dimen/_10sdp"
 
                 android:src="@drawable/mike"/>
@@ -174,6 +173,7 @@
             android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_height="wrap_content">
             <CheckBox
                 android:id="@+id/check_box"
@@ -195,8 +195,8 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_45sdp"
             android:background="@color/colorPrimary"
             android:paddingLeft="@dimen/_70sdp"
             android:paddingTop="@dimen/_5sdp"

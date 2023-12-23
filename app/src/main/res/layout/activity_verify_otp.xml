@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".VerifyOtpActivity">
+
+  <EditText
+      android:id="@+id/userId"
+      android:visibility="invisible"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="100dp"/>
+    <EditText
+        android:id="@+id/otp"
+        android:hint="submit your otp"
+        android:layout_width="300dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/card_shape_input"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/submit_otp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Sumit"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/quantum_orange"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

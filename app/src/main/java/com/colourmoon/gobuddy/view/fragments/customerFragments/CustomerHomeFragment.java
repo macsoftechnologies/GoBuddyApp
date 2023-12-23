@@ -42,6 +42,7 @@ import com.colourmoon.gobuddy.view.adapters.CustomerServicesRecyclerViewAdapter;
 //import com.colourmoon.gobuddy.view.adapters.ImageSliderAdapter;
 
 //import com.colourmoon.gobuddy.view.adapters.ImageSliderAdapter;
+import com.colourmoon.gobuddy.view.fragments.ProfileFragment;
 import com.colourmoon.gobuddy.view.fragments.customerflowfragments.SearchFragment;
 import com.colourmoon.gobuddy.view.fragments.customerflowfragments.SubCategoriesFragment;
 import com.glide.slider.library.Animations.DescriptionAnimation;
@@ -72,7 +73,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     private RecyclerView customerServicesRecyclerView;
     private Timer sliderTimer;
     private EditText custHomeSearchView;
-    private TextView homeLoginBtn;
+    private TextView homeLoginBtn,name;
     private ImageView homeHelpBtn;
     private SliderLayout homesliderLayout;
     private ViewPager viewPager;
@@ -252,6 +253,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homeLoginBtn = view.findViewById(R.id.toolBarLoginBtn);
         homeHelpBtn = view.findViewById(R.id.toolBarQuestionBtn);
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
+        name = view.findViewById(R.id.profileName);
         //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
@@ -277,6 +279,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             homeLoginBtn.setText("");
             if (homeHelpBtn.getVisibility() == View.VISIBLE) {
                 homeHelpBtn.setVisibility(View.GONE);
+                homeLoginBtn.setVisibility(View.GONE);
+                name.setVisibility(View.VISIBLE);
             } else {
                 homeLoginBtn.setText(getResources().getString(R.string.login));
             }
@@ -290,7 +294,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
             @Override
             public void onProfileDetailsSuccessResponse(ProfileModel profileModel) {
-                homeLoginBtn.setText(profileModel.getName());
+              //  homeLoginBtn.setText(profileModel.getName());
+                name.setText(profileModel.getName());
 
             }
 
@@ -454,7 +459,8 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         promptInfo = new androidx.biometric.BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Gobuddy")
                 .setDescription("Use finger Print to login")
-                .setNegativeButtonText("Cancel")
+                .setDeviceCredentialAllowed(true)
+              // .setNegativeButtonText("Cancel")
                 //.setDeviceCredentialAllowed(true)
 
                 .build();

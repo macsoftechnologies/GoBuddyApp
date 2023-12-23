@@ -16,6 +16,9 @@ public class UserSessionManagement {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+
+    
+
     // private constructor
     private UserSessionManagement(Context mContext) {
         sharedPreferences = mContext.getSharedPreferences(USER_SESSION_PREF_NAME, Context.MODE_PRIVATE);

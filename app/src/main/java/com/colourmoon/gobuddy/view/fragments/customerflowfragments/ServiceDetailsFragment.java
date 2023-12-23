@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.helper.HtmlTagHelper;
 import com.colourmoon.gobuddy.model.ServiceModel;
+import com.colourmoon.gobuddy.model.SubCategoryModel;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SCHEDULE_FRAGMENT_TAG;
 
@@ -43,6 +44,7 @@ public class ServiceDetailsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private ServiceModel serviceModel;
+    private SubCategoryModel subCategoryModel;
     private TextToSpeech tts,tts1,tts2,tts3;
     private String subCategoryId;
     private TextView serviceTitleText, servicePriceText, serviceProviderRespText, serviceCustomerRespText, serviceNoteText, serviceDetailsNextBtn;
@@ -205,7 +207,7 @@ public class ServiceDetailsFragment extends Fragment {
             public void onInit(int provider) {
                 if (provider != TextToSpeech.ERROR) {
                     tts1.setLanguage(Locale.US);
-                     String providerSpeech = serviceModel.getServiceProviderResponsibility();
+                     String providerSpeech = serviceModel.getServiceCustomerResponsibility();
                     String providerSpeechtext= providerSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
                    // String textToSpeak = "Are you willing to place the order";
                     tts1.speak(providerSpeechtext, TextToSpeech.QUEUE_FLUSH, null, null);
@@ -223,7 +225,7 @@ public class ServiceDetailsFragment extends Fragment {
                 if (customer != TextToSpeech.ERROR) {
                     tts2.setLanguage(Locale.US);
                     // String note = serviceModel.getServiceNote();
-                    String customertextSpeech = serviceModel.getServiceCustomerResponsibility();
+                    String customertextSpeech = serviceModel.getServiceProviderResponsibility();
                    String customerSpeech= customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
                     tts2.speak(customerSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
                     isCustomerTTSPlaying = true;

@@ -121,7 +121,8 @@ public class HomeFragmentController {
                                 serviceCategoryModelArrayList.add(new ServiceCategoryModel(
                                         serviceJsonObject.getString("id"),
                                         serviceJsonObject.getString("category"),
-                                        serviceJsonObject.getString("image")
+                                        serviceJsonObject.getString("image"),
+                                        serviceJsonObject.getString("count")
                                 ));
                             }
                             if (homeFragmentControllerListener != null) {

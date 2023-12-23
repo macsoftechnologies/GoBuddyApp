@@ -69,7 +69,8 @@ public class ServicesFragmentController {
                                         jsonObject1.getString("presponsibility"),
                                         jsonObject1.getString("cresponsibility"),
                                         jsonObject1.getString("note"),
-                                        jsonObject1.getString("sub_services")
+                                        jsonObject1.getString("sub_services"),
+                                       jsonObject1.getString("service_image")
                                 ));
                             }
                             if (servicesFragmentControllerListener != null) {

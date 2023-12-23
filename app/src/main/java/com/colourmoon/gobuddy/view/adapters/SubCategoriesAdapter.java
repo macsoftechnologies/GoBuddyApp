@@ -93,7 +93,9 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             ServicesViewHolder subCategoriesViewHolder = (ServicesViewHolder) holder;
             SubCategoryModel subCategoryModel = subCategoryModelList.get(i);
             try {
+
                 subCategoriesViewHolder.subCategoryTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
+                subCategoriesViewHolder.pricetext.setText("  "+context.getResources().getString(R.string.indian_rupee)+" "+subCategoryModel.getServices().get(0).getServicePrice());
                 Glide.with(context)
                         .load(subCategoryModel.getServices().get(0).getSub_image())
                         .placeholder(R.drawable.app_icon)
@@ -132,13 +134,15 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class ServicesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView subCategoryTextView;
+        private TextView subCategoryTextView,pricetext;
         private ImageView imageView;
+
 
         public ServicesViewHolder(@NonNull View itemView) {
             super(itemView);
             subCategoryTextView = itemView.findViewById(R.id.subcategoryTextview);
             imageView = itemView.findViewById(R.id.imageView);
+            pricetext = itemView.findViewById(R.id.priceText);
 
             //    ChildRecyclerView = itemView.findViewById(R.id.child_recyclerview);
 

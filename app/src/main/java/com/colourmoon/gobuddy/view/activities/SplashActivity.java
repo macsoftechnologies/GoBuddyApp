@@ -34,7 +34,9 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
     private static final int UPDATE_REQUEST_CODE = 5001;
     private ImageView splashImageView;
     private AppUpdateManager appUpdateManager;
-   // private RelativeLayout fingerprintlayout;
+
+
+    // private RelativeLayout fingerprintlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +148,8 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
         /* Create an Intent that will start the home screen */
         Intent boardingIntent = new Intent(SplashActivity.this, OnBoardingActivity.class);
-        Intent fingerIntent = new Intent(SplashActivity.this, CustomerMainActivity.class);
-     //   Intent customerIntent= new Intent(SplashActivity.this,CustomerMainActivity.class);
+        //Intent fingerIntent = new Intent(SplashActivity.this, CustomerMainActivity.class);
+        Intent customerIntent= new Intent(SplashActivity.this,CustomerMainActivity.class);
         Intent providerIntent = new Intent(SplashActivity.this, ProviderMainActivity.class);
         if (firstStart) {
             startActivity(boardingIntent);
@@ -158,9 +160,10 @@ public class SplashActivity extends AppCompatActivity implements AppUpdateContro
             startActivity(providerIntent);
         }
 
+
        else {
-           // startActivity(customerIntent);
-          startActivity(fingerIntent);
+            startActivity(customerIntent);
+          //startActivity(fingerIntent);
         }
         finish();
     }

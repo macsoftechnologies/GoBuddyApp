@@ -2,7 +2,46 @@ package com.colourmoon.gobuddy.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
+import com.google.gson.annotations.SerializedName;
+
 public class LoginResponseModel {
+
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("message")
+    private String message;
+
+    @SerializedName("user_id")
+    private String userId;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+}
+
+/*public class LoginResponseModel {
 
     @SerializedName("status")
     private String status;
@@ -91,4 +130,4 @@ public class LoginResponseModel {
     public void setPresentUserType(String presentUserType) {
         this.presentUserType = presentUserType;
     }
-}
+}*/

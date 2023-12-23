@@ -136,7 +136,9 @@ public class SearchFragment extends Fragment implements SearchFragmentController
                 searchModel.getServiceProviderResponsibility(),
                 searchModel.getServiceCustomerResponsibility(),
                 searchModel.getServiceNoteResponsibility(),
-                searchModel.getSubServiceId()
+                searchModel.getSubServiceId(),
+                searchModel.getSub_image()
+
         );
 
         Bundle bundle = new Bundle();

@@ -54,7 +54,7 @@ public class CustomerMyJobsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Jobs");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Orders");
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_my_jobs, container, false);

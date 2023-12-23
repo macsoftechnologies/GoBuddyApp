@@ -49,6 +49,10 @@ public class LoginController {
                     if (loginControllerResponseListener != null) {
                         loginControllerResponseListener.onSuccessResponse(response.body());
                     }
+                }else {
+                    if (loginControllerResponseListener != null) {
+                        loginControllerResponseListener.onFailureResponse("Login request failed with code: " + response.code());
+                    }
                 }
             }
 

@@ -70,6 +70,7 @@ public class SearchFragmentController {
                                         searchJsonObject.getString("cresponsibility"),
                                         searchJsonObject.getString("presponsibility"),
                                         searchJsonObject.getString("note")
+
                                 ));
                             }
                             if (searchFragmentControllerListener != null) {
