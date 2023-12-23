@@ -88,6 +88,12 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyDataSetChanged();
                 }
             });
+            Glide.with(context)
+                    .load(subCategoryModel.getSubImage())
+                    .placeholder(R.drawable.app_icon)
+                    .error(R.drawable.app_icon)
+                    .into(subCategoriesViewHolder.imageView);
+
             subCategoriesViewHolder.itemView.setVisibility(View.VISIBLE);
         } else {
             ServicesViewHolder subCategoriesViewHolder = (ServicesViewHolder) holder;
@@ -95,7 +101,7 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             try {
 
                 subCategoriesViewHolder.subCategoryTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
-                subCategoriesViewHolder.pricetext.setText("  "+context.getResources().getString(R.string.indian_rupee)+" "+subCategoryModel.getServices().get(0).getServicePrice());
+                subCategoriesViewHolder.pricetext.setText("  " + context.getResources().getString(R.string.indian_rupee) + " " + subCategoryModel.getServices().get(0).getServicePrice());
                 Glide.with(context)
                         .load(subCategoryModel.getServices().get(0).getSub_image())
                         .placeholder(R.drawable.app_icon)
@@ -125,23 +131,25 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class SubCategoriesViewHolder extends RecyclerView.ViewHolder {
 
         private TextView subCategoryTextView;
+        private ImageView imageView;
 
         public SubCategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
             subCategoryTextView = itemView.findViewById(R.id.subcategoryTextview);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 
     public class ServicesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView subCategoryTextView,pricetext;
+        private TextView subCategoryTextView, pricetext;
         private ImageView imageView;
 
 
         public ServicesViewHolder(@NonNull View itemView) {
             super(itemView);
             subCategoryTextView = itemView.findViewById(R.id.subcategoryTextview);
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.subimageView);
             pricetext = itemView.findViewById(R.id.priceText);
 
             //    ChildRecyclerView = itemView.findViewById(R.id.child_recyclerview);
@@ -150,10 +158,12 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
                     if (subCategoriesItemclickListener != null) {
                         subCategoriesItemclickListener.onItemClick(subCategoryModelList.get(position).getServices().get(0));
                     }
+
+//                    if (subCategoriesItemclickListener != null) {
+//                        subCategoriesItemclickListener.onItemClick(subCategoryModelList.get(position));
 //                    }
                 }
             });

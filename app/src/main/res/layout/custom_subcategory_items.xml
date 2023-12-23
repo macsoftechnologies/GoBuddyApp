@@ -16,7 +16,17 @@
     android:background="?android:attr/selectableItemBackground">
 
 
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:src="@drawable/mask_group"
+        android:layout_margin="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/subcategoryTextview"
@@ -31,6 +41,10 @@
         android:textColor="#000"
         android:textSize="@dimen/_14ssp"
         tools:text=" &#8226;  Cleaning and Washing" />
+
+</LinearLayout>
+
+
 </androidx.cardview.widget.CardView>
 
 

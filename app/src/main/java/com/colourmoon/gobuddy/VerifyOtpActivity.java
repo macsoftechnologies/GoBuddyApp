@@ -75,17 +75,17 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
 
 
         if (verifyOtpResponseModel.getStatus().equals("valid")) {
-            LoginResponseModel loginResponseModel= new LoginResponseModel();
+//            LoginResponseModel loginResponseModel= new LoginResponseModel();
             if (verifyOtpResponseModel.getView_as().equalsIgnoreCase("customer")) {
                 Toast.makeText(this, "LoggedIn as Customer", Toast.LENGTH_SHORT).show();
-                UserSessionManagement.getInstance(this).createLoginSession(loginResponseModel.getUserId(), false);
+                UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), false);
                 Intent intent = new Intent(VerifyOtpActivity.this, CustomerMainActivity.class);
                 // intent.putExtra("enableFingerprint", true);
                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "LoggedIn as Provider", Toast.LENGTH_SHORT).show();
-                UserSessionManagement.getInstance(this).createLoginSession(loginResponseModel.getUserId(), true);
+                UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), true);
                 Intent intent = new Intent(VerifyOtpActivity.this, ProviderMainActivity.class);
                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

@@ -16,6 +16,9 @@ public class SubCategoryModel implements Parcelable {
     @SerializedName("sub_category")
     private String subCategoryName;
 
+    @SerializedName("sub_image")
+    private String subImage;
+
     private List<ServiceModel> services;
 
     @SerializedName("isChecked")
@@ -122,5 +125,13 @@ public class SubCategoryModel implements Parcelable {
 
     public void setHeaderIndex(int headerIndex) {
         this.headerIndex = headerIndex;
+    }
+
+    public String getSubImage() {
+        return subImage;
+    }
+
+    public void setSubImage(String subImage) {
+        this.subImage = subImage;
     }
 }
