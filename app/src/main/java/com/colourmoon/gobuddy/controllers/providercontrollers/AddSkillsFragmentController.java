@@ -77,6 +77,8 @@ public class AddSkillsFragmentController {
                                     subCategoryModelList.add(new SubCategoryModel(
                                             subSkillJsonObject.getString("sid"),
                                             subSkillJsonObject.getString("sub_category"),
+                                            subSkillJsonObject.getString("sub_image"),
+
                                             false
                                     ));
                                 }
@@ -136,6 +138,7 @@ public class AddSkillsFragmentController {
                                     subCategoryModelList.add(new SubCategoryModel(
                                             subSkillJsonObject.getString("sid"),
                                             subSkillJsonObject.getString("sub_category"),
+                                            subSkillJsonObject.getString("sub_image"),
                                             subSkillJsonObject.getString("checked_status").equals("0") ? false : true
                                     ));
                                 }

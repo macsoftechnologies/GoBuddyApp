@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
 
 
 
-
         //  Executor executor = ContextCompat.getMainExecutor(this);
 
         // this method is responsible for casting views in xml to java file
@@ -204,11 +203,11 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             return;
         } else {
             ProgressBarHelper.show(LoginActivity.this, "Logging In.....\nPlease Wait!!!");
-            String fcmToken = FcmTokenPreference.getInstance(getApplicationContext()).getFcmToken();
+
             Map<String, String> loginMap = new HashMap<>();
             loginMap.put("phone_number", log_emailData);
-           // loginMap.put("password", log_passData);
-            //loginMap.put("token", fcmToken);
+           //loginMap.put("password", log_passData);
+           // loginMap.put("token", fcmToken);
             LoginController.getInstance().callLoginApi(loginMap);
             LoginController.getInstance().setLoginControllerResponseListener(LoginActivity.this);
         }
@@ -314,10 +313,12 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         if (loginResponseModel.getStatus().equals("valid")) {
             // Assuming you have a method to generate OTP and pass necessary data
             String userId = loginResponseModel.getUserId();
+
             // Generate OTP logic
 
             Intent intent = new Intent(LoginActivity.this, VerifyOtpActivity.class);
             intent.putExtra("user_id", userId);
+           // intent.putExtra("token",fcmToken);
             startActivity(intent);
         } else {
             // Handle invalid login status (if needed)

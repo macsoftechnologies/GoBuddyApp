@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.colourmoon.gobuddy.controllers.commoncontrollers.VerifyOtpController;
 import com.colourmoon.gobuddy.helper.DialogHelper;
 import com.colourmoon.gobuddy.model.LoginResponseModel;
+import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.view.activities.CustomerMainActivity;
 import com.colourmoon.gobuddy.view.activities.OtpVerificationActivity;
@@ -39,6 +40,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
 
         if (intent != null) {
             String userId = intent.getStringExtra("user_id");
+
             userIdEditText.setText(userId);
         }
 
@@ -54,11 +56,14 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
     private void verifyOtp() {
         String userId = userIdEditText.getText().toString().trim();
         String enteredOtp = otpEditText.getText().toString().trim();
+        String fcmToken  = FcmTokenPreference.getInstance(getApplicationContext()).getFcmToken();;
+
 
         if (!userId.isEmpty() && !enteredOtp.isEmpty()) {
             Map<String, String> otpMap = new HashMap<>();
             otpMap.put("user_id", userId);
             otpMap.put("otp", enteredOtp);
+            otpMap.put("token",fcmToken);
 
             // Assuming VerifyOtpController is used for OTP verification
 

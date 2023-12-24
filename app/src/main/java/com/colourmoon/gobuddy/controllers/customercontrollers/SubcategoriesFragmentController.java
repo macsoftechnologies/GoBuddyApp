@@ -238,6 +238,8 @@ public class SubcategoriesFragmentController {
                                 SubCategoryModel categoryModel = new SubCategoryModel(
                                         jsonObject1.getString("id"),
                                         jsonObject1.getString("sub_category"),
+                                        jsonObject1.getString("sub_image"),
+
                                         false
                                 );
                                 categoryModel.setServices(serviceModelArrayList);

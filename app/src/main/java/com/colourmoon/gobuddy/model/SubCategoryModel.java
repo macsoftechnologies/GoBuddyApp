@@ -32,6 +32,7 @@ public class SubCategoryModel implements Parcelable {
     protected SubCategoryModel(Parcel in) {
         subCategoryId = in.readString();
         subCategoryName = in.readString();
+
         services = in.createTypedArrayList(ServiceModel.CREATOR);
         isCategoryChecked = in.readByte() != 0;
     }
@@ -89,10 +90,12 @@ public class SubCategoryModel implements Parcelable {
 
     }
 
-    public SubCategoryModel(String subCategoryId, String subCategoryName, boolean isCategoryChecked) {
+    public SubCategoryModel(String subCategoryId, String subCategoryName,String subImage, boolean isCategoryChecked) {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.subImage = subImage;
         this.isCategoryChecked = isCategoryChecked;
+
     }
 
     public List<ServiceModel> getServices() {

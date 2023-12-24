@@ -80,6 +80,8 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             SubCategoriesViewHolder subCategoriesViewHolder = (SubCategoriesViewHolder) holder;
             SubCategoryModel subCategoryModel = subCategoryModelList.get(i);
             subCategoriesViewHolder.subCategoryTextView.setText(subCategoryModel.getSubCategoryName());
+
+
             subCategoriesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,11 +90,19 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyDataSetChanged();
                 }
             });
+            String baseUrl = "https://admin.gobuddyindia.com/api/sub_category"; // Replace this with your base URL
+
+            String imageUrl = baseUrl + subCategoryModel.getSubImage();
             Glide.with(context)
-                    .load(subCategoryModel.getSubImage())
+                    .load(imageUrl)
                     .placeholder(R.drawable.app_icon)
                     .error(R.drawable.app_icon)
-                    .into(subCategoriesViewHolder.imageView);
+                    .into(subCategoriesViewHolder.imageView1);
+
+                   /* .load(imageUrl)
+                    .placeholder(R.drawable.app_icon)
+                    .error(R.drawable.app_icon)
+                    .into(subCategoriesViewHolder.imageView1);*/
 
             subCategoriesViewHolder.itemView.setVisibility(View.VISIBLE);
         } else {
@@ -100,7 +110,7 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             SubCategoryModel subCategoryModel = subCategoryModelList.get(i);
             try {
 
-                subCategoriesViewHolder.subCategoryTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
+                subCategoriesViewHolder.servicesTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
                 subCategoriesViewHolder.pricetext.setText("  " + context.getResources().getString(R.string.indian_rupee) + " " + subCategoryModel.getServices().get(0).getServicePrice());
                 Glide.with(context)
                         .load(subCategoryModel.getServices().get(0).getSub_image())
@@ -131,24 +141,24 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class SubCategoriesViewHolder extends RecyclerView.ViewHolder {
 
         private TextView subCategoryTextView;
-        private ImageView imageView;
+        private ImageView imageView1;
 
         public SubCategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
             subCategoryTextView = itemView.findViewById(R.id.subcategoryTextview);
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView1 = itemView.findViewById(R.id.imageView);
         }
     }
 
     public class ServicesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView subCategoryTextView, pricetext;
+        private TextView servicesTextView, pricetext;
         private ImageView imageView;
 
 
         public ServicesViewHolder(@NonNull View itemView) {
             super(itemView);
-            subCategoryTextView = itemView.findViewById(R.id.subcategoryTextview);
+            servicesTextView = itemView.findViewById(R.id.subcategoryTextview);
             imageView = itemView.findViewById(R.id.subimageView);
             pricetext = itemView.findViewById(R.id.priceText);
 
