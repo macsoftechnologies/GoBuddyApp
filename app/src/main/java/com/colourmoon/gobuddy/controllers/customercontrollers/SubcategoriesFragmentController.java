@@ -218,6 +218,7 @@ public class SubcategoriesFragmentController {
                     try {
                         String responseString = new String(response.body().bytes());
                         JSONObject jsonObject = new JSONObject(responseString);
+                        String imageBaseUrl = jsonObject.optString("base_url", "");
                         if (jsonObject.getString("status").equals("valid")) {
                             String subCateogryString = jsonObject.getString("sub_category");
                             JSONArray subCategoryJsonArray = new JSONArray(subCateogryString);
@@ -232,13 +233,16 @@ public class SubcategoriesFragmentController {
                                     Type listType = new TypeToken<List<ServiceModel>>() {
                                     }.getType();
                                     serviceModelArrayList = gson.fromJson(servicesString, listType);
+                                    for (ServiceModel serviceModel : serviceModelArrayList) {
+                                        serviceModel.setSub_image(imageBaseUrl + serviceModel.getSub_image());
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 SubCategoryModel categoryModel = new SubCategoryModel(
                                         jsonObject1.getString("id"),
                                         jsonObject1.getString("sub_category"),
-                                        jsonObject1.getString("sub_image"),
+                                        imageBaseUrl + jsonObject1.getString("sub_image"),
 
                                         false
                                 );

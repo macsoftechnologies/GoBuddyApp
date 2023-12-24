@@ -90,9 +90,9 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyDataSetChanged();
                 }
             });
-            String baseUrl = "https://admin.gobuddyindia.com/api/sub_category"; // Replace this with your base URL
+//            String baseUrl = "https://admin.gobuddyindia.com/api/sub_category"; // Replace this with your base URL
 
-            String imageUrl = baseUrl + subCategoryModel.getSubImage();
+            String imageUrl = subCategoryModel.getSubImage();
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.app_icon)
