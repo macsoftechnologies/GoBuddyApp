@@ -295,8 +295,11 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             @Override
             public void onProfileDetailsSuccessResponse(ProfileModel profileModel) {
               //  homeLoginBtn.setText(profileModel.getName());
-                name.setText(profileModel.getName());
+                String fullName = profileModel.getName();
+                String firstName = fullName.length() > 6 ? fullName.substring(0, 5) : fullName;
 
+// Set the text of the name element with the first five characters
+                name.setText(firstName+"....");
             }
 
             @Override

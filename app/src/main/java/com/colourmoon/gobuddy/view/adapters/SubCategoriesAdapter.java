@@ -111,11 +111,25 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             try {
 
                 subCategoriesViewHolder.servicesTextView.setText(subCategoryModel.getServices().get(0).getServiceTitle());
-                subCategoriesViewHolder.pricetext.setText("  " + context.getResources().getString(R.string.indian_rupee) + " " + subCategoryModel.getServices().get(0).getServicePrice());
+                String price = subCategoryModel.getServices().isEmpty() || subCategoryModel.getServices().get(0).getServicePrice() == null
+                        ? "" // If the service list is empty or the price is null, set an empty string
+                        : subCategoryModel.getServices().get(0).getServicePrice();
+
+                if (price.isEmpty()) {
+                    subCategoriesViewHolder.pricetext.setText("→");
+                    subCategoriesViewHolder.pricetext.setTextSize(25);// Set text to empty if price is empty
+                } else {
+                    String formattedPrice = "  " + context.getResources().getString(R.string.indian_rupee) + " " + price;
+                    subCategoriesViewHolder.pricetext.setText(formattedPrice);
+                    subCategoriesViewHolder.pricetext.setTextSize(15);
+                }
+
+                //subCategoriesViewHolder.pricetext.setText("  " + context.getResources().getString(R.string.indian_rupee) + " " + subCategoryModel.getServices().get(0).getServicePrice());
+                String serviceimageUrl = subCategoryModel.getServices().get(0).getSub_image();
                 Glide.with(context)
-                        .load(subCategoryModel.getServices().get(0).getSub_image())
-                        .placeholder(R.drawable.app_icon)
-                        .error(R.drawable.app_icon)
+                        .load(serviceimageUrl)
+                        .placeholder(R.drawable.mask_grouo)
+                        .error(R.drawable.mask_grouo)
                         .into(subCategoriesViewHolder.imageView);
             } catch (Exception e) {
                 e.printStackTrace();

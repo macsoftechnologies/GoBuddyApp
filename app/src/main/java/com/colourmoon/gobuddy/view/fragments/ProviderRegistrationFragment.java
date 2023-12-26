@@ -182,7 +182,8 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
                 return false;
             }
         });*/
-         reg_prov_pass_editText.addTextChangedListener(new TextWatcher() {
+      // validateAndCallRegister();
+      /*   reg_prov_pass_editText.addTextChangedListener(new TextWatcher() {
              @Override
              public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -197,10 +198,10 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
              public void afterTextChanged(Editable editable) {
                     String pin = editable.toString();
                     if(pin.length()==4){
-                        validateAndCallRegister();
+
                     }
              }
-         });
+         });*/
 
         reg_prov_address_editText.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,7 +293,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
 
     private void validateAndCallRegister() {
         GetInputTextFromFields();
-        if (!validateName() | !validateEmail() | !validatePassword() | !validatePhone() | !validateAddress() | !validateDateOfBirth() | !validateTermsAndConditionsCheckBox()) {
+        if (!validateName() | !validateEmail()  | !validatePhone() | !validateAddress() | !validateDateOfBirth() | !validateTermsAndConditionsCheckBox()) {
             return;
         } else {
             ProgressBarHelper.show(getActivity(), "Registering You.....\nPlease Wait!!!");
@@ -305,7 +306,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
         providerRegistrationMap.put("name", reg_prov_name_data);
         providerRegistrationMap.put("email", reg_prov_email_data);
         providerRegistrationMap.put("phone_number", reg_prov_phone_data);
-        providerRegistrationMap.put("password", reg_prov_pass_data);
+//        providerRegistrationMap.put("password", reg_prov_pass_data);
         providerRegistrationMap.put("dob", reg_prov_dateOfBirth_data);
         providerRegistrationMap.put("address", reg_prov_address_data);
         providerRegistrationMap.put("terms_and_conditions", "1");
@@ -331,14 +332,14 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
         reg_prov_phone_data = reg_prov_phone_editText.getEditText().getText().toString();
         reg_prov_dateOfBirth_data = reg_prov_dateOfBirth_editText.getEditText().getText().toString();
         reg_prov_address_data = reg_prov_address_editText.getEditText().getText().toString();
-        reg_prov_pass_data = reg_prov_pass_editText.getText().toString();
+       // reg_prov_pass_data = reg_prov_pass_editText.getText().toString();
     }
 
     private void castingViews(View view) {
         reg_prov_name_editText = view.findViewById(R.id.reg_provider_name_edittext);
         reg_prov_email_editText = view.findViewById(R.id.reg_provider_email_edittext);
         reg_prov_phone_editText = view.findViewById(R.id.reg_provider_phoneNum_edittext);
-        reg_prov_pass_editText = view.findViewById(R.id.reg_provider_pass_edittext);
+    //    reg_prov_pass_editText = view.findViewById(R.id.reg_provider_pass_edittext);
         reg_prov_address_editText = view.findViewById(R.id.reg_provider_address_edittext);
         reg_prov_dateOfBirth_editText = view.findViewById(R.id.reg_provider_dateofBirth_edittext);
         reg_prov_registerBtn = view.findViewById(R.id.reg_provider_registerBtn);

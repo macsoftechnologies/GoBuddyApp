@@ -31,7 +31,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Sumit"
+        android:text="@string/submit_otp"
         android:textColor="@color/white"
         android:backgroundTint="@color/quantum_orange"
         android:layout_gravity="center"/>

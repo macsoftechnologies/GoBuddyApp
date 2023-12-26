@@ -237,7 +237,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
                 return false;
             }
         });*/
-        reg_cus_pass_editText.addTextChangedListener(new TextWatcher() {
+        /*reg_cus_pass_editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -256,7 +256,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
                 }
 
             }
-        });
+        });*/
 
 
         return view;
@@ -264,7 +264,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
     private void validateAndCallRegister() {
         GetInputTextFromFields();
-        if (!validateEmail() | !validateName() | !validatePhone() | !validatePassword()) {
+        if (!validateEmail() | !validateName() | !validatePhone()) {
             return;
         } else {
             ProgressBarHelper.show(getActivity(), "Registering You.....\nPlease Wait!!!");
@@ -296,11 +296,11 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             customerRegistrationMap.put("place_id", placeId);
         }
 
-        if (reg_cus_name_data != null && reg_cus_email_data != null && reg_cus_phone_data != null && reg_cus_pass_data != null) {
+        if (reg_cus_name_data != null && reg_cus_email_data != null && reg_cus_phone_data != null ) {
             customerRegistrationMap.put("name", reg_cus_name_data);
             customerRegistrationMap.put("email", reg_cus_email_data);
             customerRegistrationMap.put("phone_number", reg_cus_phone_data);
-            customerRegistrationMap.put("password", reg_cus_pass_data);
+          //  customerRegistrationMap.put("password", reg_cus_pass_data);
             customerRegistrationMap.put("terms_and_conditions", "1");
             customerRegistrationMap.put("token", FcmTokenPreference.getInstance(getActivity()).getFcmToken());
         }
@@ -326,14 +326,14 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_email_data = reg_cus_email_editText.getEditText().getText().toString();
         reg_cus_phone_data = reg_cus_phone_editText.getEditText().getText().toString();
       //  reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
-        reg_cus_pass_data= reg_cus_pass_editText.getText().toString();
+       // reg_cus_pass_data= reg_cus_pass_editText.getText().toString();
     }
 
     private void castingViews(View view) {
         reg_cus_name_editText = view.findViewById(R.id.reg_name_edittext);
         reg_cus_email_editText = view.findViewById(R.id.reg_email_edittext);
         reg_cus_phone_editText = view.findViewById(R.id.reg_phoneNum_edittext);
-        reg_cus_pass_editText = view.findViewById(R.id.reg_pass_edittext);
+       // reg_cus_pass_editText = view.findViewById(R.id.reg_pass_edittext);
         reg_cus_backToLoginBtn = view.findViewById(R.id.reg_toLoginBtn);
         reg_cus_registerBtn = view.findViewById(R.id.reg_registerBtn);
      //   pin_setup=view.findViewById(R.id.pin_setup);

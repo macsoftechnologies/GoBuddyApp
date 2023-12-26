@@ -44,7 +44,7 @@ public class SubServicesRecyclerViewAdapter extends RecyclerView.Adapter<SubServ
     @Override
     public void onBindViewHolder(@NonNull SubServicesViewHolder holder, int position) {
         SubServiceModel subServiceModel = subServiceModelList.get(position);
-        holder.servicesCountText.setText(String.valueOf(position + 1));
+        holder.servicesCountText.setText("•");
         holder.servicesNameText.setText(subServiceModel.getSubServiceTitle());
         holder.servicesPriceText.setText(context.getResources().getString(R.string.indian_rupee) + subServiceModel.getSubServicePrice());
 

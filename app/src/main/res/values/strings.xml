@@ -206,6 +206,7 @@
     <string name="pin_code1"><b><u>Enter Pin code</u></b></string>
     <string name="pin_code2"><b><u>Enter Pin code</u></b></string>
     <string name="indian_rupeee">\u20B9</string>
+    <string name="submit_otp">Submit</string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

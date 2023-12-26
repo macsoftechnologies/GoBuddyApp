@@ -209,8 +209,9 @@ public class ServiceDetailsFragment extends Fragment {
                     tts1.setLanguage(Locale.US);
                      String providerSpeech = serviceModel.getServiceCustomerResponsibility();
                     String providerSpeechtext= providerSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
+                    String ps = providerSpeechtext.replaceAll("nbsp","");
                    // String textToSpeak = "Are you willing to place the order";
-                    tts1.speak(providerSpeechtext, TextToSpeech.QUEUE_FLUSH, null, null);
+                    tts1.speak(ps, TextToSpeech.QUEUE_FLUSH, null, null);
                     isProviderTTSPlaying = true;
 
                 }
@@ -227,7 +228,8 @@ public class ServiceDetailsFragment extends Fragment {
                     // String note = serviceModel.getServiceNote();
                     String customertextSpeech = serviceModel.getServiceProviderResponsibility();
                    String customerSpeech= customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
-                    tts2.speak(customerSpeech, TextToSpeech.QUEUE_FLUSH, null, null);
+                   String cs = customerSpeech.replaceAll("nbsp;","");
+                    tts2.speak(cs, TextToSpeech.QUEUE_FLUSH, null, null);
                     isCustomerTTSPlaying = true;
 
                 }
@@ -244,7 +246,8 @@ public class ServiceDetailsFragment extends Fragment {
                     String noteSpeech = serviceModel.getServiceNote();
                     //String textToSpeak = "Are you willing to place the order";
                     String noteText= noteSpeech.replaceAll("\\<.*?\\>|&nbsp; ","");
-                    tts3.speak(noteText, TextToSpeech.QUEUE_FLUSH, null, null);
+                    String nt = noteText.replaceAll("nbsp","");
+                    tts3.speak(nt, TextToSpeech.QUEUE_FLUSH, null, null);
                     isNoteTTSPlaying = true;
                 }
             }

@@ -197,10 +197,11 @@
                 android:inputType="textPassword"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>-->
-        <TextView
+      <!--  <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/pin_code1"
+            android:visibility="gone"
             android:gravity="start"
             android:layout_marginLeft="30dp"
             android:textSize="18dp"/>
@@ -210,7 +211,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/reg_provider_pass_edittext"
             android:layout_gravity="center"
-
+            android:visibility="gone"
             android:layout_marginTop="0dp"
             android:clickable="true"
             android:focusable="true"
@@ -220,7 +221,7 @@
             app:cornerRadius="5dp"
             app:fieldBgColor="#fff"
             app:highlightColor="@color/colorPrimary"
-            app:noOfFields="4" />
+            app:noOfFields="4" />-->
 
 
         <LinearLayout

@@ -95,8 +95,8 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
                 android:layout_height="@dimen/_180sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_9sdp"
                 app:indicator_visibility="visible" />
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
