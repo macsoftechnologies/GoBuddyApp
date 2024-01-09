@@ -230,14 +230,14 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
             item.setHeaderIndex(index++);
         }
         SubCategoriesAdapter subCategoriesAdapter = new SubCategoriesAdapter(getActivity(), list);
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false);
         subCategoriesRecyclerView.setLayoutManager(mLayoutManager);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 switch (subCategoriesAdapter.getItemViewType(position)) {
                     case SubCategoriesAdapter.TYPE_HEADER:
-                        return 2;
+                        return 3;
                     case SubCategoriesAdapter.TYPE_ITEM:
                         return 1;
                     default:

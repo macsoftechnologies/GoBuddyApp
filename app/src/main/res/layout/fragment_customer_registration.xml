@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:padding="12dp"
-                android:background="@drawable/card_shape_input"
+
                 android:inputType="text"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email_optional"
                 android:padding="12dp"
-                android:background="@drawable/card_shape_input"
+
                 android:inputType="textEmailAddress"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -93,9 +93,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="+91"
+                   android:hint="+91"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:padding="12dp"
 
                     android:focusable="false"
@@ -119,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/phoneNum"
-                    android:background="@drawable/card_shape_input"
+
                     android:imeOptions="actionNext"
                     android:padding="12dp"
                     android:inputType="number"

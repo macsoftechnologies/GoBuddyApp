@@ -3,8 +3,10 @@ package com.colourmoon.gobuddy.view.fragments.providerfragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -60,6 +62,9 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
         ViewAsController.ViewAsControllerListener {
 
     private boolean isEkycDone;
+    private static final String SWITCH_STATE_KEY = "switch_state";
+    private SharedPreferences sharedPreferences;
+
 
     // widgets
   /*  @BindView(R.id.providerSettings_payoutsBtn)
@@ -119,19 +124,52 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_provider_settings, container, false);
         ButterKnife.bind(this, view);
+        sharedPreferences = getActivity().getSharedPreferences("SwitchPreferences", Context.MODE_PRIVATE);
+
+        // Find the Switch by ID
+      //  vacationSwitch = view.findViewById(R.id.vacationSwitchBtn);
 
         ProgressBarHelper.show(getActivity(), "Synchronizing Settings");
         vacationModeStatusApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
         vacationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (buttonView.isPressed()) {
-                vacationModeApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
+                saveSwitchState(isChecked);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                if (isChecked) {
+                    builder.setTitle("Work Mode Activated")
+                            .setMessage("You are now in work mode.")
+                            .setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                } else {
+                    builder.setTitle("Vacation Mode Activated")
+                            .setMessage("You are now in vacation mode.")
+                            .setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                }
+
+                builder.show();
+
+                // Call the appropriate API based on the switch state
+                if (isChecked) {
+                    vacationModeApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
+                } else {
+                    // Add your vacation mode API call logic here
+                }
             }
         });
+        boolean savedSwitchState = sharedPreferences.getBoolean(SWITCH_STATE_KEY, false);
+        vacationSwitch.setChecked(savedSwitchState);
 
         LogoutController.getInstance().setLogoutControllerListener(this);
         ViewAsController.getInstance().setViewAsControllerListener(this);
 
         return view;
+    }
+
+    private void saveSwitchState(boolean isChecked) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SWITCH_STATE_KEY, isChecked);
+        editor.apply();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -246,6 +284,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                 t.printStackTrace();
                 Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), (ProviderMainActivity) getActivity());
                 vacationSwitch.setChecked(false);
+
             }
         });
     }
@@ -263,9 +302,10 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                         if (jsonObject.getString("status").equals("valid")) {
                             ProgressBarHelper.dismiss(getActivity());
                             if (jsonObject.getString("vacation_status").equalsIgnoreCase("2")) {
-                                vacationSwitch.setChecked(true);
+                                //vacationSwitch.setChecked(true);
+
                             } else {
-                                vacationSwitch.setChecked(false);
+                               //vacationSwitch.setChecked(false);
                             }
                             if (jsonObject.getString("ekyc").equals("2")) {
                                 ekycBtn.setText("e-Kyc -> Approved ");
@@ -292,10 +332,15 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                 ProgressBarHelper.dismiss(getActivity());
                 t.printStackTrace();
                 Utils.getInstance().showSnackBarOnProviderScreen(t.getLocalizedMessage(), (ProviderMainActivity) getActivity());
-                vacationSwitch.setChecked(false);
+                //updateVacationSwitch(true);
+              //  vacationSwitch.setChecked(false);
             }
         });
+
+
     }
+
+
 
     @OnClick(R.id.providerSettings_LogOutBtn)
     public void providerLogOutBtn(View view) {

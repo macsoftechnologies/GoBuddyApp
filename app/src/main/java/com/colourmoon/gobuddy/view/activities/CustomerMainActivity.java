@@ -278,7 +278,7 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
 
     @Override
     public void onCheckUserStatusFailureResponse(String failureReason) {
-        new DialogHelper(this).showAlert(failureReason + "\nAnd you will be logged out after few seconds", "Attention");
+      //  new DialogHelper(this).showAlert(failureReason + "\nAnd you will be logged out after few seconds", "Attention");
         stopCheckUserStatusTimerTask();
         logoutUser();
     }
@@ -309,6 +309,6 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CustomerHomeFragment.isFingerPrintAuthorized = false;
+      //  CustomerHomeFragment.isFingerPrintAuthorized = false;
     }
 }

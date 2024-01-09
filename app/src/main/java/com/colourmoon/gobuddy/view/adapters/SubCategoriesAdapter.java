@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,9 +86,22 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             subCategoriesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int previousSelectedHeaderIndex = selectedHeaderIndex; // Store the previously selected header index
+
                     selectedHeaderIndex = subCategoryModel.getHeaderIndex();
-                    subCategoryModel.setShow(!subCategoryModel.isShow());
+
+                    boolean sameItemClicked = previousSelectedHeaderIndex == selectedHeaderIndex;
+
+                    if (sameItemClicked) {
+                        selectedHeaderIndex = -1;
+                    }
+
+                    subCategoryModel.setShow(selectedHeaderIndex != -1 && subCategoryModel.getHeaderIndex() == selectedHeaderIndex);
+
                     notifyDataSetChanged();
+                    /*selectedHeaderIndex = subCategoryModel.getHeaderIndex();
+                    subCategoryModel.setShow(!subCategoryModel.isShow());
+                    notifyDataSetChanged();*/
                 }
             });
 //            String baseUrl = "https://admin.gobuddyindia.com/api/sub_category"; // Replace this with your base URL
@@ -105,6 +119,7 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     .into(subCategoriesViewHolder.imageView1);*/
 
             subCategoriesViewHolder.itemView.setVisibility(View.VISIBLE);
+
         } else {
             ServicesViewHolder subCategoriesViewHolder = (ServicesViewHolder) holder;
             SubCategoryModel subCategoryModel = subCategoryModelList.get(i);
@@ -117,6 +132,8 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (price.isEmpty()) {
                     subCategoriesViewHolder.pricetext.setText("→");
+                    subCategoriesViewHolder.pricetext.setGravity(Gravity.END);
+
                     subCategoriesViewHolder.pricetext.setTextSize(25);// Set text to empty if price is empty
                 } else {
                     String formattedPrice = "  " + context.getResources().getString(R.string.indian_rupee) + " " + price;
@@ -166,7 +183,7 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class ServicesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView servicesTextView, pricetext;
+        private TextView servicesTextView, pricetext,arrow;
         private ImageView imageView;
 
 
@@ -175,6 +192,7 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             servicesTextView = itemView.findViewById(R.id.subcategoryTextview);
             imageView = itemView.findViewById(R.id.subimageView);
             pricetext = itemView.findViewById(R.id.priceText);
+          //  arrow = itemView.findViewById(R.id.arrow_nxt);
 
             //    ChildRecyclerView = itemView.findViewById(R.id.child_recyclerview);
 

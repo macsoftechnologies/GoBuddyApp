@@ -1,5 +1,6 @@
 package com.colourmoon.gobuddy.serverinteractions;
 
+import com.colourmoon.gobuddy.SingleUserNotificationModel;
 import com.colourmoon.gobuddy.VerifyOtpResponseModel;
 import com.colourmoon.gobuddy.model.CheckNumberRegistrationStausModel;
 import com.colourmoon.gobuddy.model.LoginResponseModel;
@@ -22,7 +23,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface GoBuddyApiInterface {
-
     @FormUrlEncoded
     @POST("customer_register")
     Call<RegistrationResponseModel> customerRegistration(@FieldMap Map<String, String> customerRegistrationMap);
@@ -324,4 +324,8 @@ public interface GoBuddyApiInterface {
     @FormUrlEncoded
     @POST("check_user_status")
     Call<ResponseBody> checkUserStatus(@Field("user_id") String userId);
+
+   @FormUrlEncoded
+    @POST("Testorder_confirmed")
+    Call<SingleUserNotificationModel> checkNotification(@FieldMap Map<String, String> notificationmap);
 }

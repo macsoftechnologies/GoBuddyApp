@@ -1,8 +1,10 @@
 package com.colourmoon.gobuddy.view.activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 
 import com.colourmoon.gobuddy.FingerPrintActivity;
+import com.colourmoon.gobuddy.NotificationUserActivity;
 import com.colourmoon.gobuddy.VerifyOtpActivity;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
@@ -48,7 +50,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements LoginController.LoginControllerResponseListener, InternetConnectionListener, PinField.OnTextCompleteListener {
 
-    private TextView loginBtn, moveToRegisterBtn, forgotPassBtn;
+    private TextView loginBtn, moveToRegisterBtn, forgotPassBtn,nextbtn;
     private TextInputLayout login_email_editText;
     private SquarePinField  login_pass_editText;
     private String log_emailData, log_passData;
@@ -63,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getSupportActionBar().setTitle(getResources().getString(R.string.login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -150,6 +153,13 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
                 checkAndCallLogin();
             }
         });
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,NotificationUserActivity.class);
+                startActivity(intent);
+            }
+        });
 
        /* login_pass_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -221,9 +231,10 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
         login_email_editText = findViewById(R.id.login_email_edittext);
         login_pass_editText = findViewById(R.id.login_password_edittext);
         loginBtn = findViewById(R.id.login_loginBtn);
-        moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
-        forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
 
+        moveToRegisterBtn = findViewById(R.id.login_toRegisterBtn);
+       forgotPassBtn = findViewById(R.id.login_forgot_passBtn);
+       nextbtn = findViewById(R.id.nextbtn);
         login_pass_editText.setOnTextCompleteListener(this);
 
 

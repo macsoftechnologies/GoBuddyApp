@@ -1,7 +1,7 @@
 package com.colourmoon.gobuddy.view.activities;
 
 import android.content.Intent;
-
+import android.content.pm.ActivityInfo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class OnBoardingLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding_login);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //this method is responsible for casting all views in xml file with java file
         castingViews();
 

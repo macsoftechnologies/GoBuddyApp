@@ -19,11 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +76,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     private Timer sliderTimer;
     private EditText custHomeSearchView;
     private TextView homeLoginBtn,name;
-    private ImageView homeHelpBtn;
+    private ImageView homeHelpBtn,appimage,appimages,profilePerson;
     private SliderLayout homesliderLayout;
     private ViewPager viewPager;
     // private boolean isBiometricAuthenticated = false;
@@ -106,7 +108,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
-        biometricManager = BiometricManager.from(getActivity());
+    //    biometricManager = BiometricManager.from(getActivity());
     }
 
 
@@ -254,6 +256,9 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homeHelpBtn = view.findViewById(R.id.toolBarQuestionBtn);
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
         name = view.findViewById(R.id.profileName);
+        appimage = view.findViewById(R.id.toolBarIcon);
+        appimages= view.findViewById(R.id.toolBarIcons);
+        profilePerson = view.findViewById(R.id.profileperson);
         //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
@@ -276,30 +281,32 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             //         if (homeLoginBtn.getVisibility() == View.VISIBLE) {
             //           homeLoginBtn.setVisibility(View.GONE);
             //     }
-            homeLoginBtn.setText("");
-            if (homeHelpBtn.getVisibility() == View.VISIBLE) {
-                homeHelpBtn.setVisibility(View.GONE);
-                homeLoginBtn.setVisibility(View.GONE);
+            name.setText("");
+            if (homeHelpBtn.getVisibility() == View.GONE) {
+               // homeHelpBtn.setVisibility(View.GONE);
                 name.setVisibility(View.VISIBLE);
+                homeLoginBtn.setVisibility(View.GONE);
+              //  appimage.setVisibility(View.GONE);
+               // appimages.setVisibility(View.VISIBLE);
+
             } else {
                 homeLoginBtn.setText(getResources().getString(R.string.login));
             }
-            if (isFingerPrintAuthorized == false) {
-                bioPrint();
+         //   if (isFingerPrintAuthorized == false) {
+           //     bioPrint();
 
-            }
-
+            //}
         }
         ProfileFragmentController.getInstance().getProfileDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
         ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
             @Override
             public void onProfileDetailsSuccessResponse(ProfileModel profileModel) {
-              //  homeLoginBtn.setText(profileModel.getName());
-                String fullName = profileModel.getName();
-                String firstName = fullName.length() > 6 ? fullName.substring(0, 5) : fullName;
+               name.setText(profileModel.getName());
+               // String fullName = profileModel.getName();
+              //  String firstName = fullName.length() > 6 ? fullName.substring(0, 5) : fullName;
 
 // Set the text of the name element with the first five characters
-                name.setText(firstName+"....");
+               // name.setText(firstName+"....");
             }
 
             @Override
@@ -396,7 +403,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
     }
 
-    androidx.biometric.BiometricPrompt biometricPrompt;
+   /* androidx.biometric.BiometricPrompt biometricPrompt;
     BiometricManager biometricManager;
 
     BiometricPrompt.PromptInfo promptInfo;
@@ -484,7 +491,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         Toast.makeText(getActivity(), "Authentication failed: " + errorMessage, Toast.LENGTH_SHORT).show();
         // You can also provide an option for the user to retry authentication
         // Or switch to an alternative authentication method (e.g., PIN entry)
-    }
+    }*/
 
 
 }

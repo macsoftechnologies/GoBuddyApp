@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.colourmoon.gobuddy.controllers.commoncontrollers.VerifyOtpController;
@@ -25,6 +27,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
 
     private EditText userIdEditText,otpEditText;
     private Button submitButton;
+    private TextView token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +55,22 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
         });
 
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
     private void verifyOtp() {
         String userId = userIdEditText.getText().toString().trim();
         String enteredOtp = otpEditText.getText().toString().trim();
         String fcmToken  = FcmTokenPreference.getInstance(getApplicationContext()).getFcmToken();;
+
+        String token = FcmTokenPreference.getInstance(getApplicationContext()).getFcmToken();
+       /* if (token != null) {
+            Log.d("FCMToken", "FCM Token: " + token);
+        } else {
+            Log.d("FCMToken", "FCM Token not found");
+        }*/
 
 
         if (!userId.isEmpty() && !enteredOtp.isEmpty()) {
@@ -64,6 +78,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
             otpMap.put("user_id", userId);
             otpMap.put("otp", enteredOtp);
             otpMap.put("token",fcmToken);
+
+
+
 
             // Assuming VerifyOtpController is used for OTP verification
 

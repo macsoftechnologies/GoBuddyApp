@@ -17,6 +17,7 @@ public class FcmTokenPreference {
     public static synchronized FcmTokenPreference getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new FcmTokenPreference(context);
+
         }
         return mInstance;
     }

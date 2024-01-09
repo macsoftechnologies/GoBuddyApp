@@ -64,7 +64,7 @@ public class CheckUserStatusController {
                         e.printStackTrace();
                     }
                 } else {
-                    if (checkUserStatusControllerListener != null) {
+                    if (checkUserStatusControllerListener != null) { 
                         checkUserStatusControllerListener.onCheckUserStatusFailureResponse("No Response From Server");
                     }
                 }
