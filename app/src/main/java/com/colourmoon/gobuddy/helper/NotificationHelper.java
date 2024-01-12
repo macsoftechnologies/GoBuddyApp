@@ -58,11 +58,11 @@ public class NotificationHelper {
 
     public void createJobNotification(JSONObject jsonObject) throws JSONException {
 
-        String title = jsonObject.getString("title");
-        String message = jsonObject.getString("body");
-        String notificationType = jsonObject.getString("type");
-        String order_id = jsonObject.getString("order_id");
-        String id = jsonObject.getString("id");
+        String title = jsonObject.optString("title");
+        String message = jsonObject.optString("body");
+        String notificationType = jsonObject.optString("type");
+        String order_id = jsonObject.optString("order_id");
+        String id = jsonObject.optString("id");
         //    String userType = jsonObject.getString("user_type");
 
         // this method creates notification channels only for api levels above 26

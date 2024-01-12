@@ -23,7 +23,7 @@ public class MyFirebaseCloudMessagingService extends FirebaseMessagingService {
                 JSONObject jsonObject = new JSONObject(remoteMessage.getData());
                 Log.d("PushNotifydata", jsonObject.toString());
 
-                if (jsonObject.getString("type").equalsIgnoreCase("chatting")) {
+                if ("chatting".equalsIgnoreCase(jsonObject.optString("type",""))) {
                     NotificationHelper.getInstance(getApplicationContext()).createChatNotification(
                             jsonObject.getString("title"),
                             jsonObject.getString("body"),

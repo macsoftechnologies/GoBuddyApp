@@ -52,30 +52,30 @@ public class CheckUserStatusController {
                         String responseString = new String(response.body().bytes());
                         JSONObject jsonObject = new JSONObject(responseString);
                         if (jsonObject.getString("status").equals("valid")) {
-                            if (checkUserStatusControllerListener != null) {
-                                checkUserStatusControllerListener.onCheckUserStatusSuccessResponse(jsonObject.getString("message"));
-                            }
+//                            if (checkUserStatusControllerListener != null) {
+//                                checkUserStatusControllerListener.onCheckUserStatusSuccessResponse(jsonObject.getString("message"));
+//                            }
                         } else {
-                            if (checkUserStatusControllerListener != null) {
-                                checkUserStatusControllerListener.onCheckUserStatusFailureResponse(jsonObject.getString("message"));
-                            }
+//                            if (checkUserStatusControllerListener != null) {
+//                                checkUserStatusControllerListener.onCheckUserStatusFailureResponse(jsonObject.getString("message"));
+//                            }
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    if (checkUserStatusControllerListener != null) { 
-                        checkUserStatusControllerListener.onCheckUserStatusFailureResponse("No Response From Server");
-                    }
+//                    if (checkUserStatusControllerListener != null) {
+//                        checkUserStatusControllerListener.onCheckUserStatusFailureResponse("No Response From Server");
+//                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                if (checkUserStatusControllerListener != null) {
-                    checkUserStatusControllerListener.onCheckUserStatusFailureResponse(t.getLocalizedMessage());
-                }
+//                if (checkUserStatusControllerListener != null) {
+//                    checkUserStatusControllerListener.onCheckUserStatusFailureResponse(t.getLocalizedMessage());
+//                }
             }
         });
     }
