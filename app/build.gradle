@@ -20,8 +20,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 33
 
-        versionCode 24
-        versionName "2.7.6"
+        versionCode 25
+        versionName "2.7.7"
         archivesBaseName = "GoBuddy-V$versionCode($versionName)"
 
 
