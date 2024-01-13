@@ -34,7 +34,8 @@
                 android:ellipsize="end"
                android:layout_marginLeft="10dp"
                 android:textStyle="bold"
-                android:maxLines="2"
+                android:maxLines="3"
+                android:lines="3"
                 android:textSize="@dimen/_10ssp"
                 tools:text="Cleaning and \n Washingjjkksnnxskjjsjsjsj" />
 
@@ -50,7 +51,6 @@
                android:layout_gravity="start"
 
                 android:textSize="@dimen/_10sdp"
-                android:layout_weight="0.4"
                 android:text="@string/indian_rupee"
                 android:textColor="#55901D"/>
 
