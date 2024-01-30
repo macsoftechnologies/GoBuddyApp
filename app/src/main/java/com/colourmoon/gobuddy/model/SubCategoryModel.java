@@ -37,6 +37,17 @@ public class SubCategoryModel implements Parcelable {
         isCategoryChecked = in.readByte() != 0;
     }
 
+    public SubCategoryModel(String sid, String sub_category, boolean b) {
+        this.subCategoryId = sid;
+        this.subCategoryName = sub_category;
+        this.isCategoryChecked = b;
+
+    }
+
+    public SubCategoryModel() {
+
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(subCategoryId);
@@ -86,9 +97,7 @@ public class SubCategoryModel implements Parcelable {
         this.isCategoryChecked = isCategoryChecked;
     }
 
-    public SubCategoryModel() {
 
-    }
 
     public SubCategoryModel(String subCategoryId, String subCategoryName,String subImage, boolean isCategoryChecked) {
         this.subCategoryId = subCategoryId;

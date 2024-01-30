@@ -109,8 +109,8 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
             String imageUrl = subCategoryModel.getSubImage();
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.app_icon)
-                    .error(R.drawable.app_icon)
+                    .placeholder(R.drawable.card_round_shaped)
+                    .error(R.drawable.card_round_shaped)
                     .into(subCategoriesViewHolder.imageView1);
 
                    /* .load(imageUrl)
@@ -145,8 +145,8 @@ public class SubCategoriesAdapter extends RecyclerView.Adapter<RecyclerView.View
                 String serviceimageUrl = subCategoryModel.getServices().get(0).getSub_image();
                 Glide.with(context)
                         .load(serviceimageUrl)
-                        .placeholder(R.drawable.mask_grouo)
-                        .error(R.drawable.mask_grouo)
+                        .placeholder(R.drawable.card_round_shaped)
+                        .error(R.drawable.card_round_shaped)
                         .into(subCategoriesViewHolder.imageView);
             } catch (Exception e) {
                 e.printStackTrace();

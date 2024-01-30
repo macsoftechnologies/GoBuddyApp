@@ -142,7 +142,7 @@
                     android:maxLines="1"
                     android:paddingTop="@dimen/_7sdp"
                     android:paddingBottom="@dimen/_7sdp"
-                    android:text="At work"
+                    android:text="At Vacation"
                     android:textColor="#000"
                     android:textSize="@dimen/_18ssp" />
 

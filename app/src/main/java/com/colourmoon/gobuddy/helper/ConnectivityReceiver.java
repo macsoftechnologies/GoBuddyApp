@@ -13,6 +13,7 @@ public class ConnectivityReceiver extends BroadcastReceiver {
 
     public ConnectivityReceiver() {
         super();
+
     }
 
     @Override
