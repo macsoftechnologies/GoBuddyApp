@@ -34,6 +34,8 @@ import com.colourmoon.gobuddy.view.alertdialogs.PaymentBottomSheetDialog;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +57,7 @@ import static com.colourmoon.gobuddy.utilities.Constants.PAYTM_MERCHANT_ID;
 import static com.colourmoon.gobuddy.utilities.Constants.PAYTM_WEBSITE;
 
 public class onGoingJobsFragment extends Fragment implements
-        CustomerOnGoingJobsAdapter.CustomerOnGoingAdapterOnClickListener,
+        CustomerOnGoingJobsAdapter.CustomerOnGoingAdapterOnClickListener, PaymentResultListener,
         OnGoingFragmentController.OnGoingFragmentControllerListener, PaytmController.PaytmControllerListener, PaytmPaymentTransactionCallback, PaymentBottomSheetDialog.PaymentBottomSheetDialogListener, ChangePaymentModeController.ChangePaymentControllerListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -95,7 +97,7 @@ public class onGoingJobsFragment extends Fragment implements
     private ImageView noJobsImageView;
     // data members
     private CustomerJobModel customerJobModel;
-    private String paymentType;
+    private String paymentType,amount;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -140,6 +142,18 @@ public class onGoingJobsFragment extends Fragment implements
         this.customerJobModel = customerJobModel;
         orderId = customerJobModel.getOrderId();
         id = customerJobModel.getJobId();
+       // UserSessionManagement.getInstance(getActivity()).setJobid(customerJobModel.getJobId());
+      //  Toast.makeText(getContext(), "jobid"+UserSessionManagement.getInstance(getContext()).getJobid(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "jid"+id, Toast.LENGTH_SHORT).show();
+        if("online".equalsIgnoreCase(customerJobModel.getPaymentMode())){
+            amount = customerJobModel.getRemaining_amount();
+        }
+        else{
+            amount = customerJobModel.getTotalAmount();
+
+        }
+
+
         totalAmount = customerJobModel.getTotalAmount();
         PaymentBottomSheetDialog paymentBottomSheetDialog = PaymentBottomSheetDialog.getInstance();
         paymentBottomSheetDialog.setPaymentBottomSheetDialogListener(this);
@@ -152,15 +166,20 @@ public class onGoingJobsFragment extends Fragment implements
     }
 
     private void createAlertDilaog(String orderId) {
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Pay by Cash Alert")
                 .setIcon(R.drawable.ic_logout_icon)
                 .setMessage("Have you paid money to the provider")
                 .setCancelable(false)
                 .setNegativeButton("Cancel", (dialog, which) -> {
+                    // Toast.makeText(getContext(), "id "+orderId, Toast.LENGTH_SHORT).show();
                     dialog.cancel();
                 })
-                .setPositiveButton("paid", (dialogInterface, i) -> jobDoneByCustomerApiCall(dialogInterface, orderId))
+                .setPositiveButton("paid", (dialogInterface, i) ->
+                        jobDoneByCustomerApiCall(dialogInterface, orderId));
+
+
         ;
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -259,6 +278,7 @@ public class onGoingJobsFragment extends Fragment implements
 
         //finally starting the payment transaction
         Service.startPaymentTransaction(getActivity(), true, true, this);
+
     }
 
     @Override
@@ -274,6 +294,8 @@ public class onGoingJobsFragment extends Fragment implements
         ProgressBarHelper.dismiss(getActivity());
         Utils.getInstance().showSnackBarOnCustomerScreen(failureReason, getActivity());
         Log.d("paytmResponse", "failed due to" + failureReason);
+
+
     }
 
     @Override
@@ -343,6 +365,7 @@ public class onGoingJobsFragment extends Fragment implements
     public void onEventSelected(String type) {
         paymentType = type;
         Map<String, String> changePaymentModeMap = new HashMap<>();
+
         changePaymentModeMap.put("order_id", id);
         changePaymentModeMap.put("payment_mode", paymentType);
         ChangePaymentModeController.getInstance().changePaymentModeApiCall(changePaymentModeMap);
@@ -358,24 +381,78 @@ public class onGoingJobsFragment extends Fragment implements
         String PAYTM_CALLBACK_URL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + uniqueOrderId;
         if (paymentType.equalsIgnoreCase("cash")) {
             createAlertDilaog(id);
-        } else if (paymentType.equalsIgnoreCase("online")) {
-            Map<String, String> paytmMap = new HashMap<>();
-            paytmMap.put("MID", PAYTM_MERCHANT_ID);
-            paytmMap.put("ORDER_ID", uniqueOrderId);
-            paytmMap.put("CUST_ID", UserSessionManagement.getInstance(getActivity()).getUserId());
-            paytmMap.put("INDUSTRY_TYPE_ID", PAYTM_INDUSTRY_TYPE);
-            paytmMap.put("CHANNEL_ID", PAYTM_CHANNEL_ID);
-            paytmMap.put("TXN_AMOUNT", totalAmount);
-            paytmMap.put("WEBSITE", PAYTM_WEBSITE);
-            paytmMap.put("CALLBACK_URL", PAYTM_CALLBACK_URL);
-            ProgressBarHelper.show(getActivity(), "Redirecting to Payment Gateway");
-            PaytmController.getInstance().getChecksumHashApiCall(paytmMap);
-            PaytmController.getInstance().setPaytmControllerListener(this);
+        }
+        else if (paymentType.equalsIgnoreCase("online")) {
+
+              UserSessionManagement.getInstance(getActivity()).setJobid(id);
+
+         //   Toast.makeText(getContext(), "id"+UserSessionManagement.getInstance(getContext()).getJobid(), Toast.LENGTH_SHORT).show();
+
+
+            Checkout checkout = new Checkout();
+
+          //  checkout.setKeyID("rzp_test_B54BlMynixkzHI");
+            checkout.setKeyID("rzp_live_ZdGjJKZdukGGzL");
+            try {
+                JSONObject options = new JSONObject();
+
+                options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.jpg");
+                // options.put("order_id", order_id);//from response of step 3.
+                options.put("theme.color", "#3399cc");
+                options.put("currency", "INR");
+                //   options.put("ORDER_ID", uniqueOrderId);
+                options.put("currency", "INR");
+
+                // Determine the amount
+                // Calculate 15%
+
+                float amt = Float.parseFloat(amount)*100;
+                int a = (int)amt;
+
+                options.put("amount", a);
+
+                JSONObject preFill = new JSONObject();
+
+
+                options.put("prefill", preFill);
+
+                checkout.open(getActivity(), options);
+            }
+            catch (Exception e) {
+                Log.e("Razorpay", "Error in starting Razorpay Checkout", e);
+                //errortxt.setText("msg"+e.getMessage());
+            }
+//            Map<String, String> paytmMap = new HashMap<>();
+//            paytmMap.put("MID", PAYTM_MERCHANT_ID);
+//            paytmMap.put("ORDER_ID", uniqueOrderId);
+//            paytmMap.put("CUST_ID", UserSessionManagement.getInstance(getActivity()).getUserId());
+//            paytmMap.put("INDUSTRY_TYPE_ID", PAYTM_INDUSTRY_TYPE);
+//            paytmMap.put("CHANNEL_ID", PAYTM_CHANNEL_ID);
+//            paytmMap.put("TXN_AMOUNT", totalAmount);
+//            paytmMap.put("WEBSITE", PAYTM_WEBSITE);
+//            paytmMap.put("CALLBACK_URL", PAYTM_CALLBACK_URL);
+//            ProgressBarHelper.show(getActivity(), "Redirecting to Payment Gateway");
+            //        PaytmController.getInstance().getChecksumHashApiCall(paytmMap);
+//            PaytmController.getInstance().setPaytmControllerListener(this);
         }
     }
 
     @Override
     public void onChangePaymentModeFailure(String failureResponse) {
         Utils.getInstance().showSnackBarOnCustomerScreen(failureResponse, getActivity());
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+        ProgressBarHelper.dismiss(getActivity());
+
+        Toast.makeText(getContext(), "Payment is successful", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Toast.makeText(getContext(),"payment is failure try again",Toast.LENGTH_SHORT).show();
+
     }
 }

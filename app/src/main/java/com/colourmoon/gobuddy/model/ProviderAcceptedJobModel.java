@@ -23,6 +23,10 @@ public class ProviderAcceptedJobModel {
     private String isJobCompletedStatus;
     private String totalAmount;
 
+
+    private String paidamount;
+    private String remainingamount;
+
     public ProviderAcceptedJobModel(String id, String orderId, String serviceDate, String serviceTime, String serviceTitle,
                                     String subServiceTitle, String providerResponsibility, String customerResponsibility,
                                     String note, String location, String locality, String gender, String name, String latitude,
@@ -49,6 +53,8 @@ public class ProviderAcceptedJobModel {
         this.isJobCompletedStatus = isJobCompletedStatus;
         this.paymentMode = paymentMode;
         this.totalAmount = totalAmount;
+        this.remainingamount = remainingamount;
+        this.paidamount = paidamount;
     }
 
     public ProviderAcceptedJobModel(String id, String orderId, String serviceDate, String serviceTime, String serviceTitle,
@@ -74,11 +80,14 @@ public class ProviderAcceptedJobModel {
         this.dateAndTime = dateAndTime;
         this.totalAmount = totalAmount;
         this.paymentMode = paymentMode;
+        this.remainingamount = remainingamount;
+        this.paidamount = paidamount;
+
     }
 
     public ProviderAcceptedJobModel(String id, String orderId, String serviceDate, String serviceTime, String serviceTitle,
                                     String subServiceTitle, String location, String locality, String dateAndTime,
-                                    String totalAmount, String paymentMode) {
+                                    String totalAmount, String paymentMode,String paidamount,String remainamount) {
         this.id = id;
         this.orderId = orderId;
         this.serviceDate = serviceDate;
@@ -90,6 +99,8 @@ public class ProviderAcceptedJobModel {
         this.dateAndTime = dateAndTime;
         this.totalAmount = totalAmount;
         this.paymentMode = paymentMode;
+        this.remainingamount = remainamount;
+        this.paidamount = paidamount;
     }
 
 
@@ -176,4 +187,13 @@ public class ProviderAcceptedJobModel {
     public String getIsJobCompletedStatus() {
         return isJobCompletedStatus;
     }
+
+    public String getPaidamount() {
+        return paidamount;
+    }
+
+    public String getRemainingamount() {
+        return remainingamount;
+    }
+
 }

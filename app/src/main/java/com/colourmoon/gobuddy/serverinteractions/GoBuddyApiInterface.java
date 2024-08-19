@@ -1,11 +1,15 @@
 package com.colourmoon.gobuddy.serverinteractions;
 
+import com.colourmoon.gobuddy.LocationResponseModel;
+import com.colourmoon.gobuddy.LocationbasedCategoriesModel;
 import com.colourmoon.gobuddy.SingleUserNotificationModel;
+import com.colourmoon.gobuddy.SliderImagesResponse;
 import com.colourmoon.gobuddy.VerifyOtpResponseModel;
 import com.colourmoon.gobuddy.model.CheckNumberRegistrationStausModel;
 import com.colourmoon.gobuddy.model.LoginResponseModel;
 import com.colourmoon.gobuddy.model.OtpVerificationResponseModel;
 import com.colourmoon.gobuddy.model.RegistrationResponseModel;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import java.util.Map;
 
@@ -35,6 +39,7 @@ public interface GoBuddyApiInterface {
     @POST("newlogin")
     Call<LoginResponseModel> login(@FieldMap Map<String, String> loginMap);
 
+
     @FormUrlEncoded
     @POST("verify_otp")
     Call<VerifyOtpResponseModel> verifyOtp(@FieldMap Map<String, String> otpMap);
@@ -56,6 +61,23 @@ public interface GoBuddyApiInterface {
 
     @GET("categories")
     Call<ResponseBody> getCustomerServices();
+
+    @GET("locations")
+    Call<LocationResponseModel> getLocations();
+
+
+    @FormUrlEncoded
+    @POST("sliders_basedonlocations")
+    Call<SliderImagesResponse> getSliderImages(@FieldMap Map<String,String>  locationId);
+
+    @FormUrlEncoded
+    @POST("locationbasedoncategories")
+    Call<ResponseBody> getLocationCategorys(@FieldMap Map<String,String> locationid);
+
+    @FormUrlEncoded
+    @POST("locationbasedsub_category")
+    Call<ResponseBody> getLocationSubCategorys(@FieldMap Map<String,String> sublocationcategorysMap);
+
 
     @FormUrlEncoded
     @POST("edit_skills_categories")
@@ -91,6 +113,10 @@ public interface GoBuddyApiInterface {
     @FormUrlEncoded
     @POST("tutorial")
     Call<ResponseBody> getTutorials(@Field("user_id") String userId);
+
+    @FormUrlEncoded
+    @POST("locationbasedontutorial")
+    Call<ResponseBody> getLocationTutorials(@FieldMap Map<String,String> locationId);
 
     @FormUrlEncoded
     @POST("sub_category")
@@ -195,7 +221,6 @@ public interface GoBuddyApiInterface {
     @FormUrlEncoded
     @POST("accepted_jobs")
     Call<ResponseBody> getProviderAcceptedJobs(@Field("user_id") String userId);
-
     @FormUrlEncoded
     @POST("favourite")
     Call<ResponseBody> postFavourite(@Field("order_id") String orderId);
@@ -302,6 +327,11 @@ public interface GoBuddyApiInterface {
     @FormUrlEncoded
     @POST("sub_services")
     Call<ResponseBody> getSubServicesList(@Field("service_id") String subServiceId);
+
+
+    @FormUrlEncoded
+    @POST("sub_services")
+    Call<ResponseBody> getLocationSubserviceList(@Field("service_id")String subserviceId,@Field("pincode") String pincode);
 
     @GET("about_us")
     Call<ResponseBody> getAboutUs();

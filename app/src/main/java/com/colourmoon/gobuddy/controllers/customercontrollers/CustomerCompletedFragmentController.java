@@ -82,11 +82,12 @@ public class CustomerCompletedFragmentController {
                                         onGoingJsonObject.getString("review_count"),
                                         onGoingJsonObject.getString("total_amount"),
                                         onGoingJsonObject.getString("extra_amount"),
-                                        onGoingJsonObject.getString("order_status"),
                                         onGoingJsonObject.getString("customer_confirm"),
                                         onGoingJsonObject.getString("payment_mode"),
                                         onGoingJsonObject.getString("favourite"),
-                                       ""
+                                        ""
+
+
                                 ));
                             }
                             if (customerCompletedFragmentControllerListener != null) {

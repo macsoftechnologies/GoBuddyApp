@@ -40,12 +40,12 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:fontFamily="sans-serif"
-            android:text="\u20B9 599"
+            android:text=" 599"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/holo_green_light"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
-
+<!--        \u20B9-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -20,6 +20,7 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.customercontrollers.AddOrderController;
@@ -48,10 +49,12 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
     private static final String SERVICE_ID_PARAM = "serviceIdParam";
     private static final String SUB_SERVICE_ID_PARAM = "subServiceIdParam";
     private static final String SUB_CATEGORY_PARAM = "subCategoryParam";
+    private static  final  String ARG_SFT_VALUE = "sftvalue";
 
     // TODO: Rename and change types of parameters
     private String serviceId;
     private String subServiceId;
+    private String  sftValue;
 
     private String[] timeSlotsMainArray;
     private CalendarView scheduleCalendarView;
@@ -70,12 +73,14 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
     private CrystalSeekbar specificSeekbar;
     private CrystalRangeSeekbar flexibleSeekbar;
 
-    public static ScheduleTimeFragment newInstance(String serviceId, String subServiceId, String subcategoryId) {
+    public static ScheduleTimeFragment newInstance(String serviceId, String subServiceId, String subcategoryId,String sftvalue) {
         ScheduleTimeFragment fragment = new ScheduleTimeFragment();
         Bundle args = new Bundle();
         args.putString(SERVICE_ID_PARAM, serviceId);
         args.putString(SUB_SERVICE_ID_PARAM, subServiceId);
         args.putString(SUB_CATEGORY_PARAM, subcategoryId);
+        args.putString(ARG_SFT_VALUE,sftvalue);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,6 +92,7 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
             serviceId = getArguments().getString(SERVICE_ID_PARAM);
             subServiceId = getArguments().getString(SUB_SERVICE_ID_PARAM);
             subcategoryId = getArguments().getString(SUB_CATEGORY_PARAM);
+            sftValue = getArguments().getString(ARG_SFT_VALUE);
         }
     }
 
@@ -95,6 +101,8 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule_time, container, false);
+
+    //
 
         castingViews(view);
 
@@ -146,6 +154,7 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.scheduleTimeNextBtn:
                 if (!UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
+                    UserSessionManagement.saveBoolean(getActivity(),"NAVIGATE",true);
                     showSnackBar("Please Login");
                     return;
                 }
@@ -162,6 +171,7 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
         addOrderMap.put("user_id", UserSessionManagement.getInstance(getActivity()).getUserId());
         addOrderMap.put("service_id", serviceId);
         addOrderMap.put("now", "0");
+        addOrderMap.put("quantity",sftValue==null?"1":sftValue);
         addOrderMap.put("sub_service_id", subServiceId.isEmpty() ? "" : subServiceId);
         addOrderMap.put("service_date", date);
         addOrderMap.put("service_time", timeSlot1);

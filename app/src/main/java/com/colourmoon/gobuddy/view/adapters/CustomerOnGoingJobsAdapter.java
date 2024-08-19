@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -68,10 +69,27 @@ public class CustomerOnGoingJobsAdapter extends RecyclerView.Adapter<CustomerOnG
         holder.jobRatingBar.setRating(Integer.parseInt(customerJobModel.getRating().substring(0, 1)));
         holder.jobCost.setText(context.getResources().getString(R.string.indian_rupee) + " " + customerJobModel.getTotalAmount() + ".00");
         holder.onGoingJobPaymentMode.setText(customerJobModel.getPaymentMode());
+
+
+        if ("online".equals(customerJobModel.getPaymentMode())) {
+            holder.paidamount.setVisibility(View.VISIBLE);
+            holder.remainingamount.setVisibility(View.VISIBLE);
+
+            holder.paidamount.setText("₹ " + customerJobModel.getPaid_amount());
+            holder.remainingamount.setText("₹ " + customerJobModel.getRemaining_amount());
+            holder.remainingamountLayout.setVisibility(View.VISIBLE);
+            holder.paidtextLayout.setVisibility(View.VISIBLE);
+       }
+//        else {
+////            holder.paidamount.setVisibility(View.GONE);
+////            holder.remainingamount.setVisibility(View.GONE);
+//            holder.remainingamountLayout.setVisibility();
+//        }
         holder.favouritesBtn.setVisibility(View.GONE);
         Glide.with(context)
                 .load(customerJobModel.getProviderProfileImage())
                 .into(holder.providerImageView);
+
         if (customerJobModel.getOrderStatus().equalsIgnoreCase("0")) {
             holder.providerLayout.setVisibility(GONE);
             holder.jobStatusView.setText("Order Cancelled");
@@ -94,6 +112,8 @@ public class CustomerOnGoingJobsAdapter extends RecyclerView.Adapter<CustomerOnG
             holder.jobStatusView.setTextColor(context.getResources().getColor(R.color.quantum_googgreen));
             holder.justStatusView.setTextColor(context.getResources().getColor(R.color.quantum_googgreen));
             holder.favouritesBtn.setVisibility(View.VISIBLE);
+
+
             if (customerJobModel.getIsFavourite().equalsIgnoreCase("1")) {
                 isFavourited = true;
                 holder.favouritesBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorites_selected));
@@ -101,7 +121,18 @@ public class CustomerOnGoingJobsAdapter extends RecyclerView.Adapter<CustomerOnG
                 isFavourited = false;
                 holder.favouritesBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorites_un_selected));
             }
-        } else if (customerJobModel.getOrderStatus().equalsIgnoreCase("3")) {
+
+        }
+        else if(customerJobModel.getOrderStatus().equalsIgnoreCase("")){
+            holder.providerLayout.setVisibility(View.VISIBLE);
+            holder.jobStatusView.setText(context.getResources().getString(R.string.completed));
+            holder.jobStatusView.setTextColor(context.getResources().getColor(R.color.quantum_googgreen));
+            holder.justStatusView.setTextColor(context.getResources().getColor(R.color.quantum_googgreen));
+          //  holder.favouritesBtn.setVisibility(View.VISIBLE);
+            holder.remainingamountLayout.setVisibility(GONE);
+            holder.paidtextLayout.setVisibility(GONE);
+        }
+        else if (customerJobModel.getOrderStatus().equalsIgnoreCase("3")) {
             holder.providerLayout.setVisibility(View.VISIBLE);
             holder.jobStatusView.setText("Waiting for Payment");
             holder.jobStatusView.setTextColor(context.getResources().getColor(R.color.quantum_vanillaredA700));
@@ -119,11 +150,13 @@ public class CustomerOnGoingJobsAdapter extends RecyclerView.Adapter<CustomerOnG
     public class CustomerOnGoingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView jobNameView, justStatusView, jobDateView, jobStatusView, providerName, providerReviewCount,
-                jobCost, viewJobBtn, onGoingJobPaymentMode;
+                jobCost, viewJobBtn, onGoingJobPaymentMode,paidamount,remainingamount;
         private ScaleRatingBar jobRatingBar;
+        private LinearLayout paidtextLayout,remainingamountLayout;
         private CircleImageView providerImageView;
         private LinearLayout onGoingItemLinearLayout, providerLayout;
         private ImageView favouritesBtn;
+
 
         public CustomerOnGoingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -149,6 +182,10 @@ public class CustomerOnGoingJobsAdapter extends RecyclerView.Adapter<CustomerOnG
             providerLayout = itemView.findViewById(R.id.onGoing_providerView);
             onGoingJobPaymentMode = itemView.findViewById(R.id.onGoingJobPaymentMode);
             favouritesBtn = itemView.findViewById(R.id.favouritesImageView);
+            paidamount = itemView.findViewById(R.id.onGoingJobPaidAmount);
+            remainingamount = itemView.findViewById(R.id.onGoingJobRemainingAmount);
+            paidtextLayout = itemView.findViewById(R.id.paidtextlayout);
+            remainingamountLayout = itemView.findViewById(R.id.remainingtextlayout);
         }
 
         @Override

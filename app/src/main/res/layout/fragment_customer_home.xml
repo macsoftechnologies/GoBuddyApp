@@ -27,22 +27,23 @@
             android:paddingBottom="@dimen/_8sdp"
             android:src="@drawable/ic_baseline_help_24" />
 
+
+        <ImageView
+            android:id="@+id/add_location"
+            android:layout_width="@dimen/_30sdp"
+            android:visibility="gone"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_add_location_24"/>
         <ImageView
             android:id="@+id/toolBarIcon"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="@dimen/_35sdp"
             android:layout_height="?actionBarSize"
             android:layout_gravity="end"
             android:layout_marginRight="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:src="@drawable/app_icon" />
-        <ImageView
-            android:id="@+id/add_location"
-            android:layout_width="@dimen/_40sdp"
-            android:visibility="gone"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_baseline_add_location_24"/>
 
         <ImageView
             android:layout_width="@dimen/_30sdp"
@@ -64,17 +65,46 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/_12ssp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:id="@+id/profilelayout"
+            android:layout_marginTop="@dimen/_1ssp"
+            android:visibility="gone"
+            android:orientation="vertical">
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/_10sdp"
+
             android:text="name"
             android:textAllCaps="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_12ssp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1ssp"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+
+                android:text="ORDERING FROM: "
+                android:textSize="@dimen/_7sdp"/>
+                <TextView
+                    android:id="@+id/edit_profile_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VISAKHAPATNAM "
+                    android:drawableRight="@drawable/ic_baseline_mode_edit_24"
+                    android:textSize="@dimen/_9sdp"
+                       android:textColor="@color/quantum_orange"/>
+
+            </LinearLayout>
+        </LinearLayout>
         <ImageView
             android:id="@+id/toolBarIcons"
             android:layout_width="@dimen/_37sdp"
@@ -85,6 +115,8 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:src="@drawable/app_icon" />
+
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -108,12 +140,21 @@
                 android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content" />-->
 
-
             <com.glide.slider.library.SliderLayout
                 android:id="@+id/homePageImageSlider"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
-                android:layout_height="@dimen/_180sdp"
+                android:layout_height="@dimen/_160sdp"
+                android:layout_marginLeft="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_9sdp"
+                app:indicator_visibility="visible" />
+            <com.glide.slider.library.SliderLayout
+                android:id="@+id/homePageImageSliderlocation"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+
+                android:visibility="gone"
+                android:layout_height="@dimen/_160sdp"
                 android:layout_marginLeft="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_9sdp"
                 app:indicator_visibility="visible" />
@@ -141,9 +182,33 @@
                     android:padding="@dimen/_6sdp" />
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/services_no"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:text="@string/no_services_are_avliable_at_your_current_location"
+                android:textStyle="italic"
+                android:textColor="@color/quantum_googred"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cust_home_services_recyclerView"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/custom_service_item" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cust_Location_home_services_recyclerView"
+                android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"

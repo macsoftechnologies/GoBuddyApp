@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,15 @@ public class ProviderAcceptedJobsRecyclerViewAdapter extends RecyclerView.Adapte
             holder.providerAcceptedJobName.setText(providerAcceptedJobModel.getServiceTitle()
                     + " -> " + providerAcceptedJobModel.getSubServiceTitle());
         }
+        if ("online".equals(providerAcceptedJobModel.getPaymentMode())) {
+            holder.paidamount.setVisibility(View.VISIBLE);
+            holder.remainingamount.setVisibility(View.VISIBLE);
+
+            holder.paidamount.setText("₹ " + providerAcceptedJobModel.getPaidamount());
+            holder.remainingamount.setText("₹ " + providerAcceptedJobModel.getRemainingamount());
+            holder.remainingamountLayout.setVisibility(View.VISIBLE);
+            holder.paidtextLayout.setVisibility(View.VISIBLE);
+        }
         holder.providerAcceptedJobDate.setText(providerAcceptedJobModel.getDateAndTime());
         holder.providerAcceptedJobLocation.setText(providerAcceptedJobModel.getLocality());
         holder.providerAcceptedJobPayMode.setText(providerAcceptedJobModel.getPaymentMode());
@@ -68,7 +78,8 @@ public class ProviderAcceptedJobsRecyclerViewAdapter extends RecyclerView.Adapte
     public class ProviderAcceptedJobsViewHolder extends RecyclerView.ViewHolder {
 
         private TextView providerAcceptedJobId, providerAcceptedJobName, providerAcceptedJobDate, providerAcceptedJobLocation,
-                providerAcceptedJobPayMode, providerAcceptedJobPrice;
+                providerAcceptedJobPayMode, providerAcceptedJobPrice,paidamount,remainingamount;;
+        private LinearLayout paidtextLayout,remainingamountLayout;
 
         public ProviderAcceptedJobsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +107,10 @@ public class ProviderAcceptedJobsRecyclerViewAdapter extends RecyclerView.Adapte
             providerAcceptedJobLocation = itemView.findViewById(R.id.provider_accepted_jobAddress);
             providerAcceptedJobPayMode = itemView.findViewById(R.id.provider_accepted_payment_mode);
             providerAcceptedJobPrice = itemView.findViewById(R.id.provider_accepted_jobPrice);
+            paidamount = itemView.findViewById(R.id.onGoingJobPaidAmount);
+            remainingamount = itemView.findViewById(R.id.onGoingJobRemainingAmount);
+            paidtextLayout = itemView.findViewById(R.id.paidamounttextlayout);
+            remainingamountLayout = itemView.findViewById(R.id.remainingamounttextlayout);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.colourmoon.gobuddy.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.HashMap;
 
@@ -15,6 +16,140 @@ public class UserSessionManagement {
     private static UserSessionManagement userSessionManagement;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+
+    private static final String SELECTED_LOCATION_ID_KEY = "selected_location_id";
+
+    private  static  final String SELECTED_PLACE ="selected_place";
+
+    private static final String ADDRESS="selected_address";
+
+    private static final String PINCODE ="pincode";
+
+    private static  final String PAIDAMOUNT ="Paidamount";
+
+    private static  final String REMAININGAMOUNT ="Remainingamount";
+
+    private static final String REGPINCODE ="regpincode";
+
+    private static final String JOBID ="jobid";
+
+
+    private static final String SOME_OTHER_BOOLEAN_KEY = "some_other_boolean_key";
+
+    private static final String SERVICE_PRICE = "service_price";
+
+    private static final String SUB_SERVICE_PRICE = "sub_service_price";
+
+
+
+
+
+
+    public static void saveBoolean(Context context, String key, boolean value) {
+        SharedPreferences.Editor prefEditor = getSharedPreferences(context, 0).edit();
+        prefEditor.putBoolean(key, value);
+        prefEditor.apply();
+    }
+
+    private static SharedPreferences getSharedPreferences(Context context, int i) {
+
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+    public static boolean getBoolean(Context context, String key) {
+        return getSharedPreferences(context, 0).getBoolean(key, false);
+    }
+
+    public  void setJobid(String jobid){
+        editor.putString(JOBID,jobid);
+        editor.apply();
+    }
+    public String getJobid(){
+        return sharedPreferences.getString(JOBID,null);
+    }
+
+    public  void setPaidamount(String paidamount){
+        editor.putString(PAIDAMOUNT,paidamount);
+        editor.apply();
+    }
+    public String getPaidamount(){
+        return sharedPreferences.getString(PAIDAMOUNT,null);
+    }
+
+    public  void setRemainingamount(String remainingamount){
+        editor.putString(REGPINCODE,remainingamount);
+        editor.apply();
+    }
+    public String getRemainingamount(){
+        return sharedPreferences.getString(REMAININGAMOUNT,null);
+    }
+
+
+
+
+    public  void setSubServicePrice(String subServicePrice){
+        editor.putString(SUB_SERVICE_PRICE,subServicePrice);
+        editor.apply();
+    }
+    public String getSubServicePrice(){
+        return sharedPreferences.getString(SUB_SERVICE_PRICE,null);
+    }
+
+
+
+    public  void setServicePrice(String servicePrice){
+        editor.putString(SERVICE_PRICE,servicePrice);
+        editor.apply();
+    }
+    public String getServicePrice(){
+        return sharedPreferences.getString(SERVICE_PRICE,null);
+    }
+
+
+    public void setRegpincode(String regpincode){
+        editor.putString(REGPINCODE,regpincode);
+        editor.apply();
+    }
+    public String getRegpincode(){
+        return sharedPreferences.getString(REGPINCODE,null);
+    }
+
+    public void  setPincode(String pincode){
+        editor.putString(PINCODE,pincode);
+        editor.apply();
+    }
+    public String getPincode(){
+        return sharedPreferences.getString(PINCODE,null);
+    }
+    public void setAddress(String address){
+        editor.putString(ADDRESS, address);
+        editor.apply();
+
+    }
+
+    public String getAddress() {
+        return sharedPreferences.getString(ADDRESS, null);
+    }
+
+
+    public void setSelectedPlace(String selectedPlace){
+        editor.putString(SELECTED_PLACE,selectedPlace);
+        editor.apply();
+    }
+
+    public String getSelectedPlace(){
+        return sharedPreferences.getString(SELECTED_PLACE,null);
+    }
+
+    public void setSelectedLocationId(String selectedLocationId) {
+        editor.putString(SELECTED_LOCATION_ID_KEY, selectedLocationId);
+        editor.apply();
+    }
+
+    public String getSelectedLocationId() {
+        return sharedPreferences.getString(SELECTED_LOCATION_ID_KEY, null);
+    }
+
 
 
     

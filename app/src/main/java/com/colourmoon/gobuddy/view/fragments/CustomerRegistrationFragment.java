@@ -12,7 +12,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.colourmoon.gobuddy.LocationResponseModel;
 import com.colourmoon.gobuddy.MyOtpPopUp;
+import com.colourmoon.gobuddy.controllers.commoncontrollers.LocationController;
 import com.colourmoon.gobuddy.utilities.Constants;
 
 
@@ -31,6 +33,7 @@ import com.colourmoon.gobuddy.helper.LocationDetailsHelper;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
 import com.colourmoon.gobuddy.utilities.Constants;
+import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.view.activities.RegistrationActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -66,6 +69,7 @@ import com.colourmoon.gobuddy.view.activities.OtpVerificationActivity;
 import com.poovam.pinedittextfield.PinField;
 import com.poovam.pinedittextfield.SquarePinField;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -97,8 +101,8 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
     private Button save_pin;
     private RelativeLayout custom_layout;
     private TextInputLayout reg_cus_name_editText, reg_cus_email_editText, reg_cus_phone_editText;
-    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data,reg_cus_pass_data;
-    private TextView reg_cus_registerBtn, reg_cus_backToLoginBtn, click_popup;
+    private String reg_cus_name_data, reg_cus_email_data, reg_cus_phone_data,reg_cus_pass_data,reg_location;
+    private TextView reg_cus_registerBtn, reg_cus_backToLoginBtn, click_popup,location;
     private OnFragmentInteractionListener mListener;
     private SquarePinField reg_cus_pass_editText;
   //  private EditText pin_setup;
@@ -149,6 +153,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
 
         RegistrationController.getInstance().setRegistrationControllerReponseListener(this);
 
+
         // this method is for casting all the views in xml to java file
         castingViews(view);
 
@@ -184,6 +189,17 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             }
 
         });
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLocation();
+
+            }
+        });
+
+
+
      /*   save_pin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -262,15 +278,69 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         return view;
     }
 
+    private void showLocation() {
+     LocationController.getInstance().fetchLocations();
+     LocationController.getInstance().setLocationControllerResponseListener(new LocationController.LocationControllerResponseListener() {
+         @Override
+         public void onLocationSuccessResponse(ArrayList<LocationResponseModel.Location> locations) {
+             ArrayList<String> locationNames = null;
+             final ArrayList<String> locationIds = new ArrayList<>(); // Store location IDs
+
+             if (locations != null) {
+                 locationNames = new ArrayList<>();
+                 for (LocationResponseModel.Location location : locations) {
+                     if ("1".equals(location.getStatus())) {
+                         locationNames.add(location.getLocation());
+                         locationIds.add(location.getId()); // Add ID to the list
+                     }
+                 }
+             }
+
+             // Convert the ArrayList to a String array
+             String[] places = locationNames.toArray(new String[0]);
+
+             // Create and show the dialog box
+             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+             builder.setTitle("Select a Location");
+             builder.setItems(places, new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialogInterface, int which) {
+                     String selectedLocation = places[which];
+                     String selectedLocationId = locationIds.get(which); // Retrieve ID using index
+                     LocationResponseModel locationResponseModel = new LocationResponseModel();
+
+//                     Toast.makeText(getContext(), "Selected Location: " + selectedLocation + ", ID: " + selectedLocationId, Toast.LENGTH_SHORT).show();
+//                     // Pass the selected location ID to the API call
+                     location.setText(selectedLocation);
+//                     UserSessionManagement.getInstance(getContext()).setRegisterSelectedLocationId(selectedLocationId);
+//                     Toast.makeText(getContext(), "Selected Location: " + UserSessionManagement.getInstance(getContext()).getRegisterSelectedLocationId() + ", ID: " + selectedLocationId, Toast.LENGTH_SHORT).show();
+
+
+                 }
+             });
+             builder.show();
+
+
+         }
+
+         @Override
+         public void onFailureResponse(String failureReason) {
+
+         }
+     });
+    }
+
     private void validateAndCallRegister() {
         GetInputTextFromFields();
-        if (!validateEmail() | !validateName() | !validatePhone()) {
+        if (!validateEmail() | !validateName() | !validatePhone() ) {
             return;
         } else {
             ProgressBarHelper.show(getActivity(), "Registering You.....\nPlease Wait!!!");
             registerCustomer();
         }
     }
+
+
 
     private void checkIsCustomerRegistered() {
         reg_cus_phone_editText.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -287,20 +357,26 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
     }
 
     private void registerCustomer() {
+
         Map<String, String> customerRegistrationMap = new HashMap<>();
 
         if (main_latitude != null && main_longitude != null && main_address != null && placeId != null) {
+
+
+
             customerRegistrationMap.put("latitude", main_latitude);
             customerRegistrationMap.put("longitude", main_longitude);
             customerRegistrationMap.put("landmark", main_address);
             customerRegistrationMap.put("place_id", placeId);
+
         }
 
-        if (reg_cus_name_data != null && reg_cus_email_data != null && reg_cus_phone_data != null ) {
+        if (reg_cus_name_data != null && reg_cus_email_data != null && reg_cus_phone_data != null  ) {
             customerRegistrationMap.put("name", reg_cus_name_data);
             customerRegistrationMap.put("email", reg_cus_email_data);
             customerRegistrationMap.put("phone_number", reg_cus_phone_data);
           //  customerRegistrationMap.put("password", reg_cus_pass_data);
+          //  customerRegistrationMap.put("location",UserSessionManagement.getInstance(getContext()).getRegisterSelectedLocationId());
             customerRegistrationMap.put("terms_and_conditions", "1");
             customerRegistrationMap.put("token", FcmTokenPreference.getInstance(getActivity()).getFcmToken());
         }
@@ -325,6 +401,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         reg_cus_name_data = reg_cus_name_editText.getEditText().getText().toString();
         reg_cus_email_data = reg_cus_email_editText.getEditText().getText().toString();
         reg_cus_phone_data = reg_cus_phone_editText.getEditText().getText().toString();
+      //  reg_location = location.getText().toString();
       //  reg_cus_pass_data = reg_cus_pass_editText.getEditText().getText().toString();
        // reg_cus_pass_data= reg_cus_pass_editText.getText().toString();
     }
@@ -339,6 +416,7 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
      //   pin_setup=view.findViewById(R.id.pin_setup);
       //  custom_layout=view.findViewById(R.id.customLayout);
        click_popup=view.findViewById(R.id.click);
+       location = view.findViewById(R.id.location_ofuser);
        //save_pin=view.findViewById(R.id.btnsave_pin);
        //squarePinField_setup=view.findViewById(R.id.square_field_pin_setup);
 
@@ -389,6 +467,16 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             return false;
         } else {
             reg_cus_name_editText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateLocation() {
+        if(reg_location.isEmpty()){
+            Toast.makeText(getActivity(), "Please Enter your Location", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            location.setError(null);
             return true;
         }
     }
@@ -530,6 +618,37 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         main_longitude = String.valueOf(longitude);
         main_address = address;
         placeId = place_id;
+     UserSessionManagement.getInstance(getContext()).setPincode(pincode);
+
+
+
+        String searchString = "Andhra Pradesh";
+        String result = "";
+
+        // Split the address by commas
+        String[] parts = address.split(", ");
+
+        // Iterate through the parts to find "Andhra Pradesh"
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].contains(searchString)) {
+                // Check if there is a previous part
+                if (i > 0) {
+                    // The city is the part before "Andhra Pradesh"
+                    result = parts[i - 1];
+                }
+                break;
+            }
+        }
+
+        // Display the result using a Toast
+//        if (!result.isEmpty()) {
+//            //Toast.makeText(getContext(), "pin"+result.trim(), Toast.LENGTH_LONG).show();
+//        } else {
+//           // Toast.makeText(getContext(), "Andhra Pradesh not found in the address", Toast.LENGTH_LONG).show();
+//        }
+
+            //Toast.makeText(getContext(), "pin"+address, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

@@ -6,8 +6,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.colourmoon.gobuddy.view.fragments.customermyjobsfragments.CustomerCompletedJobsFragment;
 import com.colourmoon.gobuddy.view.fragments.customermyjobsfragments.onGoingJobsFragment;
+import com.razorpay.PaymentResultListener;
 
-public class CustomerMyJobsPagerAdapter extends FragmentStatePagerAdapter {
+public class CustomerMyJobsPagerAdapter extends FragmentStatePagerAdapter implements PaymentResultListener {
     public CustomerMyJobsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -27,5 +28,15 @@ public class CustomerMyJobsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+
     }
 }

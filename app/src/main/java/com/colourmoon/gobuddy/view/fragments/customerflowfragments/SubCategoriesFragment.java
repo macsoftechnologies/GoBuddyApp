@@ -15,10 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 //import com.colourmoon.gobuddy.GridAdapter;
 //import com.colourmoon.gobuddy.ChildAdapter;
 import com.colourmoon.gobuddy.GridAdapter;
+import com.colourmoon.gobuddy.LocationServiceModel;
+import com.colourmoon.gobuddy.LocationSubCategoriesAdapter;
+import com.colourmoon.gobuddy.LocationbasedCategoriesModel;
+import com.colourmoon.gobuddy.LocationbasedSubCategoriesModel;
 import com.colourmoon.gobuddy.R;
 //import com.colourmoon.gobuddy.controllers.customercontrollers.CombinedFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
@@ -27,11 +32,14 @@ import com.colourmoon.gobuddy.model.ServiceCategoryModel;
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 //import com.colourmoon.gobuddy.view.adapters.GridAdapter;
+import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.view.adapters.SubCategoriesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SERVICES_FRAGMENT_TAG;
 import static com.colourmoon.gobuddy.utilities.Constants.SERVICE_DETAIL_FRAGMENT_TAG;
@@ -47,7 +55,7 @@ import static com.colourmoon.gobuddy.utilities.Constants.SUB_SERVICE_DETAIL_FRAG
  */
 /*public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener, ServicesFragmentController.ServicesFragmentControllerListener ,ServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener {*/
 // TODO: Rename parameter arguments, choose names that match
-public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener {
+public class SubCategoriesFragment extends Fragment implements SubcategoriesFragmentController.SubCategoriesFragmentControllerListener, SubCategoriesAdapter.SubCategoriesItemclickListener,LocationSubCategoriesAdapter.SubCategoriesItemclickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,12 +65,14 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
     private String mParam1;
     private String mParam2;
     private SubCategoryModel subCategoryModel;
-
+   //private LocationbasedSubCategoriesModel locationbasedSubCategoriesModel;
     private ServiceCategoryModel serviceCategoryModel;
+    private LocationbasedCategoriesModel locationbasedCategoriesModel;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView subCategoriesRecyclerView, servicesRecyclerView, gridRecylerView;
+    private RecyclerView subCategoriesRecyclerView, locationsubCategoriesRecyclerView, gridRecylerView;
     private GridAdapter gridAdapter;
     private List<String> gridItemList = new ArrayList<>();
+    private String locationid;
 
     //  private List<String> childItemList = new ArrayList<>(); // In
 
@@ -101,9 +111,34 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
-            serviceCategoryModel = (ServiceCategoryModel) getArguments().getSerializable("categoryModel");
+//            if(UserSessionManagement.getInstance(getContext()).getRegpincode() != null){
+//                locationid = UserSessionManagement.getInstance(getContext()).getRegpincode();
+//            }
+//            else {
+//                locationid = UserSessionManagement.getInstance(getContext()).getPincode();
+//            }
+//
+//
+//            if(locationid!=null){
+//                locationbasedCategoriesModel =(LocationbasedCategoriesModel) getArguments().getSerializable("categoryModel");
+//                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(locationbasedCategoriesModel.getServiceName());
+//                Map<String,String> body = new HashMap<>();
+//                body.put("category_id",locationbasedCategoriesModel.getServiceId());
+//                Toast.makeText(getContext(), " "+locationbasedCategoriesModel.getServiceId(), Toast.LENGTH_SHORT).show();
+//                body.put("pincode",locationid);
+//                SubcategoriesFragmentController.getInstance().getLocationSubCategory(body);
+//            }
+//            else{
+                serviceCategoryModel = (ServiceCategoryModel) getArguments().getSerializable("categoryModel");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceCategoryModel.getServiceName());
+                SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
+
+      //      }
+
+           // serviceCategoryModel = (ServiceCategoryModel) getArguments().getSerializable("categoryModel");
             //  subCategoryModel = (SubCategoryModel) getArguments().getParcelable("subCategoryModel");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceCategoryModel.getServiceName());
+        //  ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceCategoryModel.getServiceName());
+
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -134,7 +169,10 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
             //Toast.makeText()
         }*/
         ProgressBarHelper.show(getActivity(), "Loading SubCategories");
-        SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
+
+       // SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(locationbasedCategoriesModel.getServiceId());
+      //  SubcategoriesFragmentController.getInstance().getSubCategoriesApiCall(serviceCategoryModel.getServiceId());
+
         SubcategoriesFragmentController.getInstance().setSubCategoriesFragmentControllerListener(this);
         // addChildItems();
         //SubcategoriesFragmentController
@@ -150,6 +188,8 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
     private void castingViews(View view) {
         subCategoriesRecyclerView = view.findViewById(R.id.subCategoriesRecyclerView);
+        locationsubCategoriesRecyclerView = view .findViewById(R.id.subCategoriesLocationRecyclerView);
+
 
         // gridRecyclerView=view.findViewById(R.id.grid_recyclerView);
         //  gridRecylerView =view.findViewById(R.id.gridRecyclerView);
@@ -190,6 +230,14 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
     public void onSuccessResponse(List<SubCategoryModel> subCategoryModelList) {
         createRecyclerView(subCategoryModelList);
     }
+
+    @Override
+    public void onLocationSubCategorysSuccessResponse(List<LocationbasedSubCategoriesModel> locationbasedSubCategoriesModelList) {
+        //createLocationSubcategorysRecyclerView(locationbasedSubCategoriesModelList);
+
+    }
+
+
 
    /* @Override
     public void onServiceSuccessResponse(List<ServiceModel> serviceModelList) {
@@ -253,7 +301,55 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
 
     }
+    private void createLocationSubcategorysRecyclerView(List<LocationbasedSubCategoriesModel> locationbasedSubCategoriesModelList) {
+       subCategoriesRecyclerView.setVisibility(View.GONE);
+       locationsubCategoriesRecyclerView.setVisibility(View.VISIBLE);
+     // String price =locationbasedSubCategoriesModelList.get(0).getLoctionprice();
+   //   Toast.makeText(getContext(),"price"+price,Toast.LENGTH_SHORT).show();
+        List<LocationbasedSubCategoriesModel> locationlist = new ArrayList<>();
+        int index = 0;
+        for (LocationbasedSubCategoriesModel locationitems : locationbasedSubCategoriesModelList) {
+            locationitems.setType(LocationSubCategoriesAdapter.TYPE_HEADER);
+            locationlist.add(locationitems);
 
+            for (LocationServiceModel locationservices : locationitems.getServices()) {
+                LocationbasedSubCategoriesModel locationbasedSubCategoriesModel = new LocationbasedSubCategoriesModel();
+                locationbasedSubCategoriesModel.setType(SubCategoriesAdapter.TYPE_ITEM);
+                //Bug Fix: SubCategoryId is missing in payment
+                locationservices.setSubCategoryId(locationitems.getSubCategoryId());
+                locationbasedSubCategoriesModel.setServices(Arrays.asList(locationservices));
+                locationbasedSubCategoriesModel.setHeaderIndex(index);
+                locationbasedSubCategoriesModel.setSubCategoryId(locationitems.getSubCategoryId());
+                locationlist.add(locationbasedSubCategoriesModel);
+            }
+            locationitems.setHeaderIndex(index++);
+        }
+        LocationSubCategoriesAdapter locationSubCategoriesAdapter = new LocationSubCategoriesAdapter(getActivity(), locationlist);
+        GridLayoutManager mnLayoutManager = new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false);
+        locationsubCategoriesRecyclerView.setLayoutManager(mnLayoutManager);
+        mnLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (locationSubCategoriesAdapter.getItemViewType(position)) {
+                    case LocationSubCategoriesAdapter.TYPE_HEADER:
+                        return 3;
+                    case LocationSubCategoriesAdapter.TYPE_ITEM:
+                        return 1;
+                    default:
+                        return -1;
+                }
+            }
+        });
+
+        locationsubCategoriesRecyclerView.setHasFixedSize(true);
+        locationSubCategoriesAdapter.setHasStableIds(false);
+        locationsubCategoriesRecyclerView.setAdapter(locationSubCategoriesAdapter);
+        locationSubCategoriesAdapter.setSubCategoriesItemclickListener(this);
+        ProgressBarHelper.dismiss(getActivity());
+
+
+
+    }
 
     @Override
     public void onItemClick(SubCategoryModel subCategoryModel) {
@@ -282,6 +378,49 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         }
     }
 
+//    @Override
+//    public void onItemClick(LocationbasedSubCategoriesModel locationbasedSubCategoriesModel) {
+//        Toast.makeText(getActivity()," service response",Toast.LENGTH_SHORT).show();
+////        ServicesFragment servicesFragment = new ServicesFragment();
+////        Bundle bundle = new Bundle();
+////        bundle.putParcelable("subCategoryModel", locationbasedSubCategoriesModel);
+////        //  Fragment SubServicesFragment;
+////
+////        servicesFragment.setArguments(bundle);
+////        addToFragmentContainer(servicesFragment, true, SERVICES_FRAGMENT_TAG);
+//
+//    }
+
+    @Override
+    public void onItemClick(LocationServiceModel locationServiceModel, String priceText) {
+        Bundle bundle = new Bundle();
+      //  LocationbasedSubCategoriesModel locationbasedSubCategoriesModel = new LocationbasedSubCategoriesModel();
+       // Toast.makeText(getActivity()," service response",Toast.LENGTH_SHORT).show();
+//        String location_price = locationbasedSubCategoriesModel.getLoctionprice();
+//        String price = locationServiceModel.getServicePrice();
+//
+//        double lp = 0.0;
+//                lp = Double.parseDouble(location_price);
+//        double p = 0.0;
+//                p = Double.parseDouble(price);
+//        double sum = lp+p;
+//        String result = String.valueOf(sum);
+//        bundle.putString("locationPrice",result);
+        bundle.putString("priceText", priceText);
+        bundle.putParcelable("serviceModel", locationServiceModel);
+        bundle.putString("subCategoryId", locationServiceModel.getSubCategoryId());
+
+        if (locationServiceModel.getSubServiceId().equals("0")) {
+            ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
+            serviceDetailsFragment.setArguments(bundle);
+            addToFragmentContainer(serviceDetailsFragment, true, SERVICE_DETAIL_FRAGMENT_TAG);
+        } else {
+            addToFragmentContainer(SubServicesFragment.newInstance(locationServiceModel, locationServiceModel.getSubCategoryId()), true,
+                    SUB_SERVICE_DETAIL_FRAGMENT_TAG);
+     }
+    }
+
+
     private void addToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -292,6 +431,8 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
         fragmentTransaction.replace(R.id.customer_fragments_container, fragment, tag);
         fragmentTransaction.commitAllowingStateLoss();
     }
+
+
 
 
     /**

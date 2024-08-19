@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.colourmoon.gobuddy.LocationServiceModel;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SearchFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
@@ -142,8 +143,10 @@ public class SearchFragment extends Fragment implements SearchFragmentController
         );
 
         Bundle bundle = new Bundle();
+      //  bundle.putString("priceText", priceText);
         bundle.putParcelable("serviceModel", serviceModel);
         bundle.putString("subCategoryId", searchModel.getServiceSubCategoryId());
+      //  bundle.putString("priceText", priceText);
         ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
         if (!serviceModel.getSubServiceId().isEmpty()) {
             serviceDetailsFragment.setArguments(bundle);

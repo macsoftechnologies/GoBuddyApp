@@ -1,14 +1,18 @@
 package com.colourmoon.gobuddy.view.fragments.customerFragments;
 
+import android.Manifest;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,11 +22,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.colourmoon.gobuddy.CustomerLocationServicesRecyclerViewAdapter;
+import com.colourmoon.gobuddy.LocationResponseModel;
+import com.colourmoon.gobuddy.LocationbasedCategoriesModel;
 import com.colourmoon.gobuddy.R;
+import com.colourmoon.gobuddy.SliderImagesResponse;
+import com.colourmoon.gobuddy.controllers.commoncontrollers.LocationController;
 import com.colourmoon.gobuddy.controllers.commoncontrollers.ProfileFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.HomeFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
@@ -39,8 +47,10 @@ import com.colourmoon.gobuddy.model.ProfileModel;
 import com.colourmoon.gobuddy.model.ServiceCategoryModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
+import com.colourmoon.gobuddy.view.activities.MapsActivity;
 import com.colourmoon.gobuddy.view.activities.OnBoardingLoginActivity;
 import com.colourmoon.gobuddy.view.adapters.CustomerServicesRecyclerViewAdapter;
+
 //import com.colourmoon.gobuddy.view.adapters.ImageSliderAdapter;
 
 //import com.colourmoon.gobuddy.view.adapters.ImageSliderAdapter;
@@ -52,13 +62,20 @@ import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.SliderTypes.BaseSliderView;
 import com.glide.slider.library.SliderTypes.DefaultSliderView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
-import java.util.concurrent.Executor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static com.colourmoon.gobuddy.utilities.Constants.LOCATION_PERMISSION_CODE;
 import static com.colourmoon.gobuddy.utilities.Constants.SUBCATEGORIES_FRAGMENT_TAG;
 
-public class CustomerHomeFragment extends Fragment implements HomeFragmentController.HomeFragmentControllerListener, CustomerServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener, BaseSliderView.OnSliderClickListener {
+public class CustomerHomeFragment extends Fragment implements HomeFragmentController.HomeFragmentControllerListener,LocationController.LocationControllerResponseListener, CustomerServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener, BaseSliderView.OnSliderClickListener,CustomerLocationServicesRecyclerViewAdapter.ServicesRecyclerViewItemClickListener {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,13 +89,19 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     //  private ArrayList<String> imageUrlList;
 
     private OnFragmentInteractionListener mListener;
-    private RecyclerView customerServicesRecyclerView;
+    private RecyclerView customerServicesRecyclerView, custLocationserviceRecylerview;
+    private LinearLayout profilelayout;
     private Timer sliderTimer;
     private EditText custHomeSearchView;
-    private TextView homeLoginBtn,name;
-    private ImageView homeHelpBtn,appimage,appimages,profilePerson;
-    private SliderLayout homesliderLayout;
+    private TextView homeLoginBtn, name, edit_city_txt;
+    private ImageView homeHelpBtn, appimage, appimages, profilePerson, Locationimg;
+    private SliderLayout homesliderLayout, LocationhomeSliderLayout;
     private ViewPager viewPager;
+    // private boolean isLogined = false;
+    private boolean isLocationSliderActivated = false;
+    private String selectedId;
+    private TextView Noservice;
+
     // private boolean isBiometricAuthenticated = false;
     // private androidx.biometric.BiometricPrompt biometricPrompt;
     //private BiometricPrompt.PromptInfo promptInfo;
@@ -108,7 +131,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
-    //    biometricManager = BiometricManager.from(getActivity());
+        //    biometricManager = BiometricManager.from(getActivity());
     }
 
 
@@ -123,7 +146,13 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_home, container, false);
 
+
+
+
+
       /*boolean enableFingerprint = getArguments().getBoolean("enableFingerprint", false);
+
+
 
         if (enableFingerprint) {
             Executor executor = ContextCompat.getMainExecutor(requireContext());
@@ -163,10 +192,12 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         // this method is responsible for casting views in xml to java file
         castingViews(view);
 
+
         Utils.getInstance().hideSoftKeyboardForFragments(getActivity());
 
         ProgressBarHelper.show(getActivity(), "Designing Your Home Screen Please Wait");
         HomeFragmentController.getInstance().setHomeFragmentControllerListener(this);
+        //  LocationController.getInstance().setLocationControllerResponseListener(this);
         HomeFragmentController.getInstance().callGetImageSlidersApi();
         HomeFragmentController.getInstance().callGetCustomerServicesApi();
 
@@ -195,10 +226,52 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             }
         });
+//        Locationimg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                LocationController.getInstance().fetchLocations();
+//                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+//                        && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//                    startActivityForResult(new Intent(getActivity(), MapsActivity.class), 1005);
+//                } else {
+//                    requestLocationPermissions();
+//                }
+//            }
+//        });
 
 
         return view;
     }
+
+//    private void requestLocationPermissions() {
+//        if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) &&
+//                shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+//            new AlertDialog.Builder(getActivity())
+//                    .setTitle("Permission Info")
+//                    .setMessage("Location Permissions are needed to Show the NearBy Services to You")
+//                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+//                                    Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+//                        }
+//                    })
+//                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    })
+//                    .create()
+//                    .show();
+//        } else {
+//            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+//        }
+//    }
+
+
+    // }
 
    /* private BiometricPrompt.AuthenticationCallback authenticationCallback() {
 
@@ -238,6 +311,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     }
 
     private void createRecyclerView(ArrayList<ServiceCategoryModel> serviceCategoryModelArrayList) {
+        Noservice.setVisibility(View.GONE);
         customerServicesRecyclerView.setHasFixedSize(true);
         CustomerServicesRecyclerViewAdapter customerServicesRecyclerViewAdapter = new CustomerServicesRecyclerViewAdapter(getActivity(), serviceCategoryModelArrayList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
@@ -248,17 +322,39 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         ProgressBarHelper.dismiss(getActivity());
     }
 
+    private void createLocationRecylerView(ArrayList<LocationbasedCategoriesModel> serviceLocationCategoryModelArrayList) {
+        Noservice.setVisibility(View.GONE);
+        custLocationserviceRecylerview.setHasFixedSize(true);
+      //  Toast.makeText(getContext(),"msg"+serviceLocationCategoryModelArrayList.get(0).getStatus(),Toast.LENGTH_LONG).show();
+        CustomerLocationServicesRecyclerViewAdapter customerLocationServicesRecyclerViewAdapter = new CustomerLocationServicesRecyclerViewAdapter(getActivity(), serviceLocationCategoryModelArrayList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        custLocationserviceRecylerview.setLayoutManager(gridLayoutManager);
+        custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+
+        custLocationserviceRecylerview.setNestedScrollingEnabled(false);
+        custLocationserviceRecylerview.setAdapter(customerLocationServicesRecyclerViewAdapter);
+        customerLocationServicesRecyclerViewAdapter.setServicesRecyclerViewItemClickListener(this);
+        ProgressBarHelper.dismiss(getActivity());
+    }
+
+
     private void castingViews(View view) {
         //   homePage_slider_viewPager = view.findViewById(R.id.customer_home_viewPager);
         customerServicesRecyclerView = view.findViewById(R.id.cust_home_services_recyclerView);
+        custLocationserviceRecylerview = view.findViewById(R.id.cust_Location_home_services_recyclerView);
         custHomeSearchView = view.findViewById(R.id.cust_home_searchView);
         homeLoginBtn = view.findViewById(R.id.toolBarLoginBtn);
         homeHelpBtn = view.findViewById(R.id.toolBarQuestionBtn);
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
         name = view.findViewById(R.id.profileName);
         appimage = view.findViewById(R.id.toolBarIcon);
-        appimages= view.findViewById(R.id.toolBarIcons);
+        appimages = view.findViewById(R.id.toolBarIcons);
         profilePerson = view.findViewById(R.id.profileperson);
+        Locationimg = view.findViewById(R.id.add_location);
+        LocationhomeSliderLayout = view.findViewById(R.id.homePageImageSliderlocation);
+        profilelayout = view.findViewById(R.id.profilelayout);
+        edit_city_txt = view.findViewById(R.id.edit_profile_txt);
+        Noservice = view.findViewById(R.id.services_no);
         //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
@@ -281,32 +377,97 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             //         if (homeLoginBtn.getVisibility() == View.VISIBLE) {
             //           homeLoginBtn.setVisibility(View.GONE);
             //     }
+            //
+            //
             name.setText("");
             if (homeHelpBtn.getVisibility() == View.GONE) {
-               // homeHelpBtn.setVisibility(View.GONE);
+                // homeHelpBtn.setVisibility(View.GONE);
                 name.setVisibility(View.VISIBLE);
                 homeLoginBtn.setVisibility(View.GONE);
-              //  appimage.setVisibility(View.GONE);
-               // appimages.setVisibility(View.VISIBLE);
+                profilelayout.setVisibility(View.VISIBLE);
+              //  customerServicesRecyclerView.setVisibility(View.GONE);
+                //  appimage.setVisibility(View.GONE);
+                // appimages.setVisibility(View.VISIBLE);
 
             } else {
                 homeLoginBtn.setText(getResources().getString(R.string.login));
             }
-         //   if (isFingerPrintAuthorized == false) {
-           //     bioPrint();
+            //   if (isFingerPrintAuthorized == false) {
+            //     bioPrint();
 
             //}
         }
+
         ProfileFragmentController.getInstance().getProfileDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
         ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
             @Override
             public void onProfileDetailsSuccessResponse(ProfileModel profileModel) {
-               name.setText(profileModel.getName());
-               // String fullName = profileModel.getName();
-              //  String firstName = fullName.length() > 6 ? fullName.substring(0, 5) : fullName;
-
+                //  name.setText(profileModel.getAddress());
+                //   profileModel.getAddress()
+                // String fullName = profileModel.getName();
+                //  String firstName = fullName.length() > 6 ? fullName.substring(0, 5) : fullName;
+                //  isLogined = true;
 // Set the text of the name element with the first five characters
-               // name.setText(firstName+"....");
+                // name.setText(firstName+"....");
+                String city = profileModel.getAddress();
+                String searchString = "Andhra Pradesh";
+                String result = "";
+
+                // Split the address by commas
+                String[] part = city.split(", ");
+
+                // Iterate through the parts to find "Andhra Pradesh"
+                for (int i = 0; i < part.length; i++) {
+                    if (part[i].contains(searchString)) {
+                        // Check if there is a previous part
+                        if (i > 0) {
+                            // The city is the part before "Andhra Pradesh"
+                            result = part[i - 1];
+                        }
+                        break;
+                    }
+                }
+                edit_city_txt.setText(result.trim());
+
+
+                String address = profileModel.getAddress();
+                String[] parts = address.split(", ");
+
+                // Find the index of the part containing "India"
+                int index = -1;
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i].contains("India")) {
+                        index = i;
+                        break;
+                    }
+                }
+
+                // Extract the pincode before "India"
+                String pinscode = null;
+                if (index != -1 && index > 0) {
+                    Pattern pattern = Pattern.compile("\\d+");
+                    Matcher matcher = pattern.matcher(parts[index - 1]);
+                    if (matcher.find()) {
+                        pinscode = matcher.group();
+                    }
+                }
+                name.setText(profileModel.getName());
+                // Display the pincode
+
+                selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
+
+
+                if (pinscode != null) {
+                    UserSessionManagement.getInstance(getContext()).setRegpincode(pinscode);
+                    selectedId = UserSessionManagement.getInstance(getContext()).getRegpincode();
+                } else {
+                    selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
+                }
+
+              //  showLocations();
+
+               // Toast.makeText(getContext(), "pin" + selectedId, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -319,18 +480,242 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             }
         });
+        edit_city_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToFragmentContainer(ProfileFragment.newInstance("customer"), true, "profileFragment");
+
+            }
+        });
+
     }
+
+
+    private void showLocations() {
+        // if(isLogined) {
+        if (selectedId != null) {
+            Map<String, String> body = new HashMap<>();
+            body.put("pincode", selectedId);
+            HomeFragmentController.getInstance().callGetImagesSlidersApi(body);
+            HomeFragmentController.getInstance().callGetLocationCustomerServicesApi(body);
+            LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+            homesliderLayout.setVisibility(View.GONE);
+
+        } else {
+            LocationhomeSliderLayout.setVisibility(View.GONE);
+            homesliderLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+//        private void showDialog() {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//            builder.setMessage("Click the Location icon on the top right side.")
+//                    .setCancelable(false)
+//                    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.dismiss();
+//                        }
+//                    })
+//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            // Handle OK button click if needed
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            AlertDialog alert = builder.create();
+//            alert.show();
+//        }
+
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+//    @Override
+//    public void onimagesSliderResponse(List<SliderImagesResponse.Slider> sliderImagesResponses) {
+//
+//        createLocationSliderImage(sliderImagesResponses);
+//
+//    }
 
     @Override
     public void imageSlidersResponse(ArrayList<ImageSliderModel> imageSliderModelArrayList) {
+
         createSliderImage(imageSliderModelArrayList);
+
     }
+
+    @Override
+    public void imagesSlidersResponse(ArrayList<SliderImagesResponse> sliderImagesResponseArrayList) {
+       // createLocationSliderImage(sliderImagesResponseArrayList);
+
+    }
+
+
+//
+//    private void showLocationDialog(ArrayList<LocationResponseModel.Location> locations) {
+//        ArrayList<String> locationNames = null;
+//        final ArrayList<String> locationIds = new ArrayList<>(); // Store location IDs
+//
+//        if (locations != null) {
+//            locationNames = new ArrayList<>();
+//            for (LocationResponseModel.Location location : locations) {
+//                //if ("1".equals(location.getStatus())) {
+//                    locationNames.add(location.getLocation());
+//                    locationIds.add(location.getId()); // Add ID to the list
+//               // }
+//            }
+//        }
+//
+//        // Convert the ArrayList to a String array
+//        String[] places = locationNames.toArray(new String[0]);
+//
+//        // Create and show the dialog box
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setTitle("Select a Location");
+//        builder.setItems(places, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String selectedLocation = places[which];
+//                String selectedLocationId = locationIds.get(which); // Retrieve ID using index
+//                LocationResponseModel locationResponseModel = new LocationResponseModel();
+//
+//              //  Toast.makeText(getContext(), "Selected Location: " + selectedLocation + ", ID: " + selectedLocationId, Toast.LENGTH_SHORT).show();
+//                // Pass the selected location ID to the API call
+//               // HomeFragmentController.getInstance().callGetImageSlidersApi(selectedLocationId);
+//                UserSessionManagement.getInstance(getContext()).setSelectedLocationId(selectedLocationId);
+//
+//
+//                selectedId = UserSessionManagement.getInstance(getContext()).getSelectedLocationId();
+//                selectedRegisterId = UserSessionManagement.getInstance(getContext()).getRegisterSelectedLocationId();
+//
+////                if(selectedRegisterId != null){
+////
+////                    HomeFragmentController.getInstance().callGetImagesSlidersApi(selectedRegisterId);
+////                    LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+////                    homesliderLayout.setVisibility(View.GONE);
+//////                    custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+//////                    customerServicesRecyclerView.setVisibility(View.GONE);
+////
+////
+////                }
+////                else {
+////                    HomeFragmentController.getInstance().callGetLocationCustomerServicesApi(selectedId);
+////                    HomeFragmentController.getInstance().callGetImagesSlidersApi(selectedId);
+////                  //  LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+////                    //homesliderLayout.setVisibility(View.GONE);
+////                  //  custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+////                    //customerServicesRecyclerView.setVisibility(View.GONE);
+////
+////                }
+//
+
+    //                HomeFragmentController.getInstance().callGetImagesSlidersApi(selectedLocationId);
+//                HomeFragmentController.getInstance().callGetLocationCustomerServicesApi(selectedLocationId);
+//                if(selectedLocationId != null){
+//
+//                    LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+//                    homesliderLayout.setVisibility(View.GONE);
+//
+////                    customerServicesRecyclerView.setVisibility(View.GONE);
+////                    custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+//                }
+//                else{
+//                    LocationhomeSliderLayout.setVisibility(View.GONE);
+//                    homesliderLayout.setVisibility(View.VISIBLE);
+////                    customerServicesRecyclerView.setVisibility(View.GONE);
+////                    custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+//
+//                }
+//
+//                // Inside the onClick method of the location dialog
+////                SharedPreferences sharedPreferences = getContext().getSharedPreferences("LocationPreferences", Context.MODE_PRIVATE);
+////                SharedPreferences.Editor editor = sharedPreferences.edit();
+////                if (LocationhomeSliderLayout.getVisibility() == View.GONE) {
+////                    LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+////                    homesliderLayout.setVisibility(View.GONE);
+////                    editor.putBoolean("isLocationSliderVisible", true);
+////                } else {
+////                    editor.putBoolean("isLocationSliderVisible", false);
+////                }
+////                editor.apply();
+//
+//
+////                if(homesliderLayout.getVisibility() == View.VISIBLE) {
+////                 LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+////                  homesliderLayout.setVisibility(View.GONE);
+////                }
+////
+////                else {
+////                    LocationhomeSliderLayout.setVisibility(View.GONE);
+////                    homesliderLayout.setVisibility(View.VISIBLE);
+////                   // isLocationSliderVisible = true;
+////
+////                }
+//
+//
+//            }
+//        });
+//        builder.show();
+//    }
+    private void createLocationSliderImage(ArrayList<SliderImagesResponse> sliderImagesResponseArrayList) {
+        if (UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.centerCrop();
+            //   .placeholder(R.drawable.image_place_holder);
+
+            for (int i = 0; i < sliderImagesResponseArrayList.size(); i++) {
+                DefaultSliderView sliderView1 = new DefaultSliderView(getActivity());
+                // initialize SliderLayout
+                String imageUrl = "https://admin.gobuddyindia.com/assets/images/" + sliderImagesResponseArrayList.get(i).getImage();
+
+                sliderView1.image(imageUrl)
+                        .setRequestOption(requestOptions)
+                        .setProgressBarVisible(true)
+                        .setOnSliderClickListener(this);
+
+                //add your extra information
+                sliderView1.bundle(new Bundle());
+                sliderView1.getBundle().putString("extra", sliderImagesResponseArrayList.get(i).getCategory_id());
+                LocationhomeSliderLayout.addSlider(sliderView1);
+            }
+
+            LocationhomeSliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+            LocationhomeSliderLayout.setCustomAnimation(new DescriptionAnimation());
+            LocationhomeSliderLayout.setDuration(4000);
+        }
+    }
+
+//        if (UserSessionManagement.getInstance(getActivity()).isLoggedIn()) {
+//            RequestOptions requestOptions = new RequestOptions().centerCrop();
+//
+//            for (SliderImagesResponse.Slider slider : sliderImagesResponses) {
+//                String imageUrl = "https://admin.gobuddyindia.com/assets/images/" + slider.getImage();
+//
+//                // Create a new DefaultSliderView
+//                DefaultSliderView sliderView1 = new DefaultSliderView(getActivity());
+//                // Set the image URL
+//                sliderView1.image(imageUrl)
+//                        .setOnSliderClickListener(CustomerHomeFragment.this)
+//                        .setRequestOption(requestOptions)
+//                        .setProgressBarVisible(true);
+//
+//
+//                // Add the slider to the slider layout
+//                sliderView1.bundle(new Bundle());
+//
+//                //  homesliderLayout.addSlider(sliderView1);
+//                LocationhomeSliderLayout.addSlider(sliderView1);
+//            }
+//
+//// Set animations and other configurations for the slider layout
+//            LocationhomeSliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+//            LocationhomeSliderLayout.setCustomAnimation(new DescriptionAnimation());
+//            LocationhomeSliderLayout.setDuration(4000);
+//
+//        }
+
 
     @SuppressLint("CheckResult")
     private void createSliderImage(ArrayList<ImageSliderModel> imageSliderModelArrayList) {
@@ -358,10 +743,49 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homesliderLayout.setDuration(4000);
     }
 
+
     @Override
     public void OnServicesResponse(ArrayList<ServiceCategoryModel> serviceCategoryModelArrayList) {
         createRecyclerView(serviceCategoryModelArrayList);
     }
+
+    @Override
+    public void OnLocationServicesResponse(ArrayList<LocationbasedCategoriesModel> serviceLocationCategoryModelArrayList) {
+      //  createLocationRecylerView(serviceLocationCategoryModelArrayList);
+    }
+
+    @Override
+    public void OnLocationInvaildResponse(String msg) {
+        Noservice.setVisibility(View.VISIBLE);
+        showToast(msg);
+    }
+
+    private void showToast(String msg) {
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(Noservice, "scaleX", 1f, 1.5f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(Noservice, "scaleY", 1f, 1.5f);
+
+        scaleX.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleX.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleY.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleY.setRepeatMode(ObjectAnimator.REVERSE);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleX, scaleY);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.setDuration(1000);
+        animatorSet.start();
+    }
+
+
+    @Override
+    public void onLocationSuccessResponse(ArrayList<LocationResponseModel.Location> locations) {
+        //  showLocationDialog(locations);
+
+
+    }
+
+
 
     @Override
     public void onFailureResponse(String failureResponse) {
@@ -383,6 +807,17 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         //   Toast.makeText(getActivity(), slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onItemClickListner(LocationbasedCategoriesModel locationbasedCategoriesModel) {
+        SubCategoriesFragment subCategoriesFragment = new SubCategoriesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("categoryModel", locationbasedCategoriesModel);
+        subCategoriesFragment.setArguments(bundle);
+        addToFragmentContainer(subCategoriesFragment, true, SUBCATEGORIES_FRAGMENT_TAG);
+      //  Toast.makeText(getActivity(), "jjjjj", Toast.LENGTH_SHORT).show();
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String fragmentListener);
@@ -392,15 +827,68 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     public void onResume() {
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+//        if(selectedId != null){
+//            Map<String,String> body = new HashMap<>();
+//         body.put("pincode",selectedId);
+//          HomeFragmentController.getInstance().callGetImagesSlidersApi(body);
+//         HomeFragmentController.getInstance().callGetLocationCustomerServicesApi(body);
+//            LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+//            homesliderLayout.setVisibility(View.GONE);
+//            customerServicesRecyclerView.setVisibility(View.GONE);
+//            custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+//        }
+//        else{
+//            LocationhomeSliderLayout.setVisibility(View.GONE);
+//           homesliderLayout.setVisibility(View.VISIBLE);
+//
+//        }
+        HomeFragmentController.getInstance().callGetCustomerServicesApi();
+        HomeFragmentController.getInstance().callGetImageSlidersApi();
+
+        custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+        homesliderLayout.setVisibility(View.VISIBLE);
+
+
+//        String selectedLocationIds = UserSessionManagement.getInstance(getContext()).getPincode();
+//
+//        // Call the API to fetch slider images using the selected location ID
+//        if (selectedLocationIds != null) {
+//            Map<String,String> body = new HashMap<>();
+//            body.put("pincode",selectedLocationIds);
+//            HomeFragmentController.getInstance().callGetImagesSlidersApi(body);
+//            HomeFragmentController.getInstance().callGetLocationCustomerServicesApi(body);
+//            LocationhomeSliderLayout.setVisibility(View.VISIBLE);
+//            homesliderLayout.setVisibility(View.GONE);
+//            customerServicesRecyclerView.setVisibility(View.GONE);
+//            custLocationserviceRecylerview.setVisibility(View.VISIBLE);
+//        } else {
+//            // If no location ID is selected, show the default slider layout
+//            LocationhomeSliderLayout.setVisibility(View.GONE);
+//            homesliderLayout.setVisibility(View.VISIBLE);
+//        }
+
+
+
+
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-        homesliderLayout.stopAutoCycle();
 
 
+       // homesliderLayout.stopAutoCycle();
+
+
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Hide or release the LocationhomeSliderLayout here
+     //   LocationhomeSliderLayout.setVisibility(View.GONE);
     }
 
    /* androidx.biometric.BiometricPrompt biometricPrompt;

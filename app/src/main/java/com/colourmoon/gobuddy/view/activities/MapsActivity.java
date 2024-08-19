@@ -27,6 +27,7 @@ import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.helper.DialogHelper;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiInterface;
+import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -433,6 +434,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         new Handler().postDelayed(() -> {
                             rippleBackground.stopRippleAnimation();
                             currentLocationView.setText(mapsAddressLine);
+                            UserSessionManagement.getInstance(getApplication()).setAddress(mapsAddressLine);
                         }, 2000);
                         Log.d("place_id", mapsPlaceId);
 

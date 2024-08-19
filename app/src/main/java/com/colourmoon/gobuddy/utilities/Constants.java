@@ -33,6 +33,7 @@ public class Constants {
     public static final String FAQ_FRAGMENT_TAG = "faqFragment";
     public static final String FAQ_DETAILS_FRAGMENT_TAG = "faqDetailsFragment";
     public static final String SCHEDULE_FRAGMENT_TAG = "scheduleFragment";
+    public  static  final  String SFT_FRAGMENT_TAG ="sftFragment";
     public static final String SCHEDULE_TIME_FRAGMENT_TAG = "scheduleTimeFragment";
     public static final String SCHEDULE_RECURRING_FRAGMENT_TAG = "scheduleRecurringFragment";
     public static final String PLACE_ORDER_FRAGMENT_TAG = "placeOrderFragment";

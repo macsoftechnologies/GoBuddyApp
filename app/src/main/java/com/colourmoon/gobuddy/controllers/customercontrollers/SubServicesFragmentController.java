@@ -2,6 +2,7 @@ package com.colourmoon.gobuddy.controllers.customercontrollers;
 
 import androidx.annotation.NonNull;
 
+import com.colourmoon.gobuddy.LocationSubserviceModel;
 import com.colourmoon.gobuddy.model.SubServiceModel;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiInterface;
@@ -38,6 +39,8 @@ public class SubServicesFragmentController {
         void onSubServicesSuccessResponse(List<SubServiceModel> subServiceModelList);
 
         void onSubServicesFailureResponse(String failureReason);
+
+        void onLocationSubServicesSuccessResponse(List<LocationSubserviceModel> locationsubServiceModelList);
     }
 
     private SubServicesFragmentControllerListener subServicesFragmentControllerListener;
@@ -57,6 +60,7 @@ public class SubServicesFragmentController {
                         String responseString = new String(response.body().bytes());
                         JSONObject jsonObject = new JSONObject(responseString);
                         if (jsonObject.getString("status").equalsIgnoreCase("valid")) {
+
                             String subServiceString = jsonObject.getString("sub_services");
                             JSONArray jsonArray = new JSONArray(subServiceString);
                             List<SubServiceModel> subServiceModelList = new ArrayList<>();
@@ -66,6 +70,7 @@ public class SubServicesFragmentController {
                                         subServicesJsonObject.getString("id"),
                                         subServicesJsonObject.getString("title"),
                                         subServicesJsonObject.getString("price")
+
                                 ));
                             }
                             if (subServicesFragmentControllerListener != null) {
@@ -97,4 +102,61 @@ public class SubServicesFragmentController {
             }
         });
     }
+
+
+    public void getLocationSubserviceList(String subServiceId,String pincode) {
+        GoBuddyApiInterface goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
+        Call<ResponseBody> getSubServicesCall = goBuddyApiInterface.getLocationSubserviceList(subServiceId,pincode);
+        getSubServicesCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    try {
+                        String responseString = new String(response.body().bytes());
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        if (jsonObject.getString("status").equalsIgnoreCase("valid")) {
+                            //String locationPrice = jsonObject.getString("location_price");
+                            String subServiceString = jsonObject.getString("sub_services");
+                            JSONArray jsonArray = new JSONArray(subServiceString);
+                            List<LocationSubserviceModel> locationsubServiceModelList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject subServicesJsonObject = jsonArray.getJSONObject(i);
+                                locationsubServiceModelList.add(new LocationSubserviceModel(
+                                        subServicesJsonObject.getString("id"),
+                                        subServicesJsonObject.getString("title"),
+                                        subServicesJsonObject.getString("price")
+                                    //    locationPrice
+
+                                ));
+                            }
+                            if (subServicesFragmentControllerListener != null) {
+                                subServicesFragmentControllerListener.onLocationSubServicesSuccessResponse(locationsubServiceModelList);
+                            }
+                        } else {
+                            if (subServicesFragmentControllerListener != null) {
+                                subServicesFragmentControllerListener.onSubServicesFailureResponse(jsonObject.getString("message"));
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (subServicesFragmentControllerListener != null) {
+                        subServicesFragmentControllerListener.onSubServicesFailureResponse("No Response From Server");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                if (subServicesFragmentControllerListener != null) {
+                    subServicesFragmentControllerListener.onSubServicesFailureResponse(t.getLocalizedMessage());
+                }
+            }
+        });
+    }
+
 }

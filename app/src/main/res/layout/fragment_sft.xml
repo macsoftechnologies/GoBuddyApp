@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SftFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+            android:text="@string/sfnotes"
+            android:gravity="center"
+          android:layout_above="@+id/sftbar"
+            android:textColor="#000"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold" />
+
+    <!-- TODO: Update blank fragment layout -->
+        <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+            android:id="@+id/sftbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:elevation="@dimen/_5sdp"
+            app:bar_highlight_color="@color/colorPrimary"
+            app:left_thumb_color="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/seekbar_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sftbar"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:text="Value"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/nxt_sft_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekbar_value"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginBottom="@dimen/_45sdp"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="@dimen/_70sdp"
+            android:paddingTop="@dimen/_5sdp"
+
+            android:paddingRight="@dimen/_70sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/next"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

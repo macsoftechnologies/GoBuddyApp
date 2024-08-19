@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GoBuddyApiClient {
 
    public static final String BASE_URL = "https://admin.gobuddyindia.com/api/";
-   // public static final String BASE_URL = "http://dev.gobuddyindia.com/api/";
+  // public static final String BASE_URL = "http://dev.gobuddyindia.com/api/";
   private static final String PAYTM_URL = "https://admin.gobuddyindia.com/paytm/";
    //private static final String PAYTM_URL = "http://dev.gobuddyindia.com/paytm/";
     private static Retrofit retrofit = null;

@@ -160,6 +160,8 @@ public class CombinedFragmentController {
 
 import androidx.annotation.NonNull;
 
+import com.colourmoon.gobuddy.LocationServiceModel;
+import com.colourmoon.gobuddy.LocationbasedSubCategoriesModel;
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
@@ -175,6 +177,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -198,6 +201,8 @@ public class SubcategoriesFragmentController {
 
     public interface SubCategoriesFragmentControllerListener {
         void onSuccessResponse(List<SubCategoryModel> subCategoryModelList);
+
+       void onLocationSubCategorysSuccessResponse(List<LocationbasedSubCategoriesModel> locationbasedSubCategoriesModelList);
 
         void onFailureResponse(String failureReason);
     }
@@ -280,4 +285,82 @@ public class SubcategoriesFragmentController {
         });
     }
 
+    public void getLocationSubCategory(Map<String,String> sublocationcategorysMap){
+        GoBuddyApiInterface goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
+        Call<ResponseBody> subLocationCategoriesCall = goBuddyApiInterface.getLocationSubCategorys(sublocationcategorysMap);
+        subLocationCategoriesCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    try {
+                        String responseString = new String(response.body().bytes());
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        String imageBaseUrl = jsonObject.optString("base_url", "");
+                        if (jsonObject.getString("status").equals("valid")) {
+                            String subCateogryString = jsonObject.getString("sub_category");
+                            JSONArray subCategoryJsonArray = new JSONArray(subCateogryString);
+                            ArrayList<LocationbasedSubCategoriesModel> locationbasedSubCategoriesModelArrayList = new ArrayList<>();
+                            for (int i = 0; i < subCategoryJsonArray.length(); i++) {
+                                JSONObject jsonObject1 = subCategoryJsonArray.getJSONObject(i);
+                                String servicesString = jsonObject1.getString("services");
+                                //
+                                List<LocationServiceModel>  locationServiceModelArrayList= new ArrayList<>();
+                                try {
+                                    Gson gson = new Gson();
+                                    Type listType = new TypeToken<List<LocationServiceModel>>() {
+                                    }.getType();
+                                    locationServiceModelArrayList = gson.fromJson(servicesString, listType);
+                                    for (LocationServiceModel locationServiceModel : locationServiceModelArrayList) {
+                                        locationServiceModel.setSub_image(imageBaseUrl + locationServiceModel.getSub_image());
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                LocationbasedSubCategoriesModel locationbasedSubCategoriesModel = new LocationbasedSubCategoriesModel(
+                                        jsonObject1.getString("id"),
+                                        jsonObject1.getString("sub_category"),
+//                                        jsonObject1.getString("location_price"),
+                                        imageBaseUrl + jsonObject1.getString("sub_image"),
+
+
+                                        false
+                                );
+                                locationbasedSubCategoriesModel.setServices(locationServiceModelArrayList);
+                                locationbasedSubCategoriesModelArrayList .add(locationbasedSubCategoriesModel);
+                            }
+                            if (subCategoriesFragmentControllerListener != null) {
+                                subCategoriesFragmentControllerListener.onLocationSubCategorysSuccessResponse(locationbasedSubCategoriesModelArrayList);
+                            }
+                        } else {
+                            if (subCategoriesFragmentControllerListener != null) {
+                                subCategoriesFragmentControllerListener.onFailureResponse(jsonObject.getString("message"));
+                            }
+                        }
+                        //
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (subCategoriesFragmentControllerListener != null) {
+                        subCategoriesFragmentControllerListener.onFailureResponse("No Response From Server\nPlease Try Again");
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                if (subCategoriesFragmentControllerListener != null) {
+                    subCategoriesFragmentControllerListener.onFailureResponse(t.getLocalizedMessage());
+                }
+
+            }
+        });
+
+
+    }
 }

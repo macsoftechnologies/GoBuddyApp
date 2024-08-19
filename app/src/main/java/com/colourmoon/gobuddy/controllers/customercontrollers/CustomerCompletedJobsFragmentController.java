@@ -79,6 +79,8 @@ public class CustomerCompletedJobsFragmentController {
                                         acceptedDetailsJsonObject.getString("customer_confirm"),
                                         acceptedDetailsJsonObject.getString("payment_mode"),
                                         acceptedDetailsJsonObject.getString("total_amount")
+//                                        acceptedDetailsJsonObject.getString("paid_amount"),
+//                                      acceptedDetailsJsonObject.getString("remaining_amount")
                                 );
 
                                 if (customerCompletedJobsFragmentControllerListener != null) {

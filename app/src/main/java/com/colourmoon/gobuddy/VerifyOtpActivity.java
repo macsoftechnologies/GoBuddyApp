@@ -19,6 +19,7 @@ import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.view.activities.CustomerMainActivity;
 import com.colourmoon.gobuddy.view.activities.OtpVerificationActivity;
 import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
+import com.colourmoon.gobuddy.view.fragments.customerflowfragments.ScheduleTimeFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,14 +98,27 @@ public class VerifyOtpActivity extends AppCompatActivity implements VerifyOtpCon
 
 
         if (verifyOtpResponseModel.getStatus().equals("valid")) {
+
 //            LoginResponseModel loginResponseModel= new LoginResponseModel();
             if (verifyOtpResponseModel.getView_as().equalsIgnoreCase("customer")) {
                 Toast.makeText(this, "LoggedIn as Customer", Toast.LENGTH_SHORT).show();
-                UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), false);
-                Intent intent = new Intent(VerifyOtpActivity.this, CustomerMainActivity.class);
-                // intent.putExtra("enableFingerprint", true);
-                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                boolean value = UserSessionManagement.getBoolean(this,"NAVIGATE");
+//                if(value){
+//                   // UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), false);
+//                    Intent intt = new Intent(VerifyOtpActivity.this, ScheduleTimeFragment.class);
+//                  //  intt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intt);
+//
+//                }
+//                else{
+                    UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), false);
+                    Intent intent = new Intent(VerifyOtpActivity.this, CustomerMainActivity.class);
+
+                    // intent.putExtra("enableFingerprint", true);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+       //          }
+
             } else {
                 Toast.makeText(this, "LoggedIn as Provider", Toast.LENGTH_SHORT).show();
                 UserSessionManagement.getInstance(this).createLoginSession(verifyOtpResponseModel.getUser_id(), true);

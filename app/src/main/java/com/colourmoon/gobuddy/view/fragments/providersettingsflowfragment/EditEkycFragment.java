@@ -16,6 +16,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -264,12 +266,29 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
                 }
                 break;
             case GALLERY_PERMISSION_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LoadImageFromGallery();
+                boolean king = true;
+               if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_PERMISSION_CODE);
+
+                  LoadImageFromGallery();
                 } else {
+
                     Toast.makeText(getActivity(), "Yay! You Denied Permission", Toast.LENGTH_SHORT).show();
+
                 }
-                break;
+
+//                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+//                }
+
+//                if (king) {
+//                    LoadImageFromGallery();
+//                } else {
+//                    Toast.makeText(getActivity(), "Yay! You Denied Permission", Toast.LENGTH_SHORT).show();
+//                }
+             break;
             default:
                 break;
         }
@@ -348,8 +367,12 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
 
     private void LoadImageFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+
+      galleryIntent.setType("image/*");
+//
+       startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+
+
     }
 
     private void LoadCaptureImageScreen() {
@@ -394,12 +417,20 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = false;
-        options.inPurgeable = true;
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                Toast.makeText(getActivity(), "Image Capturing Cancelled", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == GALLERY_REQUEST_CODE) {
+                Toast.makeText(getActivity(), "Image Selection Cancelled", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        if (requestCode == CAMERA_REQUEST_CODE) {
             if (mCurrentPhotoPath != null) {
-                Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
+                Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
                 Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
                 if (fromWhichProof.equals("IdProof")) {
                     idProofImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
@@ -408,35 +439,36 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
                 }
                 ImageUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), fromWhichProof);
             }
-
-        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "Image Capturing Cancelled", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
             Uri selectedImage = data.getData();
-            if (selectedImage != null && selectedImage.toString().startsWith("content://com.google.android.apps.photos.content")) {
+            if (selectedImage != null) {
                 if (selectedImage.toString().contains("video")) {
                     Utils.getInstance().showSnackBarOnCustomerScreen("Hey! Its Video Buddy", getActivity());
                     return;
                 }
-                createImageFromPhotosUri(selectedImage);
-            } else {
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                mCurrentPhotoPath = cursor.getString(columnIndex);
-                cursor.close();
-                options.inSampleSize = 2;
+                if (selectedImage.toString().startsWith("content://")) {
+                    createImageFromPhotosUri(selectedImage);
+                } else {
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    if (cursor != null) {
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        mCurrentPhotoPath = cursor.getString(columnIndex);
+                        cursor.close();
+                    }
+                }
+                if (mCurrentPhotoPath != null) {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 2;
+                    if (fromWhichProof.equals("IdProof")) {
+                        idProofImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath, options));
+                    } else {
+                        addressProofImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath, options));
+                    }
+                    ImageUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), fromWhichProof);
+                }
             }
-            if (fromWhichProof.equals("IdProof")) {
-                idProofImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath, options));
-            } else {
-                addressProofImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath, options));
-            }
-
-            ImageUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), fromWhichProof);
-        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "Image Selection Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -444,22 +476,19 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
         try {
             InputStream is = getActivity().getContentResolver().openInputStream(selectedImage);
             if (is != null) {
-                bitmap = BitmapFactory.decodeStream(is);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
                 ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream);
                 File f = createImageFile();
-                try {
-                    FileOutputStream fo = new FileOutputStream(f);
+                try (FileOutputStream fo = new FileOutputStream(f)) {
                     fo.write(outStream.toByteArray());
                     fo.flush();
-                    fo.close();
                 } catch (IOException e) {
                     Log.w("TAG", "Error saving image file: " + e.getMessage());
-
                 }
+                mCurrentPhotoPath = f.getAbsolutePath();  // Ensure this is set for the upload method
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

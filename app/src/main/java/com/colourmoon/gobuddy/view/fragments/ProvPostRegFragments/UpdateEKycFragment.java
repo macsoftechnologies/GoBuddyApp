@@ -24,6 +24,8 @@ import com.colourmoon.gobuddy.model.EkycModel;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
@@ -71,7 +73,8 @@ public class UpdateEKycFragment extends Fragment implements CameraBottomSheetDia
 
     // TODO: Rename and change types of parameters
     private String updateType;
-
+//    private static final int GALLERY_PERMISSION_CODE = 1001;
+//    private static final int GALLERY_REQUEST_CODE = 1002;
     private Spinner addressProofSpinner, idProofSpinner;
     private ImageView addressProofImageView, idProofImageView;
     private TextView addressProofImageUploadBtn, idProofImageUploadBtn;
@@ -117,6 +120,9 @@ public class UpdateEKycFragment extends Fragment implements CameraBottomSheetDia
         View view = inflater.inflate(R.layout.fragment_update_ekyc, container, false);
 
         // this method is responsible for casting all views in xml file with java file
+
+
+
         castingViews(view);
 
         UpdateEkycController.getInstance().setUpdateEkycControllerListener(this);

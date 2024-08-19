@@ -23,16 +23,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.colourmoon.gobuddy.LocationServiceModel;
+import com.colourmoon.gobuddy.LocationbasedSubCategoriesModel;
 import com.colourmoon.gobuddy.R;
+import com.colourmoon.gobuddy.SftFragment;
+import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
 import com.colourmoon.gobuddy.helper.HtmlTagHelper;
 import com.colourmoon.gobuddy.model.ServiceModel;
 import com.colourmoon.gobuddy.model.SubCategoryModel;
+import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 
 import static com.colourmoon.gobuddy.utilities.Constants.SCHEDULE_FRAGMENT_TAG;
+import static com.colourmoon.gobuddy.utilities.Constants.SFT_FRAGMENT_TAG;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-public class ServiceDetailsFragment extends Fragment {
+public class ServiceDetailsFragment extends Fragment   {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -40,20 +49,26 @@ public class ServiceDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //private SubcategoriesFragmentController subcategoriesFragmentController;
+
 
     private OnFragmentInteractionListener mListener;
-
+    private List<LocationbasedSubCategoriesModel> locationbasedSubCategoriesModelList;
     private ServiceModel serviceModel;
+    private LocationServiceModel locationServiceModel;
+    private LocationbasedSubCategoriesModel locationbasedSubCategoriesModel;
     private SubCategoryModel subCategoryModel;
     private TextToSpeech tts,tts1,tts2,tts3;
-    private String subCategoryId;
+    private String subCategoryId,locationid,locationPrice;
     private TextView serviceTitleText, servicePriceText, serviceProviderRespText, serviceCustomerRespText, serviceNoteText, serviceDetailsNextBtn;
     private CheckBox checkBox;
     private ImageView Mike1,Mike2,Mike3;
     private LinearLayout customerlayout,providerlayout,notelayout;
+    private String title,subservicename;
     private boolean isProviderTTSPlaying = false;
     private boolean isCustomerTTSPlaying = false;
     private boolean isNoteTTSPlaying = false;
+
 
     public ServiceDetailsFragment() {
         // Required empty public constructor
@@ -62,6 +77,8 @@ public class ServiceDetailsFragment extends Fragment {
     public static ServiceDetailsFragment newInstance(String param1, String param2) {
         ServiceDetailsFragment fragment = new ServiceDetailsFragment();
         Bundle args = new Bundle();
+
+
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
@@ -82,11 +99,45 @@ public class ServiceDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+//        if(UserSessionManagement.getInstance(getContext()).getRegpincode() != null){
+//            locationid = UserSessionManagement.getInstance(getContext()).getRegpincode();
+//
+//        }
+//        else{
+//            locationid = UserSessionManagement.getInstance(getContext()).getPincode();
+//        }
+
+
         if (getArguments() != null) {
-            serviceModel = getArguments().getParcelable("serviceModel");
-            subCategoryId = getArguments().getString("subCategoryId");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceModel.getServiceTitle());
+//            if(locationid != null){
+//               // locationPrice =getArguments().getString("locationPrice");
+//                locationServiceModel = getArguments().getParcelable("serviceModel");
+//                subCategoryId = getArguments().getString("subCategoryId");
+//                locationPrice= getArguments().getString("priceText");
+//                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(locationServiceModel.getServiceTitle());
+//
+//
+//
+//
+//            }
+//          else {
+                serviceModel = getArguments().getParcelable("serviceModel");
+                subCategoryId = getArguments().getString("subCategoryId");
+                subservicename = getArguments().getString("subservicename");
+                if(subservicename != null){
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceModel.getServiceTitle());
+                    title = subservicename;
+
+                }
+                else {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceModel.getServiceTitle());
+                    title = serviceModel.getServiceTitle();
+                }
+
+         //   }
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_service_details, container, false);
@@ -96,32 +147,8 @@ public class ServiceDetailsFragment extends Fragment {
 
         setTextToTextViews();
        updateNextButtonState();
-     /*  customerlayout.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               serviceCustomerRespText.setVisibility(View.VISIBLE);
-               serviceProviderRespText.setVisibility(View.GONE);
-               serviceNoteText.setVisibility(View.GONE);
-           }
-       });
-       providerlayout.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               serviceCustomerRespText.setVisibility(View.GONE);
-               serviceProviderRespText.setVisibility(View.VISIBLE);
-               serviceNoteText.setVisibility(View.GONE);
 
-           }
-       });
-       notelayout.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               serviceCustomerRespText.setVisibility(View.GONE);
-               serviceProviderRespText.setVisibility(View.GONE);
-               serviceNoteText.setVisibility(View.VISIBLE);
 
-           }
-       });*/
        Mike1.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -159,21 +186,71 @@ public class ServiceDetailsFragment extends Fragment {
            }
        });
 
+
         serviceDetailsNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (checkBox.isChecked()) {
-                    ScheduleServiceFragment scheduleServiceFragment = ScheduleServiceFragment.newInstance(serviceModel.getServiceId(), serviceModel.getSubServiceId(), subCategoryId);
-                    addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+//                    if (title.contains("sft") || title.contains("Per Sft")) {
+                        if (title.toLowerCase().contains("sft") || title.toLowerCase().contains("per sft") || title.toLowerCase().contains("per sq.ft")) {
 
+                            // Navigate to the other fragment if title contains "sft"
+//                        OtherFragment otherFragment = OtherFragment.newInstance();
+                        SftFragment sftFragment ;
+
+                        sftFragment = SftFragment.newInstance(serviceModel.getServiceId()
+                                ,serviceModel.getSubServiceId(),
+                                subCategoryId
+                        );
+
+                       addToFragmentContainer(sftFragment, true, SFT_FRAGMENT_TAG );
+                    }
+                    else {
+                        // Navigate to ScheduleServiceFragment
+                        ScheduleServiceFragment scheduleServiceFragment;
+//                        if (locationid != null) {
+//                            scheduleServiceFragment = ScheduleServiceFragment.newInstance(
+//                                    locationServiceModel.getServiceId(),
+//                                    locationServiceModel.getSubServiceId(),
+//                                    subCategoryId
+//                            );
+//                        }
+//                        else {
+                            scheduleServiceFragment = ScheduleServiceFragment.newInstance(
+                                    serviceModel.getServiceId(),
+                                    serviceModel.getSubServiceId(),
+                                    subCategoryId
+                            );
+                      //  }
+                        addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+                    }
                 } else {
-                    Toast.makeText(getActivity(), "Click the checkbox to conform  the order", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Click the checkbox to confirm the order", Toast.LENGTH_SHORT).show();
                     initializeTextToSpeech();
-
                 }
             }
         });
+//
+//                if (checkBox.isChecked()) {
+//                    if(title.contains("sft")){
+//
+//                    }
+//                    if(locationid!=null){
+//                        ScheduleServiceFragment scheduleServiceFragment = ScheduleServiceFragment.newInstance(locationServiceModel.getServiceId(), locationServiceModel.getSubServiceId(), subCategoryId);
+//                        addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+//                    }
+//                    else {
+//                        ScheduleServiceFragment scheduleServiceFragment = ScheduleServiceFragment.newInstance(serviceModel.getServiceId(), serviceModel.getSubServiceId(), subCategoryId);
+//                        addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
+//                    }
+//                } else {
+//                    Toast.makeText(getActivity(), "Click the checkbox to conform  the order", Toast.LENGTH_SHORT).show();
+//                    initializeTextToSpeech();
+//
+//                }
+//            }
+//        });
       checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
           @Override
           public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -186,6 +263,8 @@ public class ServiceDetailsFragment extends Fragment {
       });
         return view;
     }
+
+
 
     private void initializeTextToSpeech() {
         tts = new TextToSpeech(requireContext(), new TextToSpeech.OnInitListener() {
@@ -207,13 +286,23 @@ public class ServiceDetailsFragment extends Fragment {
             public void onInit(int provider) {
                 if (provider != TextToSpeech.ERROR) {
                     tts1.setLanguage(Locale.US);
-                     String providerSpeech = serviceModel.getServiceCustomerResponsibility();
-                    String providerSpeechtext= providerSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
-                    String ps = providerSpeechtext.replaceAll("nbsp","");
-                   // String textToSpeak = "Are you willing to place the order";
-                    tts1.speak(ps, TextToSpeech.QUEUE_FLUSH, null, null);
-                    isProviderTTSPlaying = true;
+                    if(locationid !=null){
+                        String providerSpeech = locationServiceModel.getServiceCustomerResponsibility();
+                        String providerSpeechtext= providerSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
+                        String ps1 = providerSpeechtext.replaceAll("nbsp","");
+                        tts1.speak(ps1, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isProviderTTSPlaying = true;
 
+
+                    }
+                   else {
+                        String providerSpeech = serviceModel.getServiceCustomerResponsibility();
+                        String providerSpeechtext = providerSpeech.replaceAll("\\<.*?\\>|&nbsp;", "");
+                        String ps = providerSpeechtext.replaceAll("nbsp", "");
+                        // String textToSpeak = "Are you willing to place the order";
+                        tts1.speak(ps, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isProviderTTSPlaying = true;
+                    }
                 }
             }
         });
@@ -225,13 +314,22 @@ public class ServiceDetailsFragment extends Fragment {
             public void onInit(int customer) {
                 if (customer != TextToSpeech.ERROR) {
                     tts2.setLanguage(Locale.US);
-                    // String note = serviceModel.getServiceNote();
-                    String customertextSpeech = serviceModel.getServiceProviderResponsibility();
-                   String customerSpeech= customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
-                   String cs = customerSpeech.replaceAll("nbsp;","");
-                    tts2.speak(cs, TextToSpeech.QUEUE_FLUSH, null, null);
-                    isCustomerTTSPlaying = true;
+                    if(locationid!=null){
+                        String customertextSpeech = locationServiceModel.getServiceProviderResponsibility();
+                        String customerSpeech= customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;","");
+                        String cs = customerSpeech.replaceAll("nbsp;","");
+                        tts2.speak(cs, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isCustomerTTSPlaying = true;
 
+                    }
+                    // String note = serviceModel.getServiceNote();
+                    else {
+                        String customertextSpeech = serviceModel.getServiceProviderResponsibility();
+                        String customerSpeech = customertextSpeech.replaceAll("\\<.*?\\>|&nbsp;", "");
+                        String cs = customerSpeech.replaceAll("nbsp;", "");
+                        tts2.speak(cs, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isCustomerTTSPlaying = true;
+                    }
                 }
             }
         });
@@ -243,12 +341,23 @@ public class ServiceDetailsFragment extends Fragment {
             public void onInit(int note) {
                 if (note != TextToSpeech.ERROR) {
                     tts3.setLanguage(Locale.US);
-                    String noteSpeech = serviceModel.getServiceNote();
-                    //String textToSpeak = "Are you willing to place the order";
-                    String noteText= noteSpeech.replaceAll("\\<.*?\\>|&nbsp; ","");
-                    String nt = noteText.replaceAll("nbsp","");
-                    tts3.speak(nt, TextToSpeech.QUEUE_FLUSH, null, null);
-                    isNoteTTSPlaying = true;
+                    if(locationid!=null){
+                        String noteSpeech = locationServiceModel.getServiceNote();
+                        //String textToSpeak = "Are you willing to place the order";
+                        String noteText= noteSpeech.replaceAll("\\<.*?\\>|&nbsp; ","");
+                        String nt = noteText.replaceAll("nbsp","");
+                        tts3.speak(nt, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isNoteTTSPlaying = true;
+
+                    }
+                    else {
+                        String noteSpeech = serviceModel.getServiceNote();
+                        //String textToSpeak = "Are you willing to place the order";
+                        String noteText = noteSpeech.replaceAll("\\<.*?\\>|&nbsp; ", "");
+                        String nt = noteText.replaceAll("nbsp", "");
+                        tts3.speak(nt, TextToSpeech.QUEUE_FLUSH, null, null);
+                        isNoteTTSPlaying = true;
+                    }
                 }
             }
         });
@@ -273,33 +382,84 @@ public class ServiceDetailsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setTextToTextViews() {
-        serviceTitleText.setText(serviceModel.getServiceTitle());
-        if (getArguments().containsKey("subServicePrice")) {
-            servicePriceText.setText(getContext().getResources().getString(R.string.indian_rupee) +" "+ getArguments().getString("subServicePrice"));
-        } else {
-            servicePriceText.setText(getContext().getResources().getString(R.string.indian_rupee) +" "+ serviceModel.getServicePrice());
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            serviceProviderRespText.setText(Html.fromHtml(serviceModel.getServiceProviderResponsibility(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            serviceProviderRespText.setText(Html.fromHtml(serviceModel.getServiceProviderResponsibility(), null,
-                    new HtmlTagHelper()));
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            serviceCustomerRespText.setText(Html.fromHtml(serviceModel.getServiceCustomerResponsibility(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            serviceCustomerRespText.setText(Html.fromHtml(serviceModel.getServiceCustomerResponsibility(), null,
-                    new HtmlTagHelper()));
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), Html.FROM_HTML_MODE_COMPACT));
+        //locationid = UserSessionManagement.getInstance(getContext()).getSelectedLocationId();
 
-        } else {
-            serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), null,
-                    new HtmlTagHelper()));
-        }
+//        if (locationid != null) {
+//            serviceTitleText.setText(locationServiceModel.getServiceTitle());
+//            if (getArguments().containsKey("price")) {
+//                String rupee ="\u20B9";
+//                String inputString = getArguments().getString("price");
+//                String subserviceprice = inputString.replace(rupee,"");
+//
+//                servicePriceText.setText( " " + getArguments().getString("price"));
+//                UserSessionManagement.getInstance(getContext()).setSubServicePrice(subserviceprice);
+//            } else {
+//
+//                String rupee ="\u20B9";
+//
+//                String serviceprice = locationPrice.replace(rupee,"");
+//
+//
+//                //servicePriceText.setText(getContext().getResources().getString(R.string.indian_rupee) + " " +locationPrice);
+//                servicePriceText.setText( "  " +locationPrice);
+//                UserSessionManagement.getInstance(getContext()).setServicePrice(serviceprice);
+//
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                serviceProviderRespText.setText(Html.fromHtml(locationServiceModel.getServiceProviderResponsibility(), Html.FROM_HTML_MODE_COMPACT));
+//            } else {
+//                serviceProviderRespText.setText(Html.fromHtml(locationServiceModel.getServiceProviderResponsibility(), null,
+//                        new HtmlTagHelper()));
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                serviceCustomerRespText.setText(Html.fromHtml(locationServiceModel.getServiceCustomerResponsibility(), Html.FROM_HTML_MODE_COMPACT));
+//            } else {
+//                serviceCustomerRespText.setText(Html.fromHtml(locationServiceModel.getServiceCustomerResponsibility(), null,
+//                        new HtmlTagHelper()));
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                serviceNoteText.setText(Html.fromHtml(locationServiceModel.getServiceNote(), Html.FROM_HTML_MODE_COMPACT));
+//
+//            } else {
+//                serviceNoteText.setText(Html.fromHtml(locationServiceModel.getServiceNote(), null,
+//                        new HtmlTagHelper()));
+//            }
+//        }
+//        else {
+
+            if(subservicename!=null){
+                serviceTitleText.setText(title);
+            }
+            else{
+                serviceTitleText.setText(serviceModel.getServiceTitle());
+            }
+
+            if (getArguments().containsKey("subServicePrice")) {
+                servicePriceText.setText(getContext().getResources().getString(R.string.indian_rupee) + " " + getArguments().getString("subServicePrice"));
+            } else {
+                servicePriceText.setText(getContext().getResources().getString(R.string.indian_rupee) + " " + serviceModel.getServicePrice());
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                serviceProviderRespText.setText(Html.fromHtml(serviceModel.getServiceProviderResponsibility(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                serviceProviderRespText.setText(Html.fromHtml(serviceModel.getServiceProviderResponsibility(), null,
+                        new HtmlTagHelper()));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                serviceCustomerRespText.setText(Html.fromHtml(serviceModel.getServiceCustomerResponsibility(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                serviceCustomerRespText.setText(Html.fromHtml(serviceModel.getServiceCustomerResponsibility(), null,
+                        new HtmlTagHelper()));
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), Html.FROM_HTML_MODE_COMPACT));
+
+            } else {
+                serviceNoteText.setText(Html.fromHtml(serviceModel.getServiceNote(), null,
+                        new HtmlTagHelper()));
+            }
+   //     }
     }
-
     private void castingViews(View view) {
         serviceTitleText = view.findViewById(R.id.serviceDetailsTitleText);
         servicePriceText = view.findViewById(R.id.serviceDetailsPriceText);
@@ -364,6 +524,9 @@ public class ServiceDetailsFragment extends Fragment {
             }
         }
     }
+
+
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

@@ -46,7 +46,6 @@ import com.colourmoon.gobuddy.model.ProfileModel;
 import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.activities.MapsActivity;
-import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.alertdialogs.CameraBottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -92,7 +91,6 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     private ImageView profileImageChangeBtn;
     private TextView updateProfileBtn;
     private EditText edtComment;
-
     private LinearLayout progressBarLayout;
     private ProgressBar progressBar;
     private TextView textViewProgress;
@@ -168,11 +166,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
 
         updateProfileBtn.setOnClickListener(v -> {
             GetInputFromEditText();
-            if (!validateEmail() | !validateName() | !validateAddress() | !validatePhone()|
+            if (!validateEmail() | !validateName() | !validateAddress() |
                     !validateDateOfBirth() | !validateProfileImage()) {
                 return;
             } else {
-                showProgressBar();
+                showProgressbar();
                 ProfileFragmentController.getInstance().postProfileDetailsApiCall(createProfileMap());
             }
         });
@@ -207,9 +205,10 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         });
         return view;
     }
-
-    private void showProgressBar() {
+    private void showProgressbar() {
         if (progressBarLayout != null) {
+
+            //  Toast.makeText(getContext(),"pincode"+UserSessionManagement.getInstance(getContext()).getPincode(),Toast.LENGTH_SHORT).show();
             progressBarLayout.setVisibility(View.VISIBLE);
             textViewProgress.setVisibility(View.VISIBLE);
         }
@@ -222,7 +221,6 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
             textViewProgress.setVisibility(View.GONE);
         }
     }
-
 
     public void requestLocationPermissions() {
 
@@ -267,7 +265,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
 
     @Override
     public void onSuccessLocationResponse(Double latitude, Double longitude, String address, String place_id, String pincode) {
-        profileAddressEditText.getEditText().setText(address);
+     //   profileAddressEditText.getEditText().setText(address);
+        String addres = UserSessionManagement.getInstance(getContext()).getAddress();
+        if(addres == null) {
+            profileAddressEditText.getEditText().setText(address);
+        }
         main_latitude = String.valueOf(latitude);
         main_longitude = String.valueOf(longitude);
         main_address = address;
@@ -280,6 +282,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         profileDob = profileDobEditText.getEditText().getText().toString();
         profilePhoneNum = profilePhoneNumEditText.getEditText().getText().toString();
         profileAddress = profileAddressEditText.getEditText().getText().toString();
+
     }
 
     private Map<String, String> createProfileMap() {
@@ -309,11 +312,11 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         profileImageView = view.findViewById(R.id.profileImageView);
         profileImageChangeBtn = view.findViewById(R.id.profileChangeImageBtn);
         progressBarLayout = view.findViewById(R.id.progresbarlayout);
+      //  locationlist = view.findViewById(R.id.location_ofuser);
         progressBarLayout.setVisibility(View.GONE); // Hide initially
 
         progressBar = view.findViewById(R.id.progressBar);
         textViewProgress = view.findViewById(R.id.textViewProgress);
-
 
     }
 
@@ -322,7 +325,10 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         profileEmailEditText.getEditText().setText(profileModel.getEmail());
         profilePhoneNumEditText.getEditText().setText(profileModel.getPhoneNumber());
         profileDobEditText.getEditText().setText(profileModel.getDob());
-        profileAddressEditText.getEditText().setText(profileModel.getAddress());
+     profileAddressEditText.getEditText().setText(profileModel.getAddress());
+//        String addres = UserSessionManagement.getInstance(getContext()).getAddress();
+//        Toast.makeText(getContext(),"add"+addres,Toast.LENGTH_SHORT).show();
+//        profileAddressEditText.getEditText().setText(addres);
         profileImage = profileModel.getImageUrl();
         Glide.with(getActivity()).load(BASE_URL.substring(0, BASE_URL.length() - 4) + profileImage).into(profileImageView);
     }
@@ -394,7 +400,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     private boolean validateProfileImage() {
         if (profileImage.isEmpty()) {
             if (from.equalsIgnoreCase("provider")) {
-                Utils.getInstance().showSnackBarOnProviderScreen("Please Upload Image", (ProviderMainActivity) getActivity());
+                Utils.getInstance().showSnackBarOnProviderScreen("Please Upload Image", getActivity());
             } else {
                 Utils.getInstance().showSnackBarOnCustomerScreen("Please Upload Image", getActivity());
             }
@@ -413,7 +419,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     public void onProfileUpdateSuccessResponse(String successResponse) {
         hideProgressBar();
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen(successResponse, (ProviderMainActivity) getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(successResponse, getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen(successResponse, getActivity());
         }
@@ -422,7 +428,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     @Override
     public void onFailureReason(String failureReason) {
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, (ProviderMainActivity) getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen(failureReason, getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen(failureReason, getActivity());
         }
@@ -603,12 +609,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         options.inPurgeable = true;
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
-            Bitmap rotatedBitmap = null;
-            try {
-                rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
             profileImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
             //profileImage = mCurrentPhotoPath;
             AnyFileUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), "");
@@ -634,12 +635,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
                 //  profileImage = mCurrentPhotoPath;
                 bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
             }
-            Bitmap rotatedBitmap = null;
-            try {
-                rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Bitmap rotatedBitmap = rotatedImageBitmap(mCurrentPhotoPath, bitmap);
             profileImageView.setImageBitmap(getResizedBitmap(rotatedBitmap, 500));
             AnyFileUploadController.getImageUploadControllerInstance().callImageUploadApi(mCurrentPhotoPath, getActivity(), "");
         } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_CANCELED) {
@@ -681,7 +677,7 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
     public void onImageUploadSuccessResponse(String imageUrl, String fromWhichProof) {
         profileImage = imageUrl;
         if (from.equalsIgnoreCase("provider")) {
-            Utils.getInstance().showSnackBarOnProviderScreen("Success", (ProviderMainActivity) getActivity());
+            Utils.getInstance().showSnackBarOnProviderScreen("Success", getActivity());
         } else {
             Utils.getInstance().showSnackBarOnCustomerScreen("Success", getActivity());
         }
@@ -692,45 +688,37 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         Toast.makeText(getActivity(), failureReason, Toast.LENGTH_SHORT).show();
     }
 
-    private Bitmap rotatedImageBitmap(String photoPath, Bitmap bitmap) throws IOException {
-        //  ExifInterface ei = new ExifInterface(photoPath);
+    private Bitmap rotatedImageBitmap(String photoPath, Bitmap bitmap) {
         ExifInterface ei = null;
         try {
             ei = new ExifInterface(photoPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (ei != null) {
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED);
 
-            Bitmap rotatedBitmap = null;
-            switch (orientation) {
+        Bitmap rotatedBitmap = null;
+        switch (orientation) {
 
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotatedBitmap = rotateImage(bitmap, 90);
-                    break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotatedBitmap = rotateImage(bitmap, 90);
+                break;
 
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotatedBitmap = rotateImage(bitmap, 180);
-                    break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotatedBitmap = rotateImage(bitmap, 180);
+                break;
 
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotatedBitmap = rotateImage(bitmap, 270);
-                    break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotatedBitmap = rotateImage(bitmap, 270);
+                break;
 
-                case ExifInterface.ORIENTATION_NORMAL:
-                default:
-                    rotatedBitmap = bitmap;
-            }
-            return rotatedBitmap;
-        } else {
-            return bitmap;
+            case ExifInterface.ORIENTATION_NORMAL:
+            default:
+                rotatedBitmap = bitmap;
         }
-
-
+        return rotatedBitmap;
     }
-
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
@@ -739,4 +727,10 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
                 matrix, true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
 }

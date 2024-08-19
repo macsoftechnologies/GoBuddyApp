@@ -1,5 +1,7 @@
 package com.colourmoon.gobuddy.view.fragments.providerflowfragments;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,11 +12,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.providercontrollers.ProviderAcceptedJobFragmentController;
@@ -39,7 +43,7 @@ public class AcceptedJobsFragment extends Fragment implements ProviderAcceptedJo
     private ImageView noJobsImageView;
     private RecyclerView acceptedJobsRecyclerView;
 
-    public AcceptedJobsFragment() {
+    public  AcceptedJobsFragment() {
         // Required empty public constructor
     }
 
@@ -66,7 +70,7 @@ public class AcceptedJobsFragment extends Fragment implements ProviderAcceptedJo
         ProgressBarHelper.show(getActivity(), "Getting Your Jobs");
         ProviderAcceptedJobFragmentController.getInstance().getProviderAcceptedJobsApiCall(
                 UserSessionManagement.getInstance(getActivity()).getUserId());
-        super.onResume();
+          super.onResume();
     }
 
     private boolean _hasLoadedOnce = false; // your boolean field
@@ -78,6 +82,7 @@ public class AcceptedJobsFragment extends Fragment implements ProviderAcceptedJo
             // we check that the fragment is becoming visible
             if (isFragmentVisible_ && !_hasLoadedOnce) {
                 ProgressBarHelper.show(getActivity(), "Getting Your Jobs");
+                Log.d(TAG, "onResume: Fragment resumed, calling API");
                 ProviderAcceptedJobFragmentController.getInstance().getProviderAcceptedJobsApiCall(
                         UserSessionManagement.getInstance(getActivity()).getUserId());
                 _hasLoadedOnce = true;

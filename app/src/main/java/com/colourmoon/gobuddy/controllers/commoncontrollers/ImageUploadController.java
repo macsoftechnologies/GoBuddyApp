@@ -50,17 +50,45 @@ public class ImageUploadController {
     }
 
     public void callImageUploadApi(String imageFilePath, Context context, String fromWhichProof) {
-        goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
+
+        if (goBuddyApiInterface == null) {
+            goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
+        }
+
+        // Check if the file path is valid
+        if (imageFilePath == null || imageFilePath.isEmpty()) {
+            throw new IllegalArgumentException("Image file path cannot be null or empty");
+        }
+
         File actualImageFile = new File(imageFilePath);
-        File compressedImageFile = null;
+        if (!actualImageFile.exists()) {
+            throw new IllegalArgumentException("File does not exist at the provided path");
+        }
+
+        // Compress the image file
+        File compressedImageFile;
         try {
             compressedImageFile = new Compressor(context).compressToFile(actualImageFile);
         } catch (IOException e) {
             e.printStackTrace();
+            if (imageUploadControllerListener != null) {
+                imageUploadControllerListener.onImageUploadFailureResponse("Image compression failed");
+            }
+            return;
         }
-        RequestBody imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), compressedImageFile);
-        MultipartBody.Part multiPartImagePart = MultipartBody.Part.createFormData("file",
-                compressedImageFile.getName(), imagePart);
+
+        // Check if the compressed file is valid
+        if (compressedImageFile == null || !compressedImageFile.exists()) {
+            throw new IllegalArgumentException("Compressed file is null or does not exist");
+        }
+
+        // Create RequestBody for the file
+        RequestBody imagePart = RequestBody.create(compressedImageFile, MediaType.parse("multipart/form-data"));
+
+        // Create MultipartBody.Part for the file
+        MultipartBody.Part multiPartImagePart = MultipartBody.Part.createFormData("file", compressedImageFile.getName(), imagePart);
+
+        // Make the API call to upload the image
         Call<ResponseBody> imageUploadCall = goBuddyApiInterface.uploadImageFile(multiPartImagePart);
         imageUploadCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -80,6 +108,9 @@ public class ImageUploadController {
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
+                        if (imageUploadControllerListener != null) {
+                            imageUploadControllerListener.onImageUploadFailureResponse("Parsing response failed");
+                        }
                     }
                 } else {
                     if (imageUploadControllerListener != null) {
@@ -97,4 +128,52 @@ public class ImageUploadController {
             }
         });
     }
-}
+    }
+//        goBuddyApiInterface = GoBuddyApiClient.getGoBuddyClient().create(GoBuddyApiInterface.class);
+//        File actualImageFile = new File(imageFilePath);
+//        File compressedImageFile = null;
+//        try {
+//            compressedImageFile = new Compressor(context).compressToFile(actualImageFile);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        RequestBody imagePart = RequestBody.create(MediaType.parse("multipart/form-data"), compressedImageFile);
+//        MultipartBody.Part multiPartImagePart = MultipartBody.Part.createFormData("file",
+//                compressedImageFile.getName(), imagePart);
+//        Call<ResponseBody> imageUploadCall = goBuddyApiInterface.uploadImageFile(multiPartImagePart);
+//        imageUploadCall.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+//                if (response.body() != null) {
+//                    try {
+//                        String responseString = new String(response.body().bytes());
+//                        JSONObject jsonObject = new JSONObject(responseString);
+//                        if (jsonObject.getString("status").equals("valid")) {
+//                            if (imageUploadControllerListener != null) {
+//                                imageUploadControllerListener.onImageUploadSuccessResponse(jsonObject.getString("file_name"), fromWhichProof);
+//                            }
+//                        } else {
+//                            if (imageUploadControllerListener != null) {
+//                                imageUploadControllerListener.onImageUploadFailureResponse(jsonObject.getString("message"));
+//                            }
+//                        }
+//                    } catch (IOException | JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    if (imageUploadControllerListener != null) {
+//                        imageUploadControllerListener.onImageUploadFailureResponse("No Response From Server \nPlease try Again");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+//                t.printStackTrace();
+//                if (imageUploadControllerListener != null) {
+//                    imageUploadControllerListener.onImageUploadFailureResponse(t.getLocalizedMessage());
+//                }
+//            }
+//        });
+//    }
+//}

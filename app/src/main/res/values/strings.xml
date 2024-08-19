@@ -91,9 +91,9 @@
     <string name="orderDetails">Order Details</string>
     <string name="estimated_price">Above price is estimated price only, actual cost may vary after service completion</string>
     <string name="selectpayment">Select Payment Method</string>
-    <string name="pay_through_app">Pay Through App(Online Payment)</string>
-    <string name="upon_completion_of_services">Upon completion of services</string>
-    <string name="cash_payment">Pay to the Provider(Cash Payment)</string>
+    <string name="pay_through_app">Pay 15% of amount Right now through App(Online Payment) \u20B9</string>
+    <string name="upon_completion_of_services">&#8226; Fully refundable if order is cancelled</string>
+    <string name="cash_payment">Pay after Service</string>
     <string name="placeOrder">Place Order</string>
     <string name="apply">Apply</string>
     <string name="enter_your_coupon_here">Enter Your Coupon Here</string>
@@ -207,6 +207,9 @@
     <string name="pin_code2"><b><u>Enter Pin code</u></b></string>
     <string name="indian_rupeee">&#x20B9;</string>
     <string name="submit_otp">Submit</string>
+    <string name="no_services_are_avliable_at_your_current_location">No services are avaliable at \n your current location</string>
+    <string name="_8226_manual_hand_fee_is_applicable_100">• Manual handling fee amount  → ₹ <font color='#FF0000'><big>100</big></font></string>
+    <string name="sfnotes" >Tell us how many Sft Units roughly the service area is</string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

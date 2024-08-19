@@ -235,6 +235,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
 
     @OnClick(R.id.providerSettings_viewAsUserBtn)
     public void viewAsCustomer(View view) {
+      //   UserSessionManagement.getInstance(getContext()).setSomeOtherBoolean(false);
         ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
     }
 

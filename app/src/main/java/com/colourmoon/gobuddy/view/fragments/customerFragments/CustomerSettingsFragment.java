@@ -58,6 +58,7 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
     }
 
     private TextView logOutBtn, saveAddressBtn, viewAsProviderBtn, viewProfileBtn, promoCodeBtn;
+    private  Boolean changeonfragments = false;
 
     public static CustomerSettingsFragment newInstance(String param1, String param2) {
         CustomerSettingsFragment fragment = new CustomerSettingsFragment();
@@ -120,6 +121,8 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
         });
 
         viewAsProviderBtn.setOnClickListener(v -> {
+//            changeonfragments = true;
+//            UserSessionManagement.getInstance(getContext()).setSomeOtherBoolean(true);
             ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
         });
 
@@ -190,7 +193,7 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
+           throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }

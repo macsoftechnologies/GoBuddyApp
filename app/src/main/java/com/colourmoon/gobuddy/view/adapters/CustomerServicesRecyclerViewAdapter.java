@@ -48,8 +48,9 @@ public class CustomerServicesRecyclerViewAdapter extends RecyclerView.Adapter<Cu
         ServiceCategoryModel serviceCategoryModel = serviceCategoryModelList.get(i);
         customerServicesViewHolder.customerServiceNameView.setText(serviceCategoryModel.getServiceName());
         customerServicesViewHolder.serviceCountText.setText(" "+serviceCategoryModel.getServiceCount());
+        String url = "https://admin.gobuddyindia.com/assets/images/"+serviceCategoryModel.getServiceImageUrl();
         Glide.with(context)
-                .load(serviceCategoryModel.getServiceImageUrl())
+                .load(url)
                 .centerCrop()
                 .fitCenter()
                 .into(customerServicesViewHolder.customerServiceImageView);

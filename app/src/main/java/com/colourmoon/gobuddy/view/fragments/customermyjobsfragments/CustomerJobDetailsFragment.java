@@ -121,7 +121,7 @@ public class CustomerJobDetailsFragment extends Fragment {
         jobBookingAmountView.setText(getResources().getString(R.string.indian_rupee) + bookingAmount);
         jobExtraAmountView.setText(getResources().getString(R.string.indian_rupee) + customerJobModel.getExtraAmount());
         jobInvoiceAmountView.setText(getResources().getString(R.string.indian_rupee) + customerJobModel.getTotalAmount());
-        jobAmountPaidView.setText(getResources().getString(R.string.indian_rupee) + customerJobModel.getTotalAmount());
+        jobAmountPaidView.setText(getResources().getString(R.string.indian_rupee) + bookingAmount);
         providerNameView.setText(customerJobModel.getProviderName());
         edtComment.setText(customerJobModel.getComments());
         Glide.with(getActivity()).load(customerJobModel.getProviderProfileImage()).into(jobDetaislProvider_imageView);

@@ -37,6 +37,7 @@ import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHelpFragm
 import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerHomeFragment;
 import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerMyJobsFragment;
 import com.colourmoon.gobuddy.view.fragments.customerFragments.CustomerSettingsFragment;
+import com.razorpay.PaymentResultListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,7 +47,7 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
         CustomerHelpFragment.OnFragmentInteractionListener, CustomerMyJobsFragment.OnFragmentInteractionListener,
         CustomerSettingsFragment.OnFragmentInteractionListener, InternetConnectionListener,
         CheckDeviceLoginController.CheckDeviceControllerListener, CheckUserStatusController.CheckUserStatusControllerListener,
-        LogoutController.LogoutControllerListener {
+        LogoutController.LogoutControllerListener, PaymentResultListener {
 
     public static String main_latitude, main_longitude, main_address, placeId;
     private BottomNavigationView bottomNavigationView;
@@ -201,7 +202,7 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
     public void onBackPressed() {
         if (getIntent() != null && getIntent().hasExtra("screen_type") && !isFirstTime) {
             isFirstTime = true;
-            startActivity(new Intent(this, CustomerMainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+           startActivity(new Intent(this, CustomerMainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             return;
         }
 
@@ -310,5 +311,23 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
     protected void onDestroy() {
         super.onDestroy();
       //  CustomerHomeFragment.isFingerPrintAuthorized = false;
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.customer_fragments_container);
+        if (currentFragment instanceof PaymentResultListener) {
+
+            ((PaymentResultListener) currentFragment).onPaymentSuccess(s);
+        }
+
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.customer_fragments_container);
+        if (currentFragment instanceof PaymentResultListener) {
+            ((PaymentResultListener) currentFragment).onPaymentError(i, s);
+        }
     }
 }

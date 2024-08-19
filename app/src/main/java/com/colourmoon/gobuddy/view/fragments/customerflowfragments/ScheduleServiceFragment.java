@@ -38,6 +38,7 @@ public class ScheduleServiceFragment extends Fragment implements View.OnClickLis
     // TODO: Rename and change types of parameters
     private String serviceId;
     private String subServiceId;
+    private String sftvalue;
     private String subcategoryId;
 
     private TextView scheduleNowBtn, scheduleTimeBtn, scheduleRecurringBtn;
@@ -104,7 +105,7 @@ public class ScheduleServiceFragment extends Fragment implements View.OnClickLis
                 }
                 break;
             case R.id.schedule_timeBtn:
-                addToFragmentContainer(ScheduleTimeFragment.newInstance(serviceId, subServiceId, subcategoryId), true, SCHEDULE_TIME_FRAGMENT_TAG);
+                addToFragmentContainer(ScheduleTimeFragment.newInstance(serviceId, subServiceId, subcategoryId,sftvalue), true, SCHEDULE_TIME_FRAGMENT_TAG);
                 break;
             case R.id.schedule_recurringBtn:
                 addToFragmentContainer(ScheduleRecurringFragment.newInstance(serviceId, subServiceId, subcategoryId), true, SCHEDULE_RECURRING_FRAGMENT_TAG);

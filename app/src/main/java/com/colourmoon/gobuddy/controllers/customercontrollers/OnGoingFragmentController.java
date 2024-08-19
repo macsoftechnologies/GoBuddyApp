@@ -78,8 +78,10 @@ public class OnGoingFragmentController {
                                         onGoingJsonObject.getString("customer_confirm"),
                                         onGoingJsonObject.getString("payment_mode"),
                                         onGoingJsonObject.getString("total_amount"),
-                                        ""));
+                                        onGoingJsonObject.getString("paid_amount"),
+                                        onGoingJsonObject.getString("remaining_amount"), ""));
                             }
+
                             if (onGoingFragmentControllerListener != null) {
                                 onGoingFragmentControllerListener.onGoingJobsSuccessResponse(customerJobModels);
                             }

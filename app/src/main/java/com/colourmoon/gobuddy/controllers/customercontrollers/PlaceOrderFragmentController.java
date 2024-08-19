@@ -59,6 +59,7 @@ public class PlaceOrderFragmentController {
                         AddressModel addressModel = null;
                         if (jsonObject.getString("status").equals("valid")) {
                             JSONObject orderJsonObject = new JSONObject(jsonObject.getString("order_details"));
+
                             if (jsonObject.getString("address_available").equals("1")) {
                                 JSONObject addressJsonObject = new JSONObject(jsonObject.getString("address"));
                                 addressModel = new AddressModel(
@@ -78,8 +79,11 @@ public class PlaceOrderFragmentController {
                                     orderJsonObject.getString("extra_charges_price"),
                                     orderJsonObject.getString("total"),
                                     orderJsonObject.getString("sub_category"),
-                                    orderJsonObject.getString("category_id")
+                                    orderJsonObject.getString("category_id"),
+                                    orderJsonObject.getString("quantity")
                             );
+
+                          //  String locationPrice = jsonObject.getString("location_price");
                             if (placeOrderFragmentControllerListener != null) {
                                 placeOrderFragmentControllerListener.onGetOrderDetailsSuccess(orderDetailsModel, addressModel);
                             }

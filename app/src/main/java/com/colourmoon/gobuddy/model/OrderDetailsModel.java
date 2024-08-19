@@ -8,11 +8,23 @@ public class OrderDetailsModel {
     private String extra_charges_title;
     private String extra_charges_price;
     private String total;
+
+
+
+
     private String sub_category;
     private String category_id;
 
-    public OrderDetailsModel(String serviceDate, String serviceTime, String servicePrice, String serviceTitle,String extra_charges_title
-            ,String extra_charges_price,String total,String sub_category,String category_id) {
+
+
+    private String quantity;
+
+
+
+//    private String locationprice;
+
+    public OrderDetailsModel(String serviceDate, String serviceTime, String servicePrice, String serviceTitle, String extra_charges_title
+            , String extra_charges_price, String total, String sub_category, String category_id, String quantity) {
         this.serviceDate = serviceDate;
         this.serviceTime = serviceTime;
         this.servicePrice = servicePrice;
@@ -20,8 +32,12 @@ public class OrderDetailsModel {
         this.extra_charges_title = extra_charges_title;
         this.extra_charges_price = extra_charges_price;
         this.total = total;
+//        this.locationprice = locationprice;
+
         this.sub_category = sub_category;
         this.category_id = category_id;
+          this.quantity = quantity;
+
     }
 
     public String getServiceDate() {
@@ -56,7 +72,16 @@ public class OrderDetailsModel {
         return category_id;
     }
 
+//    public String getLocationprice() {
+//        return locationprice;
+//    }
+
     public String getSub_category() {
         return sub_category;
     }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
 }

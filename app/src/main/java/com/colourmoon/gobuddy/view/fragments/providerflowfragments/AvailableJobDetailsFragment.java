@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.providercontrollers.AcceptJobController;
@@ -99,6 +100,9 @@ public class AvailableJobDetailsFragment extends Fragment implements ProviderAva
         ProgressBarHelper.show(getActivity(), "Fetching Job Details");
         ProviderAvailableJobFragmentController.getInstance().getAvailableJobDetailsApiCall(orderId);
         ProviderAvailableJobFragmentController.getInstance().setProviderAvailableJobFragmentControllerListener(this);
+
+      //  Toast.makeText(getContext(), " "+UserSessionManagement.getInstance(getActivity()).getUserId(), Toast.LENGTH_SHORT).show();
+
 
         AcceptJobController.getInstance().setAcceptJobControllerListener(this);
         cancelBtn.setOnClickListener(v -> {

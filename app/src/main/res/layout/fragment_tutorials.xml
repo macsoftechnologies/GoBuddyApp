@@ -14,6 +14,15 @@
         android:layout_marginTop="@dimen/_10sdp"
         tools:listitem="@layout/custom_tutorial_item" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tutorialsLocationRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/goToDashboardBtn"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_10sdp"
+        tools:listitem="@layout/custom_location_tutorial_item" />
+
     <TextView
         android:id="@+id/goToDashboardBtn"
         android:layout_width="match_parent"

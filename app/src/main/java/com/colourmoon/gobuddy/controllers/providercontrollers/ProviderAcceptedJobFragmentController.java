@@ -76,7 +76,12 @@ public class ProviderAcceptedJobFragmentController {
                                             jobJSONObject.getString("locality"),
                                             jobJSONObject.getString("date_time"),
                                             jobJSONObject.getString("total"),
-                                            jobJSONObject.getString("payment_mode")
+                                            jobJSONObject.getString("payment_mode"),
+                                            jobJSONObject.getString("paid_amount"),
+                                            jobJSONObject.getString( "remaining_amount")
+
+
+
                                     ));
                                 }
                                 if (providerAcceptedJobFragmentControllerListener != null) {
@@ -90,7 +95,9 @@ public class ProviderAcceptedJobFragmentController {
                         } else {
                             if (providerAcceptedJobFragmentControllerListener != null) {
                                 providerAcceptedJobFragmentControllerListener.onProviderAcceptedFailureReason(jsonObject.getString("message"));
+
                             }
+
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -149,8 +156,11 @@ public class ProviderAcceptedJobFragmentController {
                                         acceptedDetailsJsonObject.getString("date_time"),
                                         acceptedDetailsJsonObject.getString("total"),
                                         acceptedDetailsJsonObject.getString("payment_mode")
+//                                       acceptedDetailsJsonObject.getString("remaining_amount"),
+//                                        acceptedDetailsJsonObject.getString("paid_amount")
 
-                                );
+
+                                        );
 
                                 if (providerAcceptedJobFragmentControllerListener != null) {
                                     providerAcceptedJobFragmentControllerListener.onProviderAcceptedDetailsSuccessResponse(providerAcceptedJobModel);
