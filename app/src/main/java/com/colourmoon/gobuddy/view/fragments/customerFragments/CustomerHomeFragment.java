@@ -84,16 +84,17 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private LinearLayout linearLayout;
     //  private ViewPager2 viewPager;
     // private ImageSliderAdapter adapter;
     //  private ArrayList<String> imageUrlList;
-
+    private String r,r1;
     private OnFragmentInteractionListener mListener;
     private RecyclerView customerServicesRecyclerView, custLocationserviceRecylerview;
     private LinearLayout profilelayout;
     private Timer sliderTimer;
     private EditText custHomeSearchView;
-    private TextView homeLoginBtn, name, edit_city_txt;
+    private TextView homeLoginBtn, name, edit_city_txt,edit_city_txt2;
     private ImageView homeHelpBtn, appimage, appimages, profilePerson, Locationimg;
     private SliderLayout homesliderLayout, LocationhomeSliderLayout;
     private ViewPager viewPager;
@@ -348,6 +349,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         homesliderLayout = view.findViewById(R.id.homePageImageSlider);
         name = view.findViewById(R.id.profileName);
         appimage = view.findViewById(R.id.toolBarIcon);
+        linearLayout = view.findViewById(R.id.linear_layout);
         appimages = view.findViewById(R.id.toolBarIcons);
         profilePerson = view.findViewById(R.id.profileperson);
         Locationimg = view.findViewById(R.id.add_location);
@@ -355,6 +357,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
         profilelayout = view.findViewById(R.id.profilelayout);
         edit_city_txt = view.findViewById(R.id.edit_profile_txt);
         Noservice = view.findViewById(R.id.services_no);
+        edit_city_txt2 = view.findViewById(R.id.edit_profile_txt2);
         //  viewPager = view.findViewById(R.id.adds_imageSlider);
     }
 
@@ -384,7 +387,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
                 // homeHelpBtn.setVisibility(View.GONE);
                 name.setVisibility(View.VISIBLE);
                 homeLoginBtn.setVisibility(View.GONE);
-                profilelayout.setVisibility(View.VISIBLE);
+
               //  customerServicesRecyclerView.setVisibility(View.GONE);
                 //  appimage.setVisibility(View.GONE);
                 // appimages.setVisibility(View.VISIBLE);
@@ -398,6 +401,17 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
             //}
         }
 
+
+
+
+
+
+
+
+////        else{
+////            edit_city_txt.setText("Visakhapatnam");
+////        }
+       //Toast.makeText(getContext(), "jj "+result, Toast.LENGTH_SHORT).show();
         ProfileFragmentController.getInstance().getProfileDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
         ProfileFragmentController.getInstance().setProfileFragmentControllerListener(new ProfileFragmentController.ProfileFragmentControllerListener() {
             @Override
@@ -409,25 +423,39 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
                 //  isLogined = true;
 // Set the text of the name element with the first five characters
                 // name.setText(firstName+"....");
-                String city = profileModel.getAddress();
-                String searchString = "Andhra Pradesh";
-                String result = "";
 
-                // Split the address by commas
-                String[] part = city.split(", ");
+             //   if(profileModel.getAddress()!= null ) {
 
-                // Iterate through the parts to find "Andhra Pradesh"
-                for (int i = 0; i < part.length; i++) {
-                    if (part[i].contains(searchString)) {
-                        // Check if there is a previous part
-                        if (i > 0) {
-                            // The city is the part before "Andhra Pradesh"
-                            result = part[i - 1];
+                profilelayout.setVisibility(View.VISIBLE);
+
+                    String city = profileModel.getAddress();
+                //edit_city_txt.setText(city);
+                    String searchString = "Andhra Pradesh";
+                    String result = "";
+
+                    // Split the address by commas
+                    String[] part = city.split(", ");
+
+                    // Iterate through the parts to find "Andhra Pradesh"
+                    for (int i = 0; i < part.length; i++) {
+                        if (part[i].contains(searchString)) {
+                            // Check if there is a previous part
+                            if (i > 0) {
+                                // The city is the part before "Andhra Pradesh"
+                                result = part[i - 1];
+                            }
+                            break;
                         }
-                        break;
                     }
-                }
-                edit_city_txt.setText(result.trim());
+                     if( result == null){
+                         linearLayout.setVisibility(View.GONE);
+                     }
+                     else{
+                         edit_city_txt.setText(result.trim());
+                     }
+                     //  r = result;
+                //  edit_city_txt.setText(result.trim());
+
 
 
                 String address = profileModel.getAddress();
@@ -454,14 +482,14 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
                 name.setText(profileModel.getName());
                 // Display the pincode
 
-                selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
+              //  selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
 
 
                 if (pinscode != null) {
-                    UserSessionManagement.getInstance(getContext()).setRegpincode(pinscode);
-                    selectedId = UserSessionManagement.getInstance(getContext()).getRegpincode();
+                  //  UserSessionManagement.getInstance(getContext()).setRegpincode(pinscode);
+                   // selectedId = UserSessionManagement.getInstance(getContext()).getRegpincode();
                 } else {
-                    selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
+                   // selectedId = UserSessionManagement.getInstance(getContext()).getPincode();
                 }
 
               //  showLocations();
@@ -472,6 +500,7 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             @Override
             public void onProfileUpdateSuccessResponse(String successResponse) {
+
 
             }
 
@@ -487,6 +516,35 @@ public class CustomerHomeFragment extends Fragment implements HomeFragmentContro
 
             }
         });
+
+
+//        if(r != null){
+//            edit_city_txt2.setText(r.trim());
+//            edit_city_txt.setVisibility(View.GONE);
+//        }
+//        else{
+//            String cit = UserSessionManagement.getInstance(getContext()).getPincode();
+//            String searchStrin = "Andhra Pradesh";
+//            String resul = "";
+//
+//            // Split the address by commas
+//            String[] partt = cit.split(", ");
+//
+//            // Iterate through the parts to find "Andhra Pradesh"
+//            for (int i = 0; i < partt.length; i++) {
+//                if (partt[i].contains(searchStrin)) {
+//                    // Check if there is a previous part
+//                    if (i > 0) {
+//                        // The city is the part before "Andhra Pradesh"
+//                        resul = partt[i - 1];
+//                    }
+//                    break;
+//                }
+//            }
+//
+//            edit_city_txt.setText(resul.trim());
+//            edit_city_txt2.setVisibility(View.GONE);
+//        }
 
     }
 

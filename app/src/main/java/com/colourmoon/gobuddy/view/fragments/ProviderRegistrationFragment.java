@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -37,6 +38,7 @@ import com.colourmoon.gobuddy.helper.ProgressBarHelper;
 import com.colourmoon.gobuddy.model.CheckNumberRegistrationStausModel;
 import com.colourmoon.gobuddy.model.RegistrationResponseModel;
 import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
+import com.colourmoon.gobuddy.utilities.UserSessionManagement;
 import com.colourmoon.gobuddy.utilities.Utils;
 import com.colourmoon.gobuddy.view.activities.LoginActivity;
 import com.colourmoon.gobuddy.view.activities.MapsActivity;
@@ -102,6 +104,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("GOBUDDY");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_provider_registration, container, false);
 
@@ -468,6 +471,7 @@ public class ProviderRegistrationFragment extends Fragment implements Registrati
         if (registrationResponseModel != null) {
             if (registrationResponseModel.getStatus().equals("valid")) {
                 Intent intent = new Intent(getActivity(), OtpVerificationActivity.class);
+                UserSessionManagement.getInstance(getContext()).setProviderRegister(true);
                 intent.putExtra("phoneNumber", registrationResponseModel.getPhoneNumber());
                 intent.putExtra("user_id", registrationResponseModel.getUserId());
                 startActivity(intent);

@@ -1,5 +1,7 @@
 package com.colourmoon.gobuddy.view.fragments.customerFragments;
 
+import static com.colourmoon.gobuddy.utilities.Constants.PROVIDER_REGISTRATION_TAG;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +28,7 @@ import com.colourmoon.gobuddy.view.activities.CustomerMainActivity;
 import com.colourmoon.gobuddy.view.activities.OnBoardingLoginActivity;
 import com.colourmoon.gobuddy.view.activities.ProviderMainActivity;
 import com.colourmoon.gobuddy.view.fragments.ProfileFragment;
+import com.colourmoon.gobuddy.view.fragments.ProviderRegistrationFragment;
 import com.colourmoon.gobuddy.view.fragments.customersettingsflowfragments.PromoCodeFragment;
 import com.colourmoon.gobuddy.view.fragments.customersettingsflowfragments.SaveAddressFragment;
 import com.colourmoon.gobuddy.view.fragments.customersettingsflowfragments.SuugestAJobFragment;
@@ -120,10 +123,54 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
             }
         });
 
+
         viewAsProviderBtn.setOnClickListener(v -> {
 //            changeonfragments = true;
 //            UserSessionManagement.getInstance(getContext()).setSomeOtherBoolean(true);
-            ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+       //    ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+//
+            if(UserSessionManagement.getInstance(getContext()).getCustomerRegister()){
+                // Check if the dialog has been shown before
+                if (!UserSessionManagement.getInstance(getContext()).isProviderRegistrationDialogShown()) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle("Provider Registration");
+                    alertDialog.setMessage("Are you sure want to Register as Provider?");
+                    alertDialog.setIcon(R.drawable.ic_logout_icon);
+                    alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                            // Mark the dialog as shown
+                            UserSessionManagement.getInstance(getContext()).setProviderRegistrationDialogShown(true);
+                            // Proceed with registration
+                            ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+                        }
+                    });
+                    alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    // Proceed directly if the dialog has been shown
+                    ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+                }
+            }
+            else {
+                ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+
+            }
+
+//            else if(UserSessionManagement.getInstance(getContext()).getCustomerRegister() && UserSessionManagement.getInstance(getContext()).getProviderRegister()){
+//                Intent intent = new Intent(getActivity(), ProviderMainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//            }
+
+
+
         });
 
         promoCodeBtn.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +268,7 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
 
     @Override
     public void onViewAsSuccessResponse(String successMessage) {
-        UserSessionManagement.getInstance(getActivity()).changeUserType(true);
+       UserSessionManagement.getInstance(getActivity()).changeUserType(true);
         Intent intent = new Intent(getActivity(), ProviderMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -236,4 +283,18 @@ public class CustomerSettingsFragment extends Fragment implements LogoutControll
         // TODO: Update argument type and name
         void onFragmentInteraction(String fragmentListener);
     }
+//
+//    private void adddToFragmentContainer(Fragment fragment, boolean addbackToStack, String tag) {
+//         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        //FragmentManager fragmentManager = getSupportFragmentManager(); // Use getFragmentManager() if not using AppCompatActivity
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        fragmentTransaction.replace(R.id.containerType, fragment, tag); // Replace with your container ID
+//
+//        if (addbackToStack) {
+//            fragmentTransaction.addToBackStack(tag);
+//        }
+//
+//        fragmentTransaction.commit();
+//    }
 }

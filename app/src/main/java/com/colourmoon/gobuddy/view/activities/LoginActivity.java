@@ -318,7 +318,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
     @Override
     public void onFailureResponse(String failureReason) {
         ProgressBarHelper.dismiss(this);
-        Toast.makeText(this, failureReason, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Invalid mobile number Please Signup", Toast.LENGTH_SHORT).show();
     }
     private void generateOtpAndNavigate(LoginResponseModel loginResponseModel) {
         if (loginResponseModel.getStatus().equals("valid")) {
@@ -333,7 +333,7 @@ public class LoginActivity extends AppCompatActivity implements LoginController.
             startActivity(intent);
         } else {
             // Handle invalid login status (if needed)
-            Toast.makeText(this, loginResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid mobile number Please Signup", Toast.LENGTH_SHORT).show();
         }
 
     }

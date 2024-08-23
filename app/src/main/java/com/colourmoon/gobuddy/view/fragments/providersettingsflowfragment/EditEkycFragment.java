@@ -512,6 +512,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
     public void onEkycSuccessResponse(String successMessage) {
         Utils.getInstance().showSnackBarOnProviderScreen(successMessage, getActivity());
         ProgressBarHelper.show(getActivity(), "Synchronizing e-KYC");
+        Toast.makeText(getContext(), "Ekyc has been uploaded", Toast.LENGTH_SHORT).show();
         UpdateEkycController.getInstance().getEkycDetailsApiCall(UserSessionManagement.getInstance(getActivity()).getUserId());
     }
 
@@ -546,6 +547,7 @@ public class EditEkycFragment extends Fragment implements UpdateEkycController.U
                         idProofRejectView.setVisibility(View.GONE);
                         idProofImageUploadBtn.setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
                         idProofImageUploadBtn.setText("Approved");
+                        UserSessionManagement.getInstance(getContext()).setIdProofValidated(true);
                     } else if (ekycModelList.get(1).getStatus().equals("2")) {
                         idProofImageUploadBtn.setText("Re-Upload");
                         idProofImageUploadBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

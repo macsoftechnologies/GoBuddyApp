@@ -22,7 +22,11 @@ public class UserSessionManagement {
 
     private  static  final String SELECTED_PLACE ="selected_place";
 
+    private static final String DAILOG_SHOWN ="provider_registration_dialog_shown";
+
     private static final String ADDRESS="selected_address";
+
+    private static final String IS_ID_PROOF_VALIDATED = "is_id_proof_validated";
 
     private static final String PINCODE ="pincode";
 
@@ -34,6 +38,9 @@ public class UserSessionManagement {
 
     private static final String JOBID ="jobid";
 
+    private static final String PROVIDER_REGISTER ="isProvider_registered";
+
+    private static final String CUSTOMER_REGISTER ="isCustomer_register";
 
     private static final String SOME_OTHER_BOOLEAN_KEY = "some_other_boolean_key";
 
@@ -201,6 +208,43 @@ public class UserSessionManagement {
         // comitting changes
         editor.apply();
     }
+
+    public void setIdProofValidated(boolean isValidated) {
+        editor.putBoolean(IS_ID_PROOF_VALIDATED, isValidated);
+        editor.apply();
+    }
+
+    public boolean isIdProofValidated() {
+        return sharedPreferences.getBoolean(IS_ID_PROOF_VALIDATED, false);
+    }
+
+    public  void setProviderRegister(boolean providerRegister){
+        editor.putBoolean(PROVIDER_REGISTER,providerRegister);
+        editor.apply();
+    }
+    public boolean getProviderRegister(){
+        return sharedPreferences.getBoolean(PROVIDER_REGISTER,false);
+    }
+
+    public  void setCustomerRegister(boolean customerRegister){
+        editor.putBoolean(CUSTOMER_REGISTER,customerRegister);
+        editor.apply();
+    }
+    public boolean getCustomerRegister(){
+        return sharedPreferences.getBoolean(CUSTOMER_REGISTER,false);
+    }
+
+    // Add this method to your UserSessionManagement class
+    public void setProviderRegistrationDialogShown(boolean shown) {
+       // SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(DAILOG_SHOWN, shown);
+        editor.apply();
+    }
+
+    public boolean isProviderRegistrationDialogShown() {
+        return sharedPreferences.getBoolean(DAILOG_SHOWN, false);
+    }
+
 
     /**
      * Clear session details

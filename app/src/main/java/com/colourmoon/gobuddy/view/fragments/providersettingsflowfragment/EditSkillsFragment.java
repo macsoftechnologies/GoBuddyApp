@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.providercontrollers.AddSkillsFragmentController;
@@ -93,6 +94,11 @@ public class EditSkillsFragment extends Fragment implements AddSkillsFragmentCon
         AddSkillsFragmentController.getInstance().callGetSkillsByUserIdApi(UserSessionManagement.getInstance(getActivity())
                 .getUserId());
 
+        if (UserSessionManagement.getInstance(getContext()).isIdProofValidated()) {
+            editSkillsBtn.setVisibility(View.GONE);
+        }
+
+
         editSkillsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +117,7 @@ public class EditSkillsFragment extends Fragment implements AddSkillsFragmentCon
                     String a = Arrays.toString(addSkillsArray).replace("[", "");
                     providerSKillsMap.put("skills", Arrays.toString(addSkillsArray).replaceAll("\\[", "").replaceAll("\\]", ""));
                     ProgressBarHelper.show(getActivity(), "Adding Selected Skills \nPlease Wait!!!");
+                    //Toast.makeText(getContext(), " Skills has been updated", Toast.LENGTH_SHORT).show();
                     AddSkillsFragmentController.getInstance().callEditProviderSkillsApi(providerSKillsMap);
                 }
             }
@@ -150,6 +157,7 @@ public class EditSkillsFragment extends Fragment implements AddSkillsFragmentCon
     @Override
     public void onGetSkillsSuccessResponse(List<CategoryModel> categoryModelList) {
         this.categoryModelList = categoryModelList;
+       // Toast.makeText(getContext(), " Skills has been updated", Toast.LENGTH_SHORT).show();
         // this method is for creating recyclerView
         createRecyclerView();
     }
@@ -157,11 +165,15 @@ public class EditSkillsFragment extends Fragment implements AddSkillsFragmentCon
     @Override
     public void onAddSkillsSuccessResponse(String message) {
         // unNecessary overRiding
+        //Toast.makeText(getContext(), " Skills has been updated", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onEditSkillsSuccessResponse(String message) {
         ProgressBarHelper.dismiss(getActivity());
+        Toast.makeText(getContext(), " Skills has been updated", Toast.LENGTH_SHORT).show();
+
         Utils.getInstance().showSnackBarOnProviderScreen(message, getActivity());
     }
 

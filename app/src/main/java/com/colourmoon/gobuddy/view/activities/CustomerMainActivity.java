@@ -15,6 +15,7 @@ import com.colourmoon.gobuddy.pushnotifications.FcmTokenPreference;
 import com.colourmoon.gobuddy.serverinteractions.GoBuddyApiClient;
 import com.colourmoon.gobuddy.serverinteractions.InternetConnectionListener;
 import com.colourmoon.gobuddy.utilities.Utils;
+import com.colourmoon.gobuddy.view.fragments.ProviderRegistrationFragment;
 import com.colourmoon.gobuddy.view.fragments.customermyjobsfragments.CustomerOnGoingJobsDetailsFragment;
 //import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -42,7 +44,7 @@ import com.razorpay.PaymentResultListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CustomerMainActivity extends AppCompatActivity implements CustomerHomeFragment.OnFragmentInteractionListener,
+public class CustomerMainActivity extends AppCompatActivity implements CustomerHomeFragment.OnFragmentInteractionListener, ProviderRegistrationFragment.OnFragmentInteractionListener,
         CustomerFavouritesFragment.OnFragmentInteractionListener,
         CustomerHelpFragment.OnFragmentInteractionListener, CustomerMyJobsFragment.OnFragmentInteractionListener,
         CustomerSettingsFragment.OnFragmentInteractionListener, InternetConnectionListener,
@@ -329,5 +331,10 @@ public class CustomerMainActivity extends AppCompatActivity implements CustomerH
         if (currentFragment instanceof PaymentResultListener) {
             ((PaymentResultListener) currentFragment).onPaymentError(i, s);
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

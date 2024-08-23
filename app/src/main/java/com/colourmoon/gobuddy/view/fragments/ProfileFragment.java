@@ -326,6 +326,8 @@ public class ProfileFragment extends Fragment implements ProfileFragmentControll
         profilePhoneNumEditText.getEditText().setText(profileModel.getPhoneNumber());
         profileDobEditText.getEditText().setText(profileModel.getDob());
      profileAddressEditText.getEditText().setText(profileModel.getAddress());
+
+        //UserSessionManagement.getInstance(getContext()).setPincode(profileModel.get);
 //        String addres = UserSessionManagement.getInstance(getContext()).getAddress();
 //        Toast.makeText(getContext(),"add"+addres,Toast.LENGTH_SHORT).show();
 //        profileAddressEditText.getEditText().setText(addres);

@@ -522,9 +522,11 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
             Log.d("registrationModel", registrationResponseModel.getMessage());
             if (registrationResponseModel.getStatus().equals("valid")) {
                 Intent intent = new Intent(getActivity(), OtpVerificationActivity.class);
+                UserSessionManagement.getInstance(getContext()).setCustomerRegister(true);
                 Log.d("ph", reg_cus_phone_data);
                 intent.putExtra("phoneNumber", registrationResponseModel.getPhoneNumber());
                 intent.putExtra("user_id", registrationResponseModel.getUserId());
+
                 startActivity(intent);
             } else {
                 showAlert(registrationResponseModel.getMessage());
@@ -618,27 +620,30 @@ public class CustomerRegistrationFragment extends Fragment implements Registrati
         main_longitude = String.valueOf(longitude);
         main_address = address;
         placeId = place_id;
-     UserSessionManagement.getInstance(getContext()).setPincode(pincode);
+//     UserSessionManagement.getInstance(getContext()).setPincode(address);
 
 
-
-        String searchString = "Andhra Pradesh";
-        String result = "";
-
-        // Split the address by commas
-        String[] parts = address.split(", ");
-
-        // Iterate through the parts to find "Andhra Pradesh"
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].contains(searchString)) {
-                // Check if there is a previous part
-                if (i > 0) {
-                    // The city is the part before "Andhra Pradesh"
-                    result = parts[i - 1];
-                }
-                break;
-            }
-        }
+       // Toast.makeText(getContext(), " "+address, Toast.LENGTH_SHORT).show();
+//        String searchString = "Andhra Pradesh";
+//        String result = "";
+//
+//        // Split the address by commas
+//        String[] parts = address.split(", ");
+//
+//        // Iterate through the parts to find "Andhra Pradesh"
+//        for (int i = 0; i < parts.length; i++) {
+//            if (parts[i].contains(searchString)) {
+//                // Check if there is a previous part
+//                if (i > 0) {
+//                    // The city is the part before "Andhra Pradesh"
+//                    result = parts[i - 1];
+//                }
+//                break;
+//            }
+//
+//
+//        }
+//        UserSessionManagement.getInstance(getContext()).setPincode(result);
 
         // Display the result using a Toast
 //        if (!result.isEmpty()) {

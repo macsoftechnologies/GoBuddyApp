@@ -237,6 +237,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
     public void viewAsCustomer(View view) {
       //   UserSessionManagement.getInstance(getContext()).setSomeOtherBoolean(false);
         ViewAsController.getInstance().changeViewAsApiCall(createViewAsMap());
+
     }
 
     private Map<String, String> createViewAsMap() {
@@ -310,6 +311,7 @@ public class ProviderSettingsFragment extends Fragment implements LogoutControll
                             }
                             if (jsonObject.getString("ekyc").equals("2")) {
                                 ekycBtn.setText("e-Kyc -> Approved ");
+                                UserSessionManagement.getInstance(getContext()).setIdProofValidated(true);
                                 isEkycDone = true;
                                 ekycBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_tick_active, 0);
                             }
