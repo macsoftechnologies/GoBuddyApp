@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed state -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/quantum_yellow"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+
+    <!-- Default state -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/quantum_yellow"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+
+</selector>
+
+<!--    #42d7f5-->

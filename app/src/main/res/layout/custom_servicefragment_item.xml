@@ -12,6 +12,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="@dimen/_6sdp"
@@ -53,7 +58,72 @@
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             tools:text="\u20B9 500" />
+
+
     </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/qtydailog"
+            android:text="Qty"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:padding="@dimen/_10ssp"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/quantum_googgreen"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/incremant_decrement_layout"
+            android:visibility="gone"
+
+            android:orientation="horizontal"
+            android:padding="1dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:gravity="end">
+
+            <!-- Minus Button -->
+            <Button
+                android:id="@+id/buttonMinus"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:text="-"
+
+                android:gravity="center"
+                android:background="@drawable/button_background"
+                android:textColor="@android:color/holo_orange_dark"
+                android:layout_marginEnd="10dp"/>
+
+            <!-- Quantity Text -->
+            <TextView
+                android:id="@+id/quantityView"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:background="@drawable/quantity_text_bg"
+                android:paddingLeft="@dimen/_3sdp"
+                android:paddingRight="@dimen/_3sdp"
+
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
+
+            <!-- Plus Button -->
+            <Button
+                android:id="@+id/buttonPlus"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:text="+"
+                android:gravity="center"
+                android:background="@drawable/button_background"
+                android:textColor="@android:color/holo_orange_dark"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -68,6 +68,7 @@ public class ServiceDetailsFragment extends Fragment   {
     private boolean isProviderTTSPlaying = false;
     private boolean isCustomerTTSPlaying = false;
     private boolean isNoteTTSPlaying = false;
+    private int quantity;
 
 
     public ServiceDetailsFragment() {
@@ -124,7 +125,9 @@ public class ServiceDetailsFragment extends Fragment   {
 //          else {
                 serviceModel = getArguments().getParcelable("serviceModel");
                 subCategoryId = getArguments().getString("subCategoryId");
-                subservicename = getArguments().getString("subservicename");
+         //   quantity = getArguments().getInt("service_quantity", 1);  // Default quantity is 1
+
+            subservicename = getArguments().getString("subservicename");
                 if(subservicename != null){
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(serviceModel.getServiceTitle());
                     title = subservicename;
@@ -147,6 +150,7 @@ public class ServiceDetailsFragment extends Fragment   {
 
         setTextToTextViews();
        updateNextButtonState();
+     //   Toast.makeText(getContext(), " "+quantity, Toast.LENGTH_SHORT).show();
 
 
        Mike1.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +218,7 @@ public class ServiceDetailsFragment extends Fragment   {
 //                                    locationServiceModel.getServiceId(),
 //                                    locationServiceModel.getSubServiceId(),
 //                                    subCategoryId
+
 //                            );
 //                        }
 //                        else {
@@ -222,6 +227,7 @@ public class ServiceDetailsFragment extends Fragment   {
                                     serviceModel.getSubServiceId(),
                                     subCategoryId
                             );
+
                       //  }
                         addToFragmentContainer(scheduleServiceFragment, true, SCHEDULE_FRAGMENT_TAG);
                     }

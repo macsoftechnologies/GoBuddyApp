@@ -24,6 +24,7 @@ import com.colourmoon.gobuddy.LocationServiceModel;
 import com.colourmoon.gobuddy.LocationSubCategoriesAdapter;
 import com.colourmoon.gobuddy.LocationbasedCategoriesModel;
 import com.colourmoon.gobuddy.LocationbasedSubCategoriesModel;
+import com.colourmoon.gobuddy.QuantityManager;
 import com.colourmoon.gobuddy.R;
 //import com.colourmoon.gobuddy.controllers.customercontrollers.CombinedFragmentController;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubcategoriesFragmentController;
@@ -364,10 +365,12 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
 
     @Override
     public void onItemClick(ServiceModel serviceModel) {
+
         Log.d("serviceModel", serviceModel.toString());
         Bundle bundle = new Bundle();
         bundle.putParcelable("serviceModel", serviceModel);
         bundle.putString("subCategoryId", serviceModel.getSubCategoryId());
+        //bundle.putInt("service_quantity", serviceModel.getQuantity());
         if (serviceModel.getSubServiceId().equals("0")) {
             ServiceDetailsFragment serviceDetailsFragment = new ServiceDetailsFragment();
             serviceDetailsFragment.setArguments(bundle);
@@ -448,5 +451,11 @@ public class SubCategoriesFragment extends Fragment implements SubcategoriesFrag
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        QuantityManager.resetQuantities();
     }
 }

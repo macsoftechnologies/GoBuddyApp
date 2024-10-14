@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +58,10 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
     private static final String ORDER_ID_PARAM = "orderIdParam";
 
     private String order_id,currentOrderId, couponText, couponId, couponAmount, finalPrice, price, pioncode, result, name, email, contact_no,totalprice;
-
+    private RelativeLayout travel_layout;
+    private TextView travel_tittle,travel_price;
     private boolean isCouponApplied;
+
     private  String amountSt;
      private TextView payonlineTextview,payordercash,paytotalcash,pay_cashtxt;
 
@@ -68,7 +71,7 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
         // Required empty public constructor
     }
 
-    private TextView name_textView, address_textView, date_textView, address_changeBtn, orderName_textView,
+    private TextView name_textView, address_textView, date_textView, address_changeBtn, orderName_textView,qty,
             orderPrice_textView, payOnline_textView, payBycash_textView, placeOrderBtn, apply_couponBtn, couponPriceView, removeCouponBtn, finalPriceView,
             extra_charges_title, extra_charges_price, total_price, errortxt,manaulhandfee,cashorderbtn,onlineorderbtn,sftunits;
     private LinearLayout onlineLayoutBtn, cashLayoutBtn, couponAppliedLayout, couponApplyLayout;
@@ -199,13 +202,16 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
         extra_charges_title = view.findViewById(R.id.extra_charges_title);
         extra_charges_price = view.findViewById(R.id.extra_charges_price);
         total_price = view.findViewById(R.id.total_price);
-
+         travel_layout = view.findViewById(R.id.travel_layout);
+         travel_price = view.findViewById(R.id.Travel_charges_price);
+         travel_tittle = view.findViewById(R.id.Travel_charges);
         errortxt = view.findViewById(R.id.error_text);
         manaulhandfee = view.findViewById(R.id.manaul_handfee);
         payordercash = view.findViewById(R.id.payByCashTextView);
         paytotalcash = view.findViewById(R.id.orderToatalecash);
         cashorderbtn = view.findViewById(R.id.cashorderbtn);
         onlineorderbtn = view.findViewById(R.id.onlineOrderbtn);
+        qty = view.findViewById(R.id.qty_units);
 
     }
 
@@ -349,11 +355,11 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
 
 //                    }
 
-                    //  couponMap.put("category_id", orderDetailsModel.getCategory_id());
-                    couponMap.put("category_id", "20");
+                     couponMap.put("category_id", orderDetailsModel.getCategory_id());
+                //    couponMap.put("category_id", "20");
                   //  couponMap.put("pincode", pioncode);
-                    //  couponMap.put("sub_category_id", orderDetailsModel.getSub_category());
-                    couponMap.put("sub_category_id", "32");
+                      couponMap.put("sub_category_id", orderDetailsModel.getSub_category());
+                   // couponMap.put("sub_category_id", "32");
                     couponMap.put("extra_charges_price", orderDetailsModel.getExtra_charges_price());
                     couponMap.put("user_id", UserSessionManagement.getInstance(getActivity()).getUserId());
                   //  couponMap.put("user_id", "1749");
@@ -363,7 +369,37 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
                 break;
             case R.id.removeCouponBtn:
                 couponAppliedLayout.setVisibility(View.GONE);
+                 isCouponApplied = false;
+
                 couponApplyLayout.setVisibility(View.VISIBLE);
+
+                String amountSt =  orderDetailsModel.getTotal();
+                float amt = Float.parseFloat(amountSt);
+
+// Calculate the 15% deduction
+                float amount15 = amt * 0.15f;
+                float remaingAmount = (amt - amount15);
+
+// Format the amount15Percent to 2 decimal places
+                String  formattedAmount15 = String.format("%.2f", amount15 );
+
+
+
+                String onlinetxt ="Avoid manual handling fee and"+"\n"+" Pay 15% advance now "+"→ " +"<font color='#0000'><big>"+"₹ "+formattedAmount15 + "</big></font>";
+                payOnline_textView.setText(Html.fromHtml(onlinetxt));
+
+                String amount = orderDetailsModel.getTotal();
+
+                String price = String.valueOf(Float.parseFloat(amount)+100);
+                String fees = "&#8226"+" Order amount →    ₹ <font color='#FFA500'><big>" + amount + "</big></font>";
+
+
+                payordercash.setText(Html.fromHtml(fees));
+
+                String formattedPrice = "&#8226"+" Total amount →    ₹  <font color='#FFA500'><big>" + price + "</big></font>";
+
+                // Set the formatted string to the TextView
+                paytotalcash.setText(Html.fromHtml(formattedPrice));
                 break;
 
             default:
@@ -567,7 +603,7 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
 
                             String amount = isCouponApplied? finalPrice:orderDetailsModel.getTotal();
 
-                            String price = String.valueOf(Integer.parseInt(amount)+100);
+                            String price = String.valueOf(Float.parseFloat(amount)+100);
                             String fees = "&#8226"+" Order amount → ₹  <font color='#FFA500'><big>" + amount + "</big></font>";
 
 
@@ -627,17 +663,34 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
 
         date_textView.setText(orderDetailsModel.getServiceDate() + " , " + orderDetailsModel.getServiceTime());
         orderName_textView.setText(orderDetailsModel.getServiceTitle());
+
+         int sprice = Integer.parseInt(orderDetailsModel.getServicePrice());
+
+         if(sprice > 250){
+             travel_layout.setVisibility(View.GONE);
+         }
+         else{
+             travel_tittle.setText("Travel Charges  ");
+             travel_price.setText("\u20B9"+orderDetailsModel.getExtra_charges());
+             travel_layout.setVisibility(View.VISIBLE);
+         }
+
         if (orderDetailsModel.getExtra_charges_title().contains("  ")|| orderDetailsModel.getExtra_charges_title().isEmpty()){
             extra_charges_title.setText("Extra Charges");
-        }else {
-            extra_charges_title.setText(orderDetailsModel.getExtra_charges_title());
+       }
+        else {
+            extra_charges_title.setText("Extra Charges");
         }
         if(orderDetailsModel.getQuantity().equals("1")){
             sftunits.setVisibility(View.GONE);
+            qty.setVisibility(View.GONE);
         }
         else{
             sftunits.setVisibility(View.VISIBLE);
-            sftunits.setText("Selected "+sft+" sft units");
+            qty.setVisibility(View.VISIBLE);
+            qty.setText(getActivity().getResources().getString(R.string.indian_rupee) +orderDetailsModel.getServicePrice()+" × "+
+                    sft);
+            sftunits.setText("Selected "+sft+" service quantity");
         }
 
         // TODO error - java.lang.IllegalStateException: Fragment PlaceOrderFragment{520f37e} not attached to a context.
@@ -671,7 +724,7 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
 
             String amount = isCouponApplied? finalPrice:orderDetailsModel.getTotal();
 
-        String price = String.valueOf(Integer.parseInt(amount)+100);
+        String price = String.valueOf(Float.parseFloat(amount)+100);
         String fees = "&#8226"+" Order amount →    ₹ <font color='#FFA500'><big>" + amount + "</big></font>";
 
 
@@ -762,13 +815,13 @@ public class PlaceOrderFragment extends Fragment implements PaymentResultListene
     }
 
 
-    private void initiateRazorpayPayment(String order_id){
+    private void initiateRazorpayPayment(String order_id) {
 
         Checkout checkout = new Checkout();
-        checkout.setKeyID("rzp_live_ZdGjJKZdukGGzL");
+       // checkout.setKeyID("rzp_live_ZdGjJKZdukGGzL");
 
-       //  checkout.setKeyID("rzp_live_ZdGjJKZdukGGzL");
-        //checkout.setKeyID("rzp_test_B54BlMynixkzHI");
+        checkout.setKeyID("rzp_live_ZdGjJKZdukGGzL");
+       // checkout.setKeyID("rzp_test_B54BlMynixkzHI");
         String amountStr = isCouponApplied? finalPrice:totalprice;
 
              amount = Float.parseFloat(amountStr) * 100;

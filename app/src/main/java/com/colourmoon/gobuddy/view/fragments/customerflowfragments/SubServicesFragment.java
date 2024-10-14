@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.colourmoon.gobuddy.LocationServiceModel;
 import com.colourmoon.gobuddy.LocationSubServicesRecyclerViewAdapter;
 import com.colourmoon.gobuddy.LocationSubserviceModel;
+import com.colourmoon.gobuddy.QuantityManager;
 import com.colourmoon.gobuddy.R;
 import com.colourmoon.gobuddy.controllers.customercontrollers.SubServicesFragmentController;
 import com.colourmoon.gobuddy.helper.ProgressBarHelper;
@@ -196,5 +197,9 @@ public class SubServicesFragment extends Fragment implements SubServicesFragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+       QuantityManager.resetQuantities();
+    }
 }

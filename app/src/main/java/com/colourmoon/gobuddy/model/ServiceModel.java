@@ -8,6 +8,11 @@ import com.google.gson.annotations.SerializedName;
 public class ServiceModel implements Parcelable {
 
     @SerializedName("sid")
+
+//    private int quantity = 1;  // Default quantity to 1
+
+    // Getter and setter for quantity
+
     private String serviceId;
     @SerializedName("title")
     private String serviceTitle;
@@ -99,6 +104,13 @@ public class ServiceModel implements Parcelable {
         }
         return subServiceId;
     }
+//    public int getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(int quantity) {
+//        this.quantity = quantity;
+//    }
 
     @Override
     public int describeContents() {
@@ -131,4 +143,6 @@ public class ServiceModel implements Parcelable {
     public void setSub_image(String sub_image) {
         this.sub_image = sub_image;
     }
+
+
 }

@@ -80,7 +80,8 @@ public class PlaceOrderFragmentController {
                                     orderJsonObject.getString("total"),
                                     orderJsonObject.getString("sub_category"),
                                     orderJsonObject.getString("category_id"),
-                                    orderJsonObject.getString("quantity")
+                                    orderJsonObject.getString("quantity"),
+                                    orderJsonObject.getString("extra_charges")
                             );
 
                           //  String locationPrice = jsonObject.getString("location_price");

@@ -48,6 +48,8 @@ public class UserSessionManagement {
 
     private static final String SUB_SERVICE_PRICE = "sub_service_price";
 
+    private static final String QUANTITY ="quantity";
+
 
 
 
@@ -78,6 +80,15 @@ public class UserSessionManagement {
     public  void setPaidamount(String paidamount){
         editor.putString(PAIDAMOUNT,paidamount);
         editor.apply();
+    }
+
+    public void setQantity(String quantity){
+        editor.putString(QUANTITY,quantity);
+        editor.apply();
+    }
+    public String getQantity() {
+        return sharedPreferences.getString(QUANTITY, null);
+
     }
     public String getPaidamount(){
         return sharedPreferences.getString(PAIDAMOUNT,null);

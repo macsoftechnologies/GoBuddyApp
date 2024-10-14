@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/layout_dailog_box"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Number of items require the Service:"
+        android:textSize="19sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnMinusDialog"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="-"
+
+            android:padding="@dimen/_1ssp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:textSize="@dimen/_20ssp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/holo_orange_dark" />
+
+        <TextView
+            android:id="@+id/quantityTextViewDialog"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+             android:textStyle="bold"
+            android:layout_marginTop="@dimen/_2ssp"
+           android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="17sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/btnPlusDialog"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="+"
+
+             android:textSize="@dimen/_20ssp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/holo_orange_dark" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnOkDialog"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:textStyle="bold"
+
+        android:textColor="@color/white"
+        android:padding="@dimen/_5ssp"
+        android:background="@color/quantum_googgreen"
+        android:layout_height="wrap_content"
+        android:text="OK" />
+
+</LinearLayout>

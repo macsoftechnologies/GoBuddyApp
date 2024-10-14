@@ -209,7 +209,7 @@
     <string name="submit_otp">Submit</string>
     <string name="no_services_are_avliable_at_your_current_location">No services are avaliable at \n your current location</string>
     <string name="_8226_manual_hand_fee_is_applicable_100">• Manual handling fee amount  → ₹ <font color='#FF0000'><big>100</big></font></string>
-    <string name="sfnotes" >Tell us how many Sft Units roughly the service area is</string>
+    <string name="sfnotes">Tell us how many Sft Units roughly the service area is</string>
     <string-array name="address_proof_array">
         <item>Aadhar</item>
         <item>VoterID</item>

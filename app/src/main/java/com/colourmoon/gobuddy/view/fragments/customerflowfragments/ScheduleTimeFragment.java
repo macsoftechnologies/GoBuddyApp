@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.colourmoon.gobuddy.QuantityManager;
+import com.colourmoon.gobuddy.model.ServiceModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.content.ContextCompat;
@@ -56,11 +58,14 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
     private String subServiceId;
     private String  sftValue;
 
+    private ServiceModel serviceModel;
+
     private String[] timeSlotsMainArray;
     private CalendarView scheduleCalendarView;
     private LinearLayout specificLayout, buttonsLayout;
     private RelativeLayout flexibleLayout;
     private boolean isSpecific;
+    private String quantity;
     private String date, timeSlot1, timeslot2;
     private String subcategoryId;
 
@@ -109,6 +114,15 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
         flexibleTimeBtn.setOnClickListener(this);
         specificTimeBtn.setOnClickListener(this);
         ScheduleTime_nextBtn.setOnClickListener(this);
+
+      int itemid = Integer.parseInt(UserSessionManagement.getInstance(getContext()).getQantity());
+        int currentQuantity = QuantityManager.getQuantity(itemid);
+
+      //  Toast.makeText(getContext(), " "+currentQuantity, Toast.LENGTH_SHORT).show();
+
+        //String quant = String.valueOf(serviceModel.getQuantity);
+
+        quantity = String.valueOf(currentQuantity);
 
 
         ProgressBarHelper.show(getActivity(), "Loading Slots");
@@ -171,7 +185,8 @@ public class ScheduleTimeFragment extends Fragment implements View.OnClickListen
         addOrderMap.put("user_id", UserSessionManagement.getInstance(getActivity()).getUserId());
         addOrderMap.put("service_id", serviceId);
         addOrderMap.put("now", "0");
-        addOrderMap.put("quantity",sftValue==null?"1":sftValue);
+      //  addOrderMap.put("quantity",sftValue==null?"1":sftValue);
+        addOrderMap.put("quantity",sftValue==null?quantity:sftValue);
         addOrderMap.put("sub_service_id", subServiceId.isEmpty() ? "" : subServiceId);
         addOrderMap.put("service_date", date);
         addOrderMap.put("service_time", timeSlot1);
